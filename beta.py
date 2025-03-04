@@ -34,6 +34,42 @@ def proper_name():
     while True:
         player_name = input("Please enter a valid character name (letters only): ").strip()
         if player_name.isalpha():
+            print(f"Thank you! Enjoy your time {player_name}!")
             return player_name
         else:
             print("Not a valid character name. Try again.")
+
+
+# Character Battle Stances with Clavem and its attack list
+"""
+Bear: Clavem transforms into a giant greatsword. The edges aren't very sharp but it packs a huge punch.
+      It cannot break and it can deflect ki attacks.
+Turtle: Clavem transforms into a shield. Its shape and size can be manipulated. 
+        The outer shield can be imbued with ki.
+Snake: Clavem transforms into a whip. It can extend to great lengths or split into hundreds of smaller whips.
+"""
+battle_stances = ['Bear', 'Turtle', 'Snake']
+
+# Store NPC genre:type
+"""
+Meadows Monsters:
+    Djinn: A spirit that lives in magic lamps. They are capable of possessing humans and animals.
+           They are believed to be made of smokeless fire.
+Woods Monsters:
+    Wendigo: A cannibalistic monster. They are tall, thin, and emaciated, with pale skin.
+             They posses humanoid and deer features.
+"""
+npc_list = {'Friendly': {'Civilian', 'Merchant', 'Guard', 'Fairy'},
+            'Meadows Monsters': {'Djinn', 'Skinwalkers', 'Ghouls'},
+            'Woods Monsters': {'Wendigo', 'Shapeshifter', 'Werewolf'},
+            'Mountain Monsters': {'Vampire', }}
+
+# Store Monster's list of attacks (Ordered from most likely attack to least likely)
+"""
+Wendigo:
+    Swipe: Basic attack. Swipes with its claws.
+    Insatiable Hunger: Increases its appetite, boosting its stats.
+    Poison Bite: Its saliva is toxic causing its bite to apply poison.
+"""
+monster_attack_list = {'Wendigo': ['Swipe', 'Insatiable Hunger', 'Poison Bite'],
+                       'Djinn': ['Paralyze', 'Soul Drain', 'Possess']}
