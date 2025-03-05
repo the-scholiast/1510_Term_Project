@@ -7,8 +7,8 @@
 """
 Health: Life pool. You lose the game if it goes to zero.
 Ki: Resource pool for special abilities.
-Strength: Determines how much physical damage you do.
-Spirit: Determines how much Ki based damage you do.
+Strength: Determines how much physical damage you do. Reduces physical based attacks taken.
+Spirit: Determines how much Ki based damage you do. Reduces ki based attacks taken.
 Speed: Determines how often it is your turn.
 Luck: Determines your dodge and critical hit chance. Also determines the chance of rare items from merchants.
 Honour: Determines how NPCs interact with you. High honour = favourable options.
@@ -43,12 +43,21 @@ def proper_name():
 # Character Battle Stances with Clavem and its attack list
 """
 Bear: Clavem transforms into a giant greatsword. The edges aren't very sharp but it packs a huge punch.
-      It cannot break and it can deflect ki attacks.
-Turtle: Clavem transforms into a shield. Its shape and size can be manipulated. 
-        The outer shield can be imbued with ki.
+    Heavy Strike: Basic attack. (Physical)
+    Sunder: Slams the ground in front of you creating a wave of ki. (Ki)
+    Berserk: Perform Heavy Strike imbued with Ki the next 3 turns. Huge boost to Strength and Ki during affect. (Physical, Ki)
+Turtle: Clavem transforms into a shield. Its shape and size can be manipulated. The outer shield can be imbued with ki.
+    Shell: Basic move. 95% reduced Physical damage taken and 85% reduced Ki damage taken.
+    Bash: Coats the outer shield with spikes then bash into the enemy. (Physical)
+    Roar: Can be used after absorbing damage with Shell. A lion's mouth forms and shoots a Ki wave based on 
+          damage taken. (Ki)
+    
 Snake: Clavem transforms into a whip. It can extend to great lengths or split into hundreds of smaller whips.
 """
 battle_stances = ['Bear', 'Turtle', 'Snake']
+character_attacks = {'Bear': ['Heavy Strike', 'Sunder', 'Berserk'],
+                     'Turtle': ['Shell', 'Bash', 'Roar'],
+                     'Snake': []}
 
 # Store NPC genre:type
 """
@@ -60,7 +69,7 @@ Woods Monsters:
              They posses humanoid and deer features.
 """
 npc_list = {'Friendly': {'Civilian', 'Merchant', 'Guard', 'Fairy'},
-            'Meadows Monsters': {'Djinn', 'Skinwalkers', 'Ghouls'},
+            'Meadows Monsters': {'Djinn', 'Skinwalker', 'Ghoul'},
             'Woods Monsters': {'Wendigo', 'Shapeshifter', 'Werewolf'},
             'Mountain Monsters': {'Vampire', }}
 
