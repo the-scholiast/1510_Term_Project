@@ -1,4 +1,5 @@
 # File for idea and testing
+import random
 
 # Dictionary storing Character's stats
 # character_stats = {'name': 'tester', 'level': 1, 'Health': 100, 'Strength': 15, 'Speed': 10, 'Luck': 5,
@@ -69,9 +70,11 @@ Woods Monsters:
              They posses humanoid and deer features.
 """
 npc_list = {'Friendly': {'Civilian', 'Merchant', 'Guard', 'Fairy'},
-            'Meadows Monsters': {'Djinn', 'Skinwalker', 'Ghoul'},
-            'Woods Monsters': {'Wendigo', 'Shapeshifter', 'Werewolf'},
-            'Mountain Monsters': {'Vampire', }}
+            'Monsters': {'Meadows': {'Djinn', 'Skinwalker', 'Ghoul'},
+                         'Woods': {'Wendigo', 'Shapeshifter', 'Werewolf'},
+                         'Mountain': {'Vampire', }
+                         }
+            }
 
 # Store Monster's list of attacks (Ordered from most likely attack to least likely)
 """
@@ -82,3 +85,40 @@ Wendigo:
 """
 monster_attack_list = {'Wendigo': ['Swipe', 'Insatiable Hunger', 'Poison Bite'],
                        'Djinn': ['Paralyze', 'Soul Drain', 'Possess']}
+
+# Store list of potential boss to fight
+"""
+Zodd
+
+"""
+
+# Given the grid character, randomly choose from an element from within its group type.
+# Weighted system to guarantee certain numbers of NPCs/Monsters
+def obtain_random_npc(group_type):
+    """
+
+    :param group_type:
+    :return:
+    >>> obtain_random_npc('[!]')
+    Werewolf
+    >>> obtain_random_npc('[!]')
+    Civilian
+    >>> obtain_random_npc('[!]')
+    Merchant
+    """
+    # Store how many of each encounter in a zone
+    npc_count = {'Monsters': 10, 'Friendly': 5}
+    # Store the types of encounters (manually adjust how many types will be within the grid)
+    encounters = []
+    [encounters.extend([npc] * npc_count[npc]) for npc in npc_list]
+    random_type = random.choice(encounters)
+    # Randomly obtain the exact NPC given the random_type (random count?)
+    print(random_type)
+
+
+def main():
+    obtain_random_npc('')
+
+
+if __name__ == "__main__":
+    main()
