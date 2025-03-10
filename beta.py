@@ -21,7 +21,6 @@ X-coordinate and Y-coordinate: Current character location on the grid.
 """
 
 
-
 # Make character including the player's name
 def make_character(player_name):
     character = {'Name': f'{player_name}', 'Level': 1, 'Health': 100, 'Strength': 15, 'Speed': 10, 'Luck': 5,
@@ -82,12 +81,18 @@ Woods Monsters:
     Wendigo: A cannibalistic monster. They are tall, thin, and emaciated, with pale skin.
              They posses humanoid and deer features.
 """
-npc_list = {'Friendly': {'Civilian', 'Merchant', 'Guard', 'Fairy'},
-            'Monsters': {'Meadows': {'Djinn', 'Skinwalker', 'Ghoul'},
-                         'Woods': {'Wendigo', 'Shapeshifter', 'Werewolf'},
-                         'Mountain': {'Vampire', }
-                         }
-            }
+# NPC list for multiple zones
+# npc_list = {'Friendly': {'Civilian', 'Merchant', 'Guard', 'Fairy'},
+#             'Monsters': {'Meadows': {'Djinn', 'Skinwalker', 'Ghoul'},
+#                          'Woods': {'Wendigo', 'Shapeshifter', 'Werewolf'},
+#                          'Mountain': {'Vampire', }},
+#             'Environment': {'Hot Spring'}
+#             }
+# NPC list for single zone (simple)
+# npc_list = {'Friendly': ['Civilian', 'Merchant', 'Guard', 'Fairy'],
+#             'Monsters': ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'],
+#             'Environment': ['Hot Spring']
+#             }
 
 # Store Monster's list of attacks (Ordered from most likely attack to least likely)
 """
@@ -105,12 +110,13 @@ Zodd
 
 """
 
+
 # Given the grid character, randomly choose from an element from within its group type.
 # Weighted system to guarantee certain numbers of NPCs/Monsters
-def obtain_random_npc(group_type):
+def obtain_random_npc():
     """
 
-    :param group_type:
+    :param:
     :return:
     >>> obtain_random_npc('[!]')
     Werewolf
@@ -119,18 +125,32 @@ def obtain_random_npc(group_type):
     >>> obtain_random_npc('[!]')
     Merchant
     """
+    npc_list = {'Friendly': ['Civilian', 'Merchant', 'Guard', 'Fairy'],
+                'Monsters': ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'],
+                'Environment': ['Hot Spring']
+                }
     # Store how many of each encounter in a zone
-    npc_count = {'Monsters': 10, 'Friendly': 5}
-    # Store the types of encounters (manually adjust how many types will be within the grid)
-    encounters = []
-    [encounters.extend([npc] * npc_count[npc]) for npc in npc_list]
-    random_type = random.choice(encounters)
-    # Randomly obtain the exact NPC given the random_type (random count?)
-    print(random_type)
+    npc_count = {'Monsters': 14, 'Friendly': 7, 'Environment': 4}
+
+    # Sort NPC list by its keys
+    npc_list_keys = sorted(list(npc_list.keys()))
+
+    # Create weighted NPC list
+    weighted_list = [npc_count[npc_type] for npc_type in sorted(npc_list)]
+
+    # Get a weighted random selection of encounter type
+    random_type = random.choices(population=npc_list_keys,
+                                 weights=weighted_list,
+                                 k=1)[0]
+
+    # Get random NPC from that type
+    random_npc = random.choice(npc_list[random_type])
+
+    return random_npc
 
 
 def main():
-    obtain_random_npc('')
+    print(obtain_random_npc())
 
 
 if __name__ == "__main__":
