@@ -23,9 +23,9 @@ X-coordinate and Y-coordinate: Current character location on the grid.
 
 # Make character including the player's name
 def make_character(player_name):
-    character = {'Name': f'{player_name}', 'Level': 1, 'Health': 100, 'Strength': 15, 'Speed': 10, 'Luck': 5,
-                 'Honour': 0, 'Ki': 50, 'Spirit': 10, 'Experience': 0, 'Crystals': 0, 'Shards': 10,
-                 'Current Health': 100, 'X-coordinate': 0, 'Y-coordinate': 0}
+    character = {'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Strength': 15, 'Speed': 10, 'Luck': 5,
+                 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0, 'Crystals': 0, 'Shards': 10,
+                 'Current Health': 100, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': set()}
     return character
 
 
@@ -35,9 +35,8 @@ def update_title(character):
 
     # Name for each level
     level_name = {1: 'Amateur', 2: 'Novice', 3: 'Accepted'}
-
-    character['Name'] += f' the {level_name[current_level]}'
-
+    # Edit character title depending on level
+    character['Title'] = f'the {level_name[current_level]}'
     return character
 
 
@@ -58,19 +57,21 @@ def proper_name():
 Bear: Clavem transforms into a giant greatsword. The edges aren't very sharp but it packs a huge punch.
     Heavy Strike: Basic attack. (Physical)
     Sunder: Slams the ground in front of you creating a wave of ki. (Ki)
-    Berserk: Perform Heavy Strike imbued with Ki the next 3 turns. Huge boost to Strength and Ki during affect. (Physical, Ki)
+    Berserk: Perform Heavy Strike imbued with Ki the next 3 turns. Huge boost to Strength and Ki during affect. (Physical Ki)
 Turtle: Clavem transforms into a shield. Its shape and size can be manipulated. The outer shield can be imbued with ki.
-    Shell: Basic move. 95% reduced Physical damage taken and 85% reduced Ki damage taken.
+    Shell: Basic move. Reduced Physical and Ki damage taken depending on Strength and Spirit (Physical Ki).
     Bash: Coats the outer shield with spikes then bash into the enemy. (Physical)
     Roar: Can be used after absorbing damage with Shell. A lion's mouth forms and shoots a Ki wave based on 
           damage taken. (Ki)
-    
 Snake: Clavem transforms into a whip. It can extend to great lengths or split into hundreds of smaller whips.
+    Lash: Basic attack. Whip extends to lash its target (Physical).
+    Snare: Whip entangles its target, paralyzing its victim and inflicting poison (Physical Ki).
+    Hydra: Splits into hundreds of smaller whips making its attack unavoidable (Physical Ki).
 """
 battle_stances = ['Bear', 'Turtle', 'Snake']
-character_attacks = {'Bear': ['Heavy Strike', 'Sunder', 'Berserk'],
-                     'Turtle': ['Shell', 'Bash', 'Roar'],
-                     'Snake': []}
+character_attacks = {'Bear': [('Heavy Strike', 'Physical'), ('Sunder', 'Ki'), ('Berserk', 'Physical Ki')],
+                     'Turtle': [('Shell', 'Physical Ki'), ('Bash', 'Physical'), ('Roar', 'Ki')],
+                     'Snake': [('Lash', 'Physical'), ('Snare', 'Physical Ki'), ('Hydra', 'Physical Ki')]}
 
 # Store NPC genre:type
 """
