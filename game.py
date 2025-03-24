@@ -14,6 +14,17 @@ def check_crystals(character):
     return crystals >= 100
 
 
+def check_current_health(character):
+    """
+    Return True if character's Current Health is greater than 0 else return False.
+
+    :param character:
+    :return:
+    """
+    current_health = character['Current Health']
+    return current_health > 0
+
+
 def validate_move(board, character, direction):
     """
     Return True if the character's coordinates after moving are in the board else return False.
@@ -106,18 +117,18 @@ def move_character(character, direction):
 
 
 def game():
-    # Ask user for proper character name
-    # Create new character
-    # Make tutorial zone
+    # Ask user for proper character name @DONE
+    # Create new character @DONE
+    # Make tutorial zone @STARTED
     # Character spawns in
-    # Character goes through NPC interactions. Can skip to main zone.
-        # Dialogue with Darrow explaining the goal
-        # Dialogue with Misaki explaining stats and monsters
+    # Character goes through NPC interactions. Can skip to main zone. @DONE
+        # Dialogue with Darrow explaining the goal @DONE
+        # Dialogue with Misaki explaining stats and monsters @STARTED
         # Dialogue with Ragnar explaining battle mechanics and quick battle tutorial
         # Character obtains basic items
         # Character moves out of tutorial zone
     # Make main board
-    # If character Current HP == 0, lost game dialogue and end game
+    # If character Current Health == 0, lost game dialogue and end game
     # Critical game loop around if Crystals >= 100
         # Validate character direction
         # Move character
