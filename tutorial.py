@@ -6,7 +6,7 @@ This module contains all necessary functionality for the tutorial zone.
 # Character interactions with NPCs in tutorial zone
 def tutorial_npcs(character_location: (int, int)) -> str:
     # Tutorial Interactions
-    tutorial_npc = {(1, 0): 'Darrow', (2, 0): 'Misaki', (3, 0): 'Ragnar'}
+    tutorial_npc = {(0, 0): 'Self', (1, 0): 'Darrow', (2, 0): 'Misaki', (3, 0): 'Ragnar'}
     # Return which NPC you are interacting with
     return tutorial_npc.get(character_location)
 
@@ -18,6 +18,11 @@ def get_npc_dialogue(npc: str, character_name: str) -> list:
     :return: a list of tuples (dialogue as a string, Boolean indicator if user input is required)
     """
     npcs = {
+        'Self': [
+            ("Today's the day! I'm going to become an official member of the Reaper's Guild!", False),
+            ("Wait what time is it?! Ahhh I'm late!", False),
+            (f"{character_name} enters the main room of the Guild.", False)
+        ],
         'Darrow': [
             (f'Finally awake eh {character_name}? So how about it. Do you need to prep or are you ready to go?', True),
             ("ZEHAHAHAHAHAHA! That's the spirit! Go bring me the head of a worthy beast!", False),
@@ -78,7 +83,7 @@ def tutorial_interaction(npc, character):
 
 def exit_tutorial(character) -> bool:
     character_location = (character['X-coordinate'], character['Y-coordinate'])
-    return character_location == (4, 0)
+    return character_location != (4, 0)
 
 
 def main():
