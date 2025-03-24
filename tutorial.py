@@ -6,7 +6,7 @@ This module contains all necessary functionality for the tutorial zone.
 # Character interactions with NPCs in tutorial zone
 def tutorial_npcs(character_location: (int, int)) -> str:
     # Tutorial Interactions
-    tutorial_npc = {(1, 0): 'Darrow', (2, 0): 'Ragnar', (3, 0): 'Misaki'}
+    tutorial_npc = {(1, 0): 'Darrow', (2, 0): 'Misaki', (3, 0): 'Ragnar'}
     # Return which NPC you are interacting with
     return tutorial_npc.get(character_location)
 
@@ -74,6 +74,11 @@ def tutorial_interaction(npc, character):
             dialogue_counter = handle_input(npc, dialogue_counter)
         else:
             dialogue_counter += 1
+
+
+def exit_tutorial(character) -> bool:
+    character_location = (character['X-coordinate'], character['Y-coordinate'])
+    return character_location == (4, 0)
 
 
 def main():
