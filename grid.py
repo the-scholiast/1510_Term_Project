@@ -25,9 +25,9 @@ def check_encounter(character, board):
 
 
 # Create tutorial zone
-def tutorial_area(rows):
+def tutorial_area():
     # Linear grid for tutorial. There should be a skip option.
-    tutorial_zone = ['[?]' for row in range(rows)]
+    tutorial_zone = {(row, column): '[?]' for row in range(1) for column in range(5)}
     return tutorial_zone
 
 
