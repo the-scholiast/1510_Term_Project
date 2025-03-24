@@ -35,19 +35,45 @@ def get_npc_dialogue(npc: str, character_name: str) -> list:
     return npcs.get(npc)
 
 
+def handle_input(npc, dialogue_counter):
+    # First tutorial NPC encounter. Option to skip tutorial.
+    if npc == 'Darrow' and dialogue_counter == 0:
+        user_response = input("Type 'Yes' for tutorial or 'No' to skip: ")
+        if user_response.lower() == 'no':
+            # Skip to dialogue index 1
+            return 1
+        else:
+            # Skip to dialogue index 2 for tutorial
+            return 2
+    else:
+        user_response = input("Type 'Yes' to repeat or 'No' to continue: ")
+        # Repeat current dialogue
+        if user_response.lower() == 'yes':
+            return dialogue_counter
+        # Move to next dialogue
+        return dialogue_counter + 1
+
+
 def tutorial_interaction(npc, character):
     name = character['Name']
     character_location = (character['X-coordinate'], character['Y-coordinate'])
     # Get dialogue for the specified NPC
     npc_dialogue = get_npc_dialogue(tutorial_npcs(character_location), name)
     dialogue_counter = 0
-    # Create a while loop to continue NPC dialogue and handle user input if needed
+    # Loop to continue NPC dialogue and handle user input if needed
     while dialogue_counter < len(npc_dialogue):
         # Get current dialogue and input requirement
-        npc_line = npc_dialogue[dialogue_counter][0]
-        print(npc_line)
-        dialogue_counter += 1
-    pass
+        dialogue, input_required = npc_dialogue[dialogue_counter]
+        # Display the dialogue
+        print(f"{npc}: {dialogue}")
+        # Exit tutorial dialogue if dialogue_counter == 1 and Darrow is NPC
+        if npc == 'Darrow' and dialogue_counter == 1:
+            return
+        # If input is required after this dialogue
+        if input_required:
+            dialogue_counter = handle_input(npc, dialogue_counter)
+        else:
+            dialogue_counter += 1
 
 
 def main():
