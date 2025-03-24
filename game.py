@@ -5,6 +5,20 @@ import sys
 import tutorial
 
 
+def get_user_choice():
+    """
+    Return the direction ("Up", "Down", "Left", "Right") the user inputs.
+
+    :postcondition: obtain a direction ("Up", "Down", "Left", "Right") as a string from the user
+    :return: the direction ("Up", "Down", "Left", "Right") as a string based on the user input
+    """
+    directions = {"Up", "Down", "Left", "Right"}
+    while True:
+        user_direction = input("Please enter Up, Down, Left, or Right to move: ").title().strip()
+        if user_direction in directions:
+            return user_direction
+
+
 def check_crystals(character):
     """
     Return True if character has 100 Crystals or else return False.
@@ -134,7 +148,17 @@ def game():
     character = character_module.make_character(name)
     # Make tutorial zone @STARTED
     tutorial_zone = grid.tutorial_area()
+    in_tutorial = tutorial.exit_tutorial(character)
     # Character spawns in
+    while in_tutorial:
+        tutorial_npc = tutorial.tutorial_npcs((character["X-coordinate"], character["Y-coordinate"]))
+        tutorial.tutorial_interaction(tutorial_npc, character)
+        direction = get_user_choice()
+        if validate_move(tutorial_zone, character, direction):
+            move_character(character, direction)
+        else:
+            print("You cannot move in that direction. Please enter a different direction.")
+        in_tutorial = tutorial.exit_tutorial(character)
     # Character goes through NPC interactions. Can skip to main zone. @DONE
         # Dialogue with Darrow explaining the goal @DONE
         # Dialogue with Misaki explaining stats and monsters @STARTED
@@ -159,8 +183,6 @@ def game():
     # Recall back to tutorial zone
     # Give quest item to Darrow
     # Win dialogue and end game
-    print(character)
-    print(tutorial_zone)
 
 
 def main():
