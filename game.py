@@ -150,21 +150,26 @@ def game():
     tutorial_zone = grid.tutorial_area()
     in_tutorial = tutorial.exit_tutorial(character)
     # Character spawns in
-    while in_tutorial:
-        tutorial_npc = tutorial.tutorial_npcs((character["X-coordinate"], character["Y-coordinate"]))
-        tutorial.tutorial_interaction(tutorial_npc, character)
-        direction = get_user_choice()
-        if validate_move(tutorial_zone, character, direction):
-            move_character(character, direction)
-        else:
-            print("You cannot move in that direction. Please enter a different direction.")
-        in_tutorial = tutorial.exit_tutorial(character)
     # Character goes through NPC interactions. Can skip to main zone. @DONE
+    while in_tutorial:
         # Dialogue with Darrow explaining the goal @DONE
         # Dialogue with Misaki explaining stats and monsters @STARTED
         # Dialogue with Ragnar explaining battle mechanics and quick battle tutorial
-        # Character obtains basic items
-        # Character moves out of tutorial zone
+        tutorial_npc = tutorial.tutorial_npcs((character["X-coordinate"], character["Y-coordinate"]))
+        skip_tutorial = tutorial.tutorial_interaction(tutorial_npc, character)
+        # Skip tutorial flag.
+        if skip_tutorial:
+            break
+        while True:
+            direction = get_user_choice()
+            if validate_move(tutorial_zone, character, direction):
+                move_character(character, direction)
+                break
+            else:
+                print("You cannot move in that direction. Please enter a different direction.")
+        in_tutorial = tutorial.exit_tutorial(character)
+    # Character obtains basic items
+    # Character moves out of tutorial zone
     # Make main board @STARTED
     # If character Current Health == 0, lost game dialogue and end game @DONE
     # Critical game loop around if Crystals >= 100 @DONE
