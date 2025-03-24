@@ -2,6 +2,18 @@
 from beta import make_character, proper_name
 
 
+def check_crystals(character):
+    """
+    Return True if character has 100 Crystals or else return False.
+
+    :param character:
+    :return:
+    """
+    # Obtain Crystals value from character
+    crystals = character['Crystals']
+    return crystals >= 100
+
+
 def validate_move(board, character, direction):
     """
     Return True if the character's coordinates after moving are in the board else return False.
