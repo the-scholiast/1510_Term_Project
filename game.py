@@ -106,8 +106,35 @@ def move_character(character, direction):
 
 
 def game():
-    character = make_character(proper_name())
-    print(character)
+    # Ask user for proper character name
+    # Create new character
+    # Make tutorial zone
+    # Character spawns in
+    # Character goes through NPC interactions. Can skip to main zone.
+        # Dialogue with Darrow explaining the goal
+        # Dialogue with Misaki explaining stats and monsters
+        # Dialogue with Ragnar explaining battle mechanics and quick battle tutorial
+        # Character obtains basic items
+        # Character moves out of tutorial zone
+    # Make main board
+    # If character Current HP == 0, lost game dialogue and end game
+    # Critical game loop around if Crystals >= 100
+        # Validate character direction
+        # Move character
+        # Check if there is an encounter
+        # Randomize an encounter
+        # If friendly NPC, give dialogue options
+        # If monster, begin battle phase
+        # If hot spring, give option to heal or leave it for future use
+        # Gain new move set, stats, and title upgrade every level up
+    # If true, notify Character a Calamity Monster approaches
+        # Character healed for battle
+    # Final boss battle
+    # If won, obtain quest item
+    # Recall back to tutorial zone
+    # Give quest item to Darrow
+    # Win dialogue and end game
+    pass
 
 
 def main():
