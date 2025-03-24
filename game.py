@@ -1,5 +1,36 @@
 # Future import files below
-from beta import make_character, proper_name
+import sys
+
+
+# Ask user for proper player name
+def proper_name():
+    # Keep asking user for valid name
+    while True:
+        player_name = input("Please enter a valid character name (letters only): ").strip()
+        if player_name.isalpha():
+            print(f"Thank you! Enjoy your time {player_name}!")
+            return player_name
+        else:
+            print("Not a valid character name. Try again.")
+
+
+# Make character including the player's name
+def make_character(player_name):
+    character = {'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Strength': 15,
+                 'Speed': 10, 'Luck': 5, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
+                 'Crystals': 0, 'Shards': 10, 'Current Health': 100, 'X-coordinate': 0, 'Y-coordinate': 0,
+                 'Items': set()}
+    return character
+
+
+# Update the title of the character into it's name, depending on level
+def update_title(character):
+    current_level = character['Level']
+    # Name for each level
+    level_name = {1: 'Amateur', 2: 'Novice', 3: 'Accepted'}
+    # Edit character title depending on level
+    character['Title'] = f'the {level_name[current_level]}'
+    return character
 
 
 def check_crystals(character):
@@ -14,7 +45,7 @@ def check_crystals(character):
     return crystals >= 100
 
 
-def check_current_health(character):
+def is_alive(character) -> bool:
     """
     Return True if character's Current Health is greater than 0 else return False.
 
@@ -23,6 +54,14 @@ def check_current_health(character):
     """
     current_health = character['Current Health']
     return current_health > 0
+
+
+def game_lost(alive):
+    print("Your quest to become Accepted has ended.")
+    print("So much blood spills from your guts.")
+    print("You let go of your family heirloom.")
+    print("There is only regret as you close your eyes for the final time.")
+    sys.exit(0)
 
 
 def validate_move(board, character, direction):
@@ -118,7 +157,9 @@ def move_character(character, direction):
 
 def game():
     # Ask user for proper character name @DONE
+    name = proper_name()
     # Create new character @DONE
+    character = make_character(name)
     # Make tutorial zone @STARTED
     # Character spawns in
     # Character goes through NPC interactions. Can skip to main zone. @DONE
@@ -127,9 +168,9 @@ def game():
         # Dialogue with Ragnar explaining battle mechanics and quick battle tutorial
         # Character obtains basic items
         # Character moves out of tutorial zone
-    # Make main board
-    # If character Current Health == 0, lost game dialogue and end game
-    # Critical game loop around if Crystals >= 100
+    # Make main board @STARTED
+    # If character Current Health == 0, lost game dialogue and end game @DONE
+    # Critical game loop around if Crystals >= 100 @DONE
         # Validate character direction
         # Move character
         # Check if there is an encounter
