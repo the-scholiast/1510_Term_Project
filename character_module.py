@@ -17,8 +17,8 @@ def proper_name():
 # Make character including the player's name
 def make_character(player_name):
     character = {'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Strength': 15,
-                 'Speed': 10, 'Luck': 5, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
-                 'Crystals': 0, 'Shards': 10, 'Current Health': 100, 'X-coordinate': 0, 'Y-coordinate': 0,
+                 'Speed': 10, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
+                 'Crystals': 0, 'Current Health': 100, 'X-coordinate': 0, 'Y-coordinate': 0,
                  'Items': set()}
     return character
 
