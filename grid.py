@@ -28,7 +28,11 @@ def tutorial_npcs(character_location):
 
 
 def get_npc_dialogue(npc, character_name):
-    """Return the dialogue options for a specific NPC."""
+    """
+    Return the dialogue options for a specific NPC.
+
+    :return: a list of tuples (dialogue as a string, Boolean indicator if user input is required)
+    """
     npcs = {
         'Darrow': [
             (f'Finally awake eh {character_name}? So how about it. Do you need to prep or are you ready to go?', True),
