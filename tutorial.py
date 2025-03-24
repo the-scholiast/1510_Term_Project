@@ -73,12 +73,14 @@ def tutorial_interaction(npc, character):
         print(f"{npc}: {dialogue}")
         # Exit tutorial dialogue if dialogue_counter == 1 and Darrow is NPC
         if npc == 'Darrow' and dialogue_counter == 1:
-            return
+            character['X-coordinate'] = 4
+            return True
         # If input is required after this dialogue
         if input_required:
             dialogue_counter = handle_input(npc, dialogue_counter)
         else:
             dialogue_counter += 1
+    return False
 
 
 def exit_tutorial(character) -> bool:
