@@ -19,7 +19,7 @@ def make_character(player_name):
     character = {'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Strength': 15,
                  'Speed': 10, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
                  'Crystals': 0, 'Current Health': 100, 'X-coordinate': 0, 'Y-coordinate': 0,
-                 'Items': set()}
+                 'Items': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}}
     return character
 
 
@@ -31,3 +31,15 @@ def update_title(character):
     # Edit character title depending on level
     character['Title'] = f'the {level_name[current_level]}'
     return character
+
+
+def equip_items(character: dict, items: dict):
+    """
+    Equip items onto character.
+
+    :param character:
+    :param items:
+    """
+    character_items = character['Items']
+    for equipment, item in items.items():
+        character_items[equipment] = item
