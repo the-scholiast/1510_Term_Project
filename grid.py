@@ -13,7 +13,7 @@ test_character = {'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health'
 # For each grid position, randomly choose from a set of characters which represents different encounters.
 def make_board(rows, columns):
     # Substitute '[!]' with a data structure to randomly select other characters as well
-    grid = [['[!]' for column in range(columns)] for row in range(rows)]
+    grid = {(row, column): '[!]' for column in range(columns) for row in range(rows)}
     return grid
 
 
@@ -32,10 +32,10 @@ def tutorial_area():
 
 
 def main():
-    # print(make_board(5, 5))
+    print(make_board(5, 5))
     # print(tutorial_area(5))
-    board = make_board(5, 5)
-    print(check_encounter(test_character, board))
+    # board = make_board(5, 5)
+    # print(check_encounter(test_character, board))
 
 
 if __name__ == "__main__":
