@@ -59,7 +59,7 @@ def handle_input(npc, dialogue_counter):
         return dialogue_counter + 1
 
 
-def tutorial_interaction(npc, character):
+def tutorial_interaction(npc, character) -> bool:
     name = character['Name']
     character_location = (character['X-coordinate'], character['Y-coordinate'])
     # Get dialogue for the specified NPC
@@ -83,6 +83,18 @@ def tutorial_interaction(npc, character):
     return False
 
 
+def equip_items(character: dict, items: dict):
+    """
+    Equip items onto character.
+
+    :param character:
+    :param items:
+    """
+    character_items = character['Items']
+    for equipment, item in items.items():
+        character_items[equipment] = item
+
+
 def exit_tutorial(character) -> bool:
     character_location = (character['X-coordinate'], character['Y-coordinate'])
     return character_location != (4, 0)
@@ -93,10 +105,13 @@ def main():
     Drive the program.
     """
     character = {'Name': 'Test', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Strength': 15,
-                 'Speed': 10, 'Luck': 5, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
-                 'Crystals': 0, 'Shards': 10, 'Current Health': 100, 'X-coordinate': 1, 'Y-coordinate': 0,
-                 'Items': set()}
-    tutorial_interaction("Darrow", character)
+                 'Speed': 10, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
+                 'Crystals': 0, 'Current Health': 100, 'X-coordinate': 1, 'Y-coordinate': 0,
+                 'Items': {}}
+    # tutorial_interaction("Darrow", character)
+    basic_items = {'Helmet': 'Leather Cap', 'Armour': 'Leather Tunic'}
+    equip_items(character, basic_items)
+    print(character)
 
 
 if __name__ == "__main__":
