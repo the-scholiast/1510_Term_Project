@@ -168,9 +168,15 @@ def game():
             else:
                 print("You cannot move in that direction. Please enter a different direction.")
         in_tutorial = tutorial.exit_tutorial(character)
-    # Character obtains basic items
+    # Character obtains basic items @DONE
+    basic_items = {'Helmet': 'Leather Cap', 'Armour': 'Leather Tunic'}
+    character_module.equip_items(character, basic_items)
     # Character moves out of tutorial zone
     # Make main board @STARTED
+    board = grid.make_board(5, 5)
+    # Reset character starting location for next area
+    character['X-coordinate'] = 2
+    character['Y-coordinate'] = 4
     # If character Current Health == 0, lost game dialogue and end game @DONE
     # Critical game loop around if Crystals >= 100 @DONE
         # Validate character direction
