@@ -4,6 +4,7 @@ import encounters
 import grid
 import sys
 import tutorial
+from __init__ import NPC_DICT
 
 
 def check_crystals(character):
@@ -50,7 +51,7 @@ def game():
     while in_tutorial:
         # Dialogue with Darrow explaining the goal @DONE
         # Dialogue with Misaki explaining stats and monsters @STARTED
-        # Dialogue with Ragnar explaining battle mechanics and quick battle tutorial
+        # Dialogue with Ragnar explaining battle mechanics and quick battle tutorial @ MAKE
         tutorial_npc = tutorial.tutorial_npcs((character["X-coordinate"], character["Y-coordinate"]))
         skip_tutorial = tutorial.tutorial_interaction(tutorial_npc, character)
         # Skip tutorial flag.
@@ -93,6 +94,11 @@ def game():
         if encounters.check_encounter(character, board):
             # Randomize an encounter
             random_encounter = encounters.obtain_random_npc(npc_count)
+        else:
+            # Go back to movement if there are no encounters
+            continue
+        # If hot spring, give option to heal or leave it for future use @ MAKE
+        if random_encounter in NPC_DICT['Environment']:
         # If friendly NPC, give dialogue options
         # If monster, begin battle phase
         # If hot spring, give option to heal or leave it for future use
