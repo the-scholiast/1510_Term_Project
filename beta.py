@@ -20,39 +20,6 @@ Shards: Tradable resource. For upgrading stats and buying items.
 X-coordinate and Y-coordinate: Current character location on the grid.
 """
 
-
-# Make character including the player's name
-def make_character(player_name):
-    character = {'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Strength': 15,
-                 'Speed': 10, 'Luck': 5, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
-                 'Crystals': 0, 'Shards': 10, 'Current Health': 100, 'X-coordinate': 0, 'Y-coordinate': 0,
-                 'Items': set()}
-    return character
-
-
-# Update the title of the character into it's name, depending on level
-def update_title(character):
-    current_level = character['Level']
-
-    # Name for each level
-    level_name = {1: 'Amateur', 2: 'Novice', 3: 'Accepted'}
-    # Edit character title depending on level
-    character['Title'] = f'the {level_name[current_level]}'
-    return character
-
-
-# Ask user for proper player name
-def proper_name():
-    # Keep asking user for valid name
-    while True:
-        player_name = input("Please enter a valid character name (letters only): ").strip()
-        if player_name.isalpha():
-            print(f"Thank you! Enjoy your time {player_name}!")
-            return player_name
-        else:
-            print("Not a valid character name. Try again.")
-
-
 # Character Battle Stances with Clavem and its attack list
 """
 Bear: Clavem transforms into a giant greatsword. The edges aren't very sharp but it packs a huge punch.
@@ -113,18 +80,17 @@ Zodd
 """
 
 
-# Given the grid character, randomly choose from an element from within its group type.
-# Weighted system to guarantee certain numbers of NPCs/Monsters
-def obtain_random_npc():
+def obtain_random_npc(npc_count: dict) -> str:
     """
+    Obtain a random encounter depending on the weights.
 
     :param:
     :return:
-    >>> obtain_random_npc('[!]')
+    >>> obtain_random_npc({'Monsters': 14, 'Friendly': 7, 'Environment': 4})
     Werewolf
-    >>> obtain_random_npc('[!]')
+    >>> obtain_random_npc({'Monsters': 14, 'Friendly': 7, 'Environment': 4})
     Civilian
-    >>> obtain_random_npc('[!]')
+    >>> obtain_random_npc({'Monsters': 14, 'Friendly': 7, 'Environment': 4})
     Merchant
     """
     npc_list = {'Friendly': ['Civilian', 'Merchant', 'Guard', 'Fairy'],
@@ -132,7 +98,6 @@ def obtain_random_npc():
                 'Environment': ['Hot Spring']
                 }
     # Store how many of each encounter in a zone
-    npc_count = {'Monsters': 14, 'Friendly': 7, 'Environment': 4}
 
     # Sort NPC list by its keys
     npc_list_keys = sorted(list(npc_list.keys()))
@@ -144,15 +109,17 @@ def obtain_random_npc():
     random_type = random.choices(population=npc_list_keys,
                                  weights=weighted_list,
                                  k=1)[0]
-
+    # Reduce weight of obtained NPC type
+    npc_count[random_type] -= 1
     # Get random NPC from that type
     random_npc = random.choice(npc_list[random_type])
-
     return random_npc
 
 
 def main():
-    print(obtain_random_npc())
+    npc_list = {'Monsters': 14, 'Friendly': 7, 'Environment': 4}
+    print(obtain_random_npc(npc_list))
+    print(npc_list)
 
 
 if __name__ == "__main__":
