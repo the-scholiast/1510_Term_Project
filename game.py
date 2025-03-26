@@ -1,5 +1,6 @@
 # Future import files below
 import character_module
+import encounters
 import grid
 import sys
 import tutorial
@@ -56,9 +57,9 @@ def game():
         if skip_tutorial:
             break
         while True:
-            direction = get_user_choice()
-            if validate_move(tutorial_zone, character, direction):
-                move_character(character, direction)
+            direction = character_module.get_user_choice()
+            if character_module.validate_move(tutorial_zone, character, direction):
+                character_module.move_character(character, direction)
                 break
             else:
                 print("You cannot move in that direction. Please enter a different direction.")
@@ -73,11 +74,25 @@ def game():
     character['X-coordinate'] = 2
     character['Y-coordinate'] = 4
     # If character Current Health == 0, lost game dialogue and end game @DONE
+    character_alive = is_alive(character)
     # Critical game loop around if Crystals >= 100 @DONE
-        # Validate character direction
-        # Move character
+    crystals_100 = check_crystals(character)
+    # Store NPC and Monster weights
+    npc_count = {'Monsters': 13, 'Friendly': 7, 'Environment': 4}
+    # Main board game loop
+    while character_alive and crystals_100:
+        # Validate character direction and move character is possible or ask for direction again
+        while True:
+            direction = character_module.get_user_choice()
+            if character_module.validate_move(tutorial_zone, character, direction):
+                character_module.move_character(character, direction)
+                break
+            else:
+                print("You cannot move in that direction. Please enter a different direction.")
         # Check if there is an encounter
-        # Randomize an encounter
+        if encounters.check_encounter(character, board):
+            # Randomize an encounter
+            random_encounter = encounters.obtain_random_npc(npc_count)
         # If friendly NPC, give dialogue options
         # If monster, begin battle phase
         # If hot spring, give option to heal or leave it for future use
