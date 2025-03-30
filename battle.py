@@ -87,7 +87,15 @@ def create_monster(monster):
 
 # Obtain attack move from Monster
 def get_monster_attack(monster: str) -> list:
-    pass
+    # Get list of attacks
+    attack_names = list(monster_attack_list[monster].keys())
+    # Weighted list of monster attacks
+    monster_attack_weights = [0.5, 0.35, 0.15]
+    # Select weighted random attack
+    attack_name = random.choices(attack_names, weights=monster_attack_weights, k=1)[0]
+    attack_details = monster_attack_list[monster][attack_name]
+    # Return list of attack name and its details
+    return [attack_name] + attack_details
 
 
 # Apply monster attack and its affect to character
