@@ -99,8 +99,37 @@ def get_monster_attack(monster: str) -> list:
 
 
 # Apply monster attack and its affect to character
-def apply_monster_attack(attack: list, turn):
-    pass
+def apply_monster_attack(attack: list, character: dict) -> str:
+    # Unpack attack list
+    attack_name, description, attack_type, damage = attack
+    # Check if character has Shell active -> Figure out how to apply #######################################
+
+    # Apply monster attack based on type
+    if attack_type == 'Attack':
+        character['Current Health'] -= damage
+        message = f"Monster used {attack_name}! {description} You took {damage} damage!"
+    elif attack_type == 'Heal':
+        # Monster heals itself 50% of the damage dealt
+        heal_amount = damage // 2
+        message = f"Monster used {attack_name}! {description} Monster healed for {heal_amount} health!"
+    elif attack_type == 'Poison':
+        character['Current Health'] -= damage
+        # Add poison status effect
+        character['Status']['Poison'] = 4  # Lasts for 4 turns
+        message = f"Monster used {attack_name}! {description} You took {damage} damage and are poisoned!"
+    elif attack_type == 'Bleed':
+        character['Current Health'] -= damage
+        # Add bleed status effect
+        character['Status']['Bleed'] = 2  # Lasts for 2 turns
+        message = f"Monster used {attack_name}! {description} You took {damage} damage and are bleeding!"
+    else:
+        # Monster buffs itself
+        message = f"Monster used {attack_name}! {description} Monster's damage is increased!"
+    # Check if character is defeated
+    if character['Current Health'] <= 0:
+        message += "\nYou have been defeated!"
+
+    return message
 
 
 # Figure out turn order depending on who got "First Strike" -> use itertools.cycle?
