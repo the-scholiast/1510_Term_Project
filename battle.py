@@ -5,7 +5,7 @@ import random
 from itertools import cycle
 
 # Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
-monster_attack_list = {
+MONSTER_ATTACK_LIST = {
     'Wendigo': {
         'Swipe': ['A vicious claw attack dealing physical damage.', 'Attack', 10],
         'Insatiable Hunger': ['A frenzied bite that heals the Wendigo.', 'Heal', 8],
@@ -44,7 +44,7 @@ monster_attack_list = {
 }
 
 # Store character's attack moves
-character_attacks = {
+CHARACTER_ATTACKS = {
     'Bear': {
         'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
         'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
@@ -88,12 +88,12 @@ def create_monster(monster):
 # Obtain attack move from Monster
 def get_monster_attack(monster: str) -> list:
     # Get list of attacks
-    attack_names = list(monster_attack_list[monster].keys())
+    attack_names = list(MONSTER_ATTACK_LIST[monster].keys())
     # Weighted list of monster attacks
     monster_attack_weights = [0.5, 0.35, 0.15]
     # Select weighted random attack
     attack_name = random.choices(attack_names, weights=monster_attack_weights, k=1)[0]
-    attack_details = monster_attack_list[monster][attack_name]
+    attack_details = MONSTER_ATTACK_LIST[monster][attack_name]
     # Return list of attack name and its details
     return [attack_name] + attack_details
 
