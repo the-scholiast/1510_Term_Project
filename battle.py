@@ -137,14 +137,14 @@ def display_attack_options(stance, attacks_list):
     print("Available attacks:")
 
     attack_names = list(attacks_list.keys())
-    for i, attack_name in enumerate(attack_names, 1):
+    for order, attack_name in enumerate(attack_names, 1):
         description = attacks_list[attack_name][0]
         attack_type = attacks_list[attack_name][1]
         damage = attacks_list[attack_name][2]
 
         # Show damage or effect based on attack type
         effect = f"Damage: {damage}" if damage > 0 else "Special Effect"
-        print(f"{i}. {attack_name} ({attack_type}) - {description} - {effect}")
+        print(f"{order}. {attack_name} ({attack_type}) - {description} - {effect}")
 
     return attack_names
 # TESTING DELETE ######################################
