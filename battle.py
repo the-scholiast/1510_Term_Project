@@ -63,7 +63,26 @@ character_attacks = {
 }
 # Create monster with Health
 def create_monster(monster):
-    pass
+    # Base health for different monster types
+    monster_health = {
+        'Wendigo': 100,
+        'Djinn': 85,
+        'Skinwalker': 90,
+        'Ghoul': 80,
+        'Shapeshifter': 95,
+        'Werewolf': 110,
+        'Vampire': 90
+    }
+    # Create monster dictionary with health and status
+    monster_dict = {
+        'Name': monster,
+        'Health': monster_health.get(monster),
+        'Current Health': monster_health.get(monster),
+        'Status Effects': {'Buff': 0},
+        'Damage Modifier': 1.0,
+        'Health Modifier': 1.0
+    }
+    return monster_dict
 
 
 # Obtain attack move from Monster
@@ -83,7 +102,7 @@ def turn_order(monster, character):
         first_strike_message = "You strike first!"
         turns = cycle(['character', 'monster'])
     else:
-        first_strike_message = f"The {monster['Name']} strikes first!"
+        first_strike_message = f"The {monster} strikes first!"
         turns = cycle(['monster', 'character'])
 
     return turns, first_strike_message
