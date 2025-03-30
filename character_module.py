@@ -16,10 +16,10 @@ def proper_name():
 
 # Make character including the player's name
 def make_character(player_name):
-    character = {'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Strength': 15,
-                 'Speed': 10, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
-                 'Crystals': 0, 'Current Health': 100, 'X-coordinate': 0, 'Y-coordinate': 0,
-                 'Items': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}}
+    character = {'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
+                 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
+                 'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
+                 'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}}
     return character
 
 
@@ -40,7 +40,7 @@ def equip_items(character: dict, items: dict):
     :param character:
     :param items:
     """
-    character_items = character['Items']
+    character_items = character['Equipment']
     for equipment, item in items.items():
         character_items[equipment] = item
 
