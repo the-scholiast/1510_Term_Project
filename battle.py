@@ -143,20 +143,33 @@ def turn_order(monster, character):
     return turns, first_strike_message
 
 
-# Obtain user input for attack move. Max value = 3 (number of attack moves).
-def get_user_choice():
-    # Keep asking for valid number
+# Display battle menu with options in Pokemon-style format
+def display_battle_menu():
+    """
+    Display the main battle menu options in Pokemon-style.
+
+    :return: The user's choice as a string ('STANCE', 'ITEM', 'FIGHT')
+    """
+    # Display main battle menu
+    print()
+    print("┌────────────┐  ┌────────────┐")
+    print("│   STANCE   │  │    ITEM    │")
+    print("└────────────┘  └────────────┘")
+    print("┌────────────┐")
+    print("│   FIGHT    │")
+    print("└────────────┘")
+
+    # Get user choice
+    valid_choices = {'STANCE': 'STANCE', 'ITEM': 'ITEM', 'FIGHT': 'FIGHT'}
+
     while True:
-        try:
-            user_input = input("Choose your attack. Enter a number between 1 and 3: ")
-            attack_choice = int(user_input)
-        except ValueError:
-            print("Please enter a valid number.")
+        choice = input("\nWhat will you do? Enter option name: ").upper()
+        if choice in valid_choices:
+            return valid_choices[choice]
         else:
-            if 1 <= attack_choice <= 3:
-                return attack_choice
-            else:
-                print("Invalid choice. Please enter a number between 1 and 3")
+            print("Invalid choice. The option name.")
+# TESTING DELETE ######################################
+display_battle_menu()
 
 
 def display_attack_options(stance, attacks_list):
@@ -206,6 +219,22 @@ def display_attack_moves(character):
     pass
 
 
+# Obtain user input for attack move. Max value = 3 (number of attack moves).
+def get_user_choice():
+    # Keep asking for valid number
+    while True:
+        try:
+            user_input = input("Choose your attack. Enter a number between 1 and 3: ")
+            attack_choice = int(user_input)
+        except ValueError:
+            print("Please enter a valid number.")
+        else:
+            if 1 <= attack_choice <= 3:
+                return attack_choice
+            else:
+                print("Invalid choice. Please enter a number between 1 and 3")
+
+
 # Obtain character attack move or back to display_battle_menu
 def get_attack_move(character: dict) -> list:
     character_stance = character['Stance']
@@ -221,32 +250,3 @@ def apply_attack_move(attack: list, turn):
 # Monster gives loot once defeated
 def monster_defeat():
     pass
-
-
-# Display battle menu with options in Pokemon-style format
-def display_battle_menu():
-    """
-    Display the main battle menu options in Pokemon-style.
-
-    :return: The user's choice as a string ('STANCE', 'ITEM', 'FIGHT')
-    """
-    # Display main battle menu
-    print()
-    print("┌────────────┐  ┌────────────┐")
-    print("│   STANCE   │  │    ITEM    │")
-    print("└────────────┘  └────────────┘")
-    print("┌────────────┐")
-    print("│   FIGHT    │")
-    print("└────────────┘")
-
-    # Get user choice
-    valid_choices = {'STANCE': 'STANCE', 'ITEM': 'ITEM', 'FIGHT': 'FIGHT'}
-
-    while True:
-        choice = input("\nWhat will you do? Enter option name: ").upper()
-        if choice in valid_choices:
-            return valid_choices[choice]
-        else:
-            print("Invalid choice. The option name.")
-# TESTING DELETE ######################################
-display_battle_menu()
