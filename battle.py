@@ -132,6 +132,28 @@ def get_user_choice():
                 print("Invalid choice. Please enter a number between 1 and 3")
 
 
+def display_attack_options(stance, attacks_list):
+    print(f"Your stance: {stance}")
+    print("Available attacks:")
+
+    attack_names = list(attacks_list.keys())
+    for i, attack_name in enumerate(attack_names, 1):
+        description = attacks_list[attack_name][0]
+        attack_type = attacks_list[attack_name][1]
+        damage = attacks_list[attack_name][2]
+
+        # Show damage or effect based on attack type
+        effect = f"Damage: {damage}" if damage > 0 else "Special Effect"
+        print(f"{i}. {attack_name} ({attack_type}) - {description} - {effect}")
+
+    return attack_names
+# TESTING DELETE ######################################
+print(display_attack_options('Bear', {
+        'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
+        'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
+        'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
+    }))
+
 # Obtain character attack move
 def get_attack_move(character: dict) -> list:
     character_stance = character['Stance']
