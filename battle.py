@@ -128,7 +128,6 @@ def apply_monster_attack(attack: list, character: dict) -> str:
     # Check if character is defeated
     if character['Current Health'] <= 0:
         message += "\nYou have been defeated!"
-
     return message
 
 
@@ -141,7 +140,6 @@ def turn_order(monster, character):
     else:
         first_strike_message = f"The {monster} strikes first!"
         turns = cycle(['monster', 'character'])
-
     return turns, first_strike_message
 
 
@@ -183,7 +181,32 @@ def display_attack_options(stance, attacks_list):
 #         'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
 #     }))
 
-# Obtain character attack move
+# Display available stances when clicking from display_battle_menu
+def display_stances(character):
+    pass
+
+
+# Get user input for stances or back to display_battle_menu
+def get_stance(character):
+    pass
+
+
+# Display items when clicking from display_battle_menu
+def display_items(character):
+    pass
+
+
+# Get user input for items or back to display_battle_menu
+def get_item(character):
+    pass
+
+
+# Display attack list depending on stance
+def display_attack_moves(character):
+    pass
+
+
+# Obtain character attack move or back to display_battle_menu
 def get_attack_move(character: dict) -> list:
     character_stance = character['Stance']
     user_input = input()
