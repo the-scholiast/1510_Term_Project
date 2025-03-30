@@ -116,6 +116,22 @@ def turn_order(monster, character):
     return turns, first_strike_message
 
 
+# Obtain user input for attack move. Max value = 3 (number of attack moves).
+def get_user_choice():
+    # Keep asking for valid number
+    while True:
+        try:
+            user_input = input("Choose your attack. Enter a number between 1 and 3: ")
+            attack_choice = int(user_input)
+        except ValueError:
+            print("Please enter a valid number.")
+        else:
+            if 1 <= attack_choice <= 3:
+                return attack_choice
+            else:
+                print("Invalid choice. Please enter a number between 1 and 3")
+
+
 # Obtain character attack move
 def get_attack_move(character: dict) -> list:
     character_stance = character['Stance']
