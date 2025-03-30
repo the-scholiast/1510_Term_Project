@@ -148,11 +148,11 @@ def display_attack_options(stance, attacks_list):
 
     return attack_names
 # TESTING DELETE ######################################
-print(display_attack_options('Bear', {
-        'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
-        'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
-        'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
-    }))
+# print(display_attack_options('Bear', {
+#         'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
+#         'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
+#         'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
+#     }))
 
 # Obtain character attack move
 def get_attack_move(character: dict) -> list:
@@ -171,4 +171,30 @@ def monster_defeat():
     pass
 
 
-#
+# Display battle menu with options in Pokemon-style format
+def display_battle_menu():
+    """
+    Display the main battle menu options in Pokemon-style.
+
+    :return: The user's choice as a string ('STANCE', 'ITEM', 'FIGHT')
+    """
+    # Display main battle menu
+    print()
+    print("┌────────────┐  ┌────────────┐")
+    print("│   STANCE   │  │    ITEM    │")
+    print("└────────────┘  └────────────┘")
+    print("┌────────────┐")
+    print("│   FIGHT    │")
+    print("└────────────┘")
+
+    # Get user choice
+    valid_choices = {'STANCE': 'STANCE', 'ITEM': 'ITEM', 'FIGHT': 'FIGHT'}
+
+    while True:
+        choice = input("\nWhat will you do? Enter option name: ").upper()
+        if choice in valid_choices:
+            return valid_choices[choice]
+        else:
+            print("Invalid choice. Please enter 1-3 or the option name.")
+# TESTING DELETE ######################################
+display_battle_menu()
