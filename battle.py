@@ -1,6 +1,8 @@
 """
 This module contains functions for the battle mechanic.
 """
+import random
+from itertools import cycle
 
 # Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
 monster_attack_list = {
@@ -59,3 +61,49 @@ character_attacks = {
         'Hydra': ['Splits into hundreds of smaller whips making its attack unavoidable.', 'Ki', 50]
     }
 }
+# Create monster with Health
+def create_monster(monster):
+    pass
+
+
+# Obtain attack move from Monster
+def get_monster_attack(monster: str) -> list:
+    pass
+
+
+# Apply monster attack and its affect to character
+def apply_monster_attack(attack: list, turn):
+    pass
+
+
+# Figure out turn order depending on who got "First Strike" -> use itertools.cycle?
+def turn_order(monster, character):
+    # 50% chance to go first
+    if random.random() < 0.5:
+        first_strike_message = "You strike first!"
+        turns = cycle(['character', 'monster'])
+    else:
+        first_strike_message = f"The {monster['Name']} strikes first!"
+        turns = cycle(['monster', 'character'])
+
+    return turns, first_strike_message
+
+
+# Obtain character attack move
+def get_attack_move(character: dict) -> list:
+    character_stance = character['Stance']
+    user_input = input()
+    pass
+
+
+# Apply character attack to monster
+def apply_attack_move(attack: list, turn):
+    pass
+
+
+# Monster gives loot once defeated
+def monster_defeat():
+    pass
+
+
+#
