@@ -29,14 +29,3 @@ def tutorial_area():
     # Linear grid for tutorial. There should be a skip option.
     tutorial_zone = {(row, column): '[?]' for row in range(1) for column in range(5)}
     return tutorial_zone
-
-
-def main():
-    print(make_board(5, 5))
-    # print(tutorial_area(5))
-    # board = make_board(5, 5)
-    # print(check_encounter(test_character, board))
-
-
-if __name__ == "__main__":
-    main()

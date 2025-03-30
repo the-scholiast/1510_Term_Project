@@ -195,6 +195,6 @@ def display_battle_menu():
         if choice in valid_choices:
             return valid_choices[choice]
         else:
-            print("Invalid choice. Please enter 1-3 or the option name.")
+            print("Invalid choice. The option name.")
 # TESTING DELETE ######################################
 display_battle_menu()

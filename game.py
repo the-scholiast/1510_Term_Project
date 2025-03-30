@@ -1,4 +1,5 @@
 # Future import files below
+import battle
 import character_module
 import encounters
 import grid

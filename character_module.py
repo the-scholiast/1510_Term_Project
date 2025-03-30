@@ -19,7 +19,7 @@ def make_character(player_name):
     character = {'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
                  'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
                  'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
-                 'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}}
+                 'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear']}
     return character
 
 
