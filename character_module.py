@@ -22,7 +22,7 @@ def make_character(player_name):
         'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
         'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
         'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-        'Status': {"Poison": 0, "Bleed": 0}
+        'Status': {"Poison": 0, "Bleed": 0}, 'Active Stance': 'Bear'
     }
     return character
 
