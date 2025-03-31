@@ -3,6 +3,7 @@ This module contains functions for the battle mechanic.
 """
 import random
 from itertools import cycle
+from __init__ import BATTLE_STANCES
 
 # Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
 MONSTER_ATTACK_LIST = {
@@ -169,7 +170,7 @@ def display_battle_menu():
         else:
             print("Invalid choice. The option name.")
 # TESTING DELETE ######################################
-display_battle_menu()
+# display_battle_menu()
 
 
 def display_attack_options(stance, attacks_list):
@@ -196,8 +197,27 @@ def display_attack_options(stance, attacks_list):
 
 # Display available stances when clicking from display_battle_menu
 def display_stances(character):
-    pass
+    available_stances = character['Stance']
+    print("Available Stances:")
+    print("┌" + "─" * 22 + "┐")
+    # Display each available stance
+    for stance_name in available_stances:
+        # Find the stance BATTLE_STANCES
+        for stance_tuple in BATTLE_STANCES:
+            if stance_tuple[0] == stance_name:
+                break
+        print(f"│ {stance_name:<20} │")
+    print("├" + "─" * 22 + "┤")
+    print(f"│ {"Back":<20} │")
+    print("└" + "─" * 22 + "┘")
 
+print(display_stances({
+        'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
+        'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
+        'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
+        'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
+        'Status': {"Poison": 0, "Bleed": 0}
+    }))
 
 # Get user input for stances or back to display_battle_menu
 def get_stance(character):
