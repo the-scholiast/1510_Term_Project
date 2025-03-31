@@ -5,6 +5,14 @@ import random
 from itertools import cycle
 from __init__ import BATTLE_STANCES
 
+# TEST CHARACTER DELETE #####################################################
+test_character = {
+    'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
+    'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
+    'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
+    'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
+    'Status': {"Poison": 0, "Bleed": 0}
+}
 # Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
 MONSTER_ATTACK_LIST = {
     'Wendigo': {
@@ -62,6 +70,8 @@ CHARACTER_ATTACKS = {
         'Hydra': ['Splits into hundreds of smaller whips making its attack unavoidable.', 'Ki', 50]
     }
 }
+
+
 # Create monster with Health
 def create_monster(monster):
     # Base health for different monster types
@@ -169,6 +179,8 @@ def display_battle_menu():
             return valid_choices[choice]
         else:
             print("Invalid choice. The option name.")
+
+
 # TESTING DELETE ######################################
 # display_battle_menu()
 
@@ -188,6 +200,8 @@ def display_attack_options(stance, attacks_list):
         print(f"{order}. {attack_name} ({attack_type}) - {description} - {effect}")
 
     return attack_names
+
+
 # TESTING DELETE ######################################
 # print(display_attack_options('Bear', {
 #         'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
@@ -211,17 +225,39 @@ def display_stances(character):
     print(f"│ {"Back":<20} │")
     print("└" + "─" * 22 + "┘")
 
-print(display_stances({
-        'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
-        'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
-        'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
-        'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-        'Status': {"Poison": 0, "Bleed": 0}
-    }))
+
+# print(display_stances({
+#         'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
+#         'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
+#         'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
+#         'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
+#         'Status': {"Poison": 0, "Bleed": 0}
+#     }))
 
 # Get user input for stances or back to display_battle_menu
 def get_stance(character):
-    pass
+    available_stances = character['Stance']
+    # Ask user for stance or back to display_battle_menu
+    while True:
+        user_choice = input("Select a stance or type 'Back' to return: ").strip().title()
+        if user_choice in available_stances:
+            # Update character's active stance
+            character['Active Stance'] = user_choice
+            print(f"You adopt the {user_choice} stance!")
+            # Obtain the stance_description
+            stance_descriptions = {stance[0]: stance[1] for stance in BATTLE_STANCES}
+            description = stance_descriptions.get(user_choice)
+            print(f"{description}")
+            # Return the stance
+            return user_choice
+        # Back to display_battle_menu
+        elif user_choice == 'Back':
+            return
+        else:
+            print("Invalid stance. Please select from the available options.")
+
+
+print(get_stance(test_character))
 
 
 # Display items when clicking from display_battle_menu
