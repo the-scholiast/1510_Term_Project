@@ -9,7 +9,7 @@ from __init__ import BATTLE_STANCES
 test_character = {
     'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
     'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 1, 'Damage Modifier': 1,
-    'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
+    'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 1, 'Shards': 3},
     'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
     'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0}, 'Active Stance': 'Bear',
     'Active Defense Modifier': 1
@@ -246,7 +246,21 @@ def get_stance(character):
 
 # Display items when clicking from display_battle_menu
 def display_items(character):
-    pass
+    items = character['Items']
+    print("Available Items:")
+    print("┌" + "─" * 22 + "┐")
+    # Display each item and its quantity
+    for item_name, quantity in items.items():
+        if quantity > 0:
+            print(f"│ {item_name:<12} x{quantity:<6} │")
+    # If no items available
+    if all(quantity == 0 for quantity in items.values()):
+        print(f"│ {'No items available':<20} │")
+    print("├" + "─" * 22 + "┤")
+    print(f"│ {"Back":<20} │")
+    print("└" + "─" * 22 + "┘")
+# TESTING DELETE ######################################
+# display_items(test_character)
 
 
 # Get user input for items or back to display_battle_menu
