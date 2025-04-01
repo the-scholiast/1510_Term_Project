@@ -11,7 +11,7 @@ test_character = {
     'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
     'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
     'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-    'Status': {"Poison": 0, "Bleed": 0}
+    'Status': {"Poison": 0, "Bleed": 0}, 'Active Stance': ['Bear']
 }
 # Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
 MONSTER_ATTACK_LIST = {
@@ -229,9 +229,8 @@ def get_stance(character):
             return
         else:
             print("Invalid stance. Please select from the available options.")
-
-
-print(get_stance(test_character))
+# TESTING DELETE ############################################################
+# print(get_stance(test_character))
 
 
 # Display items when clicking from display_battle_menu
@@ -243,50 +242,60 @@ def display_items(character):
 def get_item(character):
     pass
 
+# Obtain character attack moves by stance
+def get_attack_moves(character: dict, attacks_dict: dict) -> dict:
+    character_stance = character['Active Stance']
+    attack_moves = attacks_dict[character_stance]
+    return attack_moves
+
 
 # Display attack list depending on stance
-def display_attack_options(stance, attacks_list):
+def display_attack_options(stance, attacks_moves):
     print(f"Your stance: {stance}")
     print("Available attacks:")
-
-    attack_names = list(attacks_list.keys())
+    attack_names = list(attacks_moves.keys())
     for order, attack_name in enumerate(attack_names, 1):
-        description = attacks_list[attack_name][0]
-        attack_type = attacks_list[attack_name][1]
-        damage = attacks_list[attack_name][2]
-
+        description = attacks_moves[attack_name][0]
+        attack_type = attacks_moves[attack_name][1]
+        damage = attacks_moves[attack_name][2]
         # Show damage or effect based on attack type
         effect = f"Damage: {damage}" if damage > 0 else "Special Effect"
         print(f"{order}. {attack_name} ({attack_type}) - {description} - {effect}")
 # TESTING DELETE ######################################
-# display_attack_options('Bear', {
-#     'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
-#     'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
-#     'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
-# })
+display_attack_options('Bear', {
+    'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
+    'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
+    'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
+})
 
 
-# Obtain user input for attack move. Max value = 3 (number of attack moves).
-def get_attack_choice() -> int:
+# Obtain user input for attack move. Max value = 3 (number of attack moves). 0 to go back to display_battle_menu
+def get_attack_choice(character: dict, attacks_dict: dict) -> dict:
     # Keep asking for valid number
     while True:
         try:
-            user_input = input("Choose your attack. Enter a number between 1 and 3: ")
-            attack_choice = int(user_input)
+            user_input = input("Choose your attack. Enter a number between 1 and 3, or 0 to go back: ")
+            attack_choice = int(user_input) - 1
         except ValueError:
             print("Please enter a valid number.")
         else:
-            if 1 <= attack_choice <= 3:
-                return attack_choice
+            if 0 <= attack_choice <= 3:
+                attack_moves = tuple(attacks_dict.items())
+                return attack_moves[attack_choice]
             else:
-                print("Invalid choice. Please enter a number between 1 and 3")
-
-
-# Obtain character attack move or back to display_battle_menu
-def get_attack_move(character: dict) -> list:
-    character_stance = character['Stance']
-    user_input = input()
-    pass
+                print("Invalid choice. Please enter a number between 0 and 3")
+# TESTING DELETE ######################################
+print(get_attack_choice({
+    'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
+    'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
+    'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
+    'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
+    'Status': {"Poison": 0, "Bleed": 0}, 'Active Stance': ['Bear']
+} ,{
+    'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
+    'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
+    'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
+}))
 
 
 # Apply character attack to monster
