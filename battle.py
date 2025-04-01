@@ -158,8 +158,6 @@ def turn_order(monster, character):
 def display_battle_menu():
     """
     Display the main battle menu options in Pokemon-style.
-
-    :return: The user's choice as a string ('STANCE', 'ITEM', 'FIGHT')
     """
     # Display main battle menu
     print()
@@ -170,19 +168,19 @@ def display_battle_menu():
     print("│   FIGHT    │")
     print("└────────────┘")
 
-    # Get user choice
+# TESTING DELETE ######################################
+# display_battle_menu()
+
+def get_user_choice_battle_menu():
+    # Get user choice from battle menu
     valid_choices = {'STANCE': 'STANCE', 'ITEM': 'ITEM', 'FIGHT': 'FIGHT'}
 
     while True:
-        choice = input("\nWhat will you do? Enter option name: ").upper()
+        choice = input("What will you do? Enter option name: ").upper().strip()
         if choice in valid_choices:
             return valid_choices[choice]
         else:
             print("Invalid choice. The option name.")
-
-
-# TESTING DELETE ######################################
-# display_battle_menu()
 
 
 def display_attack_options(stance, attacks_list):
