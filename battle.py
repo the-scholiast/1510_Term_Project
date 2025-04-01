@@ -161,6 +161,14 @@ def turn_order(monster, character):
         turns = cycle(['monster', 'character'])
     return turns, first_strike_message
 
+# Skip monster turn if snared
+def skip_turn(monster):
+    # Check if monster is snared
+    if monster['Status Effects'].get('Snared') > 0:
+        print(f"{monster['Name']} is snared and cannot move this turn!")
+        return True
+    return False
+
 
 # Display battle menu with options in Pokemon-style format
 def display_battle_menu():
