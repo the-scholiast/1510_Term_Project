@@ -11,7 +11,8 @@ test_character = {
     'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 1, 'Damage Modifier': 1,
     'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
     'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-    'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0}, 'Active Stance': 'Bear'
+    'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0}, 'Active Stance': 'Bear',
+    'Active Defense Modifier': 1
 }
 test_monster = {
     'Name': 'Vampire',
@@ -297,7 +298,7 @@ def get_attack_choice(character: dict, attacks_dict: dict) -> tuple:
                 return attack_moves[attack_choice]
             else:
                 print("Invalid choice. Please enter a number between 0 and 3")
-
+            # Condition to exit when input is 0
 
 # TESTING DELETE ######################################
 # print(get_attack_choice({
@@ -313,7 +314,7 @@ def get_attack_choice(character: dict, attacks_dict: dict) -> tuple:
 # }))
 
 
-# Apply character attack to monster
+# Apply character attack to monster ### DECOMPOSE
 def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
     attack_name, attack_details = attack_move
     description, attack_type, base_damage = attack_details
@@ -337,14 +338,14 @@ def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
             # Buff/special Ki attack
             else:
                 if attack_name == 'Berserk':
-                    character['Damage Modifier'] = 1.5
+                    character['Damage Modifier'] += 0.5
                     # Add duration tracking for Berserk. Lasts for 3 turns
                     character['Status']['Berserk'] = 3
                     message = f"You used {attack_name}! {description} Your damage is increased by 50% for 3 turns!"
                 elif attack_name == 'Shell':
                     # Add Shell status with duration. # Lasts for 2 turns
                     character['Status']['Shell'] = 2
-                    character['Defense Modifier'] = 0
+                    character['Active Defense Modifier'] = 0
                     message = f"You used {attack_name}! {description} You take no damage for the next two turns!"
                 elif attack_name == 'Snare':
                     # Monster loses a turn
@@ -359,6 +360,24 @@ print(f"before: {test_monster['Current Health']}")
 apply_attack_move(('Heavy Strike', ['A powerful blow with massive physical damage.', 'Physical', 15]),
                   test_character, test_monster)
 print(f"after: {test_monster['Current Health']}")
+
+
+# Update status effects for both character and monster
+def update_status_effects(character, monster):
+    # Update character status effects
+    for effect, duration in list(character['Status'].items()):
+        if duration > 0:
+            character['Status'][effect] -= 1
+            if character['Status'][effect] == 0:
+                # Reset effect when duration expires
+                if effect == 'Shell':
+                    character['Active Defense Modifier'] = character.get('Defense Modifier')
+                elif effect == 'Berserk':
+                    character['Damage Modifier'] -= .5
+    # Update monster status effects
+    for effect, duration in list(monster['Status Effects'].items()):
+        if duration > 0:
+            monster['Status Effects'][effect] -= 1
 
 
 # Monster gives loot once defeated
