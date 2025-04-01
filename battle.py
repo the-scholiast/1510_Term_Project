@@ -265,7 +265,22 @@ def display_items(character):
 
 # Get user input for items or back to display_battle_menu
 def get_item(character):
-    pass
+    items = character.get('Items')
+    available_items = [item for item, quantity in items.items() if quantity > 0]
+    # If no items available, return to battle menu
+    if not available_items:
+        input("Press Enter to return to battle menu...")
+        return None
+    while True:
+        user_choice = input("Select an item or type 'Back' to return: ").strip().title()
+        if user_choice in available_items:
+            return user_choice
+        elif user_choice == 'Back':
+            return None
+        else:
+            print("Invalid item. Please select from the available options.")
+# TESTING DELETE ######################################
+# print(get_item(test_character))
 
 
 # Obtain character attack moves by stance
