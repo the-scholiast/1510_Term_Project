@@ -8,10 +8,18 @@ from __init__ import BATTLE_STANCES
 # TEST CHARACTER DELETE #####################################################
 test_character = {
     'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
-    'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
+    'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 1, 'Damage Modifier': 1,
     'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
     'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-    'Status': {"Poison": 0, "Bleed": 0}, 'Active Stance': ['Bear']
+    'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0}, 'Active Stance': 'Bear'
+}
+test_monster = {
+    'Name': 'Vampire',
+    'Health': 95,
+    'Current Health': 95,
+    'Status Effects': {'Buff': 0, 'Snared': 0},
+    'Damage Modifier': 1.0,
+    'Health Modifier': 1.0
 }
 # Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
 MONSTER_ATTACK_LIST = {
@@ -89,7 +97,7 @@ def create_monster(monster):
         'Name': monster,
         'Health': monster_health.get(monster),
         'Current Health': monster_health.get(monster),
-        'Status Effects': {'Buff': 0},
+        'Status Effects': {'Buff': 0, 'Snared': 0},
         'Damage Modifier': 1.0,
         'Health Modifier': 1.0
     }
@@ -110,11 +118,10 @@ def get_monster_attack(monster: str) -> list:
 
 
 # Apply monster attack and its affect to character
-def apply_monster_attack(attack: list, character: dict) -> str:
+def apply_monster_attack(attack: list, character: dict):
     # Unpack attack list
     attack_name, description, attack_type, damage = attack
     # Check if character has Shell active -> Figure out how to apply #######################################
-
     # Apply monster attack based on type
     if attack_type == 'Attack':
         character['Current Health'] -= damage
@@ -139,7 +146,7 @@ def apply_monster_attack(attack: list, character: dict) -> str:
     # Check if character is defeated
     if character['Current Health'] <= 0:
         message += "\nYou have been defeated!"
-    return message
+    print(message)
 
 
 # Figure out turn order depending on who got "First Strike" -> use itertools.cycle?
@@ -167,6 +174,7 @@ def display_battle_menu():
     print("┌────────────┐")
     print("│   FIGHT    │")
     print("└────────────┘")
+
 
 # TESTING DELETE ######################################
 # display_battle_menu()
@@ -229,6 +237,8 @@ def get_stance(character):
             return
         else:
             print("Invalid stance. Please select from the available options.")
+
+
 # TESTING DELETE ############################################################
 # print(get_stance(test_character))
 
@@ -242,10 +252,11 @@ def display_items(character):
 def get_item(character):
     pass
 
+
 # Obtain character attack moves by stance
 def get_attack_moves(character: dict, attacks_dict: dict) -> dict:
-    character_stance = character['Active Stance']
-    attack_moves = attacks_dict[character_stance]
+    character_stance = character.get('Active Stance')
+    attack_moves = attacks_dict.get(character_stance)
     return attack_moves
 
 
@@ -261,16 +272,18 @@ def display_attack_options(stance, attacks_moves):
         # Show damage or effect based on attack type
         effect = f"Damage: {damage}" if damage > 0 else "Special Effect"
         print(f"{order}. {attack_name} ({attack_type}) - {description} - {effect}")
+
+
 # TESTING DELETE ######################################
-display_attack_options('Bear', {
-    'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
-    'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
-    'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
-})
+# display_attack_options('Bear', {
+#     'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
+#     'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
+#     'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
+# })
 
 
 # Obtain user input for attack move. Max value = 3 (number of attack moves). 0 to go back to display_battle_menu
-def get_attack_choice(character: dict, attacks_dict: dict) -> dict:
+def get_attack_choice(character: dict, attacks_dict: dict) -> tuple:
     # Keep asking for valid number
     while True:
         try:
@@ -284,23 +297,68 @@ def get_attack_choice(character: dict, attacks_dict: dict) -> dict:
                 return attack_moves[attack_choice]
             else:
                 print("Invalid choice. Please enter a number between 0 and 3")
+
+
 # TESTING DELETE ######################################
-print(get_attack_choice({
-    'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
-    'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
-    'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
-    'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-    'Status': {"Poison": 0, "Bleed": 0}, 'Active Stance': ['Bear']
-} ,{
-    'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
-    'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
-    'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
-}))
+# print(get_attack_choice({
+#     'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
+#     'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
+#     'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
+#     'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
+#     'Status': {"Poison": 0, "Bleed": 0, "Shell": 0}, 'Active Stance': ['Bear']
+# }, {
+#     'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
+#     'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
+#     'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
+# }))
 
 
 # Apply character attack to monster
-def apply_attack_move(attack: list, turn):
-    pass
+def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
+    attack_name, attack_details = attack_move
+    description, attack_type, base_damage = attack_details
+    # Apply damage modifier from character
+    damage_modifier = character.get('Damage Modifier')
+    actual_damage = int(base_damage * damage_modifier)
+    message = ""
+    # Apply attack based on type
+    if attack_type == 'Physical':
+        monster['Current Health'] -= actual_damage
+        message = f"You used {attack_name}! {description} You dealt {actual_damage} damage!"
+    elif attack_type == 'Ki':
+        # Check if character has enough Ki
+        if character['Current Ki'] >= 10:
+            # Ki attacks cost 10 Ki points
+            character['Current Ki'] -= 10
+            # Damaging Ki attack
+            if base_damage > 0:
+                monster['Current Health'] -= actual_damage
+                message = f"You used {attack_name}! {description} You dealt {actual_damage} Ki damage!"
+            # Buff/special Ki attack
+            else:
+                if attack_name == 'Berserk':
+                    character['Damage Modifier'] = 1.5
+                    # Add duration tracking for Berserk. Lasts for 3 turns
+                    character['Status']['Berserk'] = 3
+                    message = f"You used {attack_name}! {description} Your damage is increased by 50% for 3 turns!"
+                elif attack_name == 'Shell':
+                    # Add Shell status with duration. # Lasts for 2 turns
+                    character['Status']['Shell'] = 2
+                    character['Defense Modifier'] = 0
+                    message = f"You used {attack_name}! {description} You take no damage for the next two turns!"
+                elif attack_name == 'Snare':
+                    # Monster loses a turn
+                    monster['Status Effects']['Snared'] = 1
+                    message = (f"You used {attack_name}! {description} "
+                               f"The monster is snared and will miss its next turn!")
+        else:
+            message = "You don't have enough Ki to use this attack!"
+    print(message)
+
+print(f"before: {test_monster['Current Health']}")
+apply_attack_move(('Heavy Strike', ['A powerful blow with massive physical damage.', 'Physical', 15]),
+                  test_character, test_monster)
+print(f"after: {test_monster['Current Health']}")
 
 
 # Monster gives loot once defeated
