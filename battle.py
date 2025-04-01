@@ -171,7 +171,7 @@ def display_battle_menu():
 # TESTING DELETE ######################################
 # display_battle_menu()
 
-def get_user_choice_battle_menu():
+def get_user_choice_battle_menu() -> str:
     # Get user choice from battle menu
     valid_choices = {'STANCE': 'STANCE', 'ITEM': 'ITEM', 'FIGHT': 'FIGHT'}
 
@@ -182,30 +182,6 @@ def get_user_choice_battle_menu():
         else:
             print("Invalid choice. The option name.")
 
-
-def display_attack_options(stance, attacks_list):
-    print(f"Your stance: {stance}")
-    print("Available attacks:")
-
-    attack_names = list(attacks_list.keys())
-    for order, attack_name in enumerate(attack_names, 1):
-        description = attacks_list[attack_name][0]
-        attack_type = attacks_list[attack_name][1]
-        damage = attacks_list[attack_name][2]
-
-        # Show damage or effect based on attack type
-        effect = f"Damage: {damage}" if damage > 0 else "Special Effect"
-        print(f"{order}. {attack_name} ({attack_type}) - {description} - {effect}")
-
-    return attack_names
-
-
-# TESTING DELETE ######################################
-# print(display_attack_options('Bear', {
-#         'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
-#         'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
-#         'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
-#     }))
 
 # Display available stances when clicking from display_battle_menu
 def display_stances(character):
@@ -269,12 +245,29 @@ def get_item(character):
 
 
 # Display attack list depending on stance
-def display_attack_moves(character):
-    pass
+def display_attack_options(stance, attacks_list):
+    print(f"Your stance: {stance}")
+    print("Available attacks:")
+
+    attack_names = list(attacks_list.keys())
+    for order, attack_name in enumerate(attack_names, 1):
+        description = attacks_list[attack_name][0]
+        attack_type = attacks_list[attack_name][1]
+        damage = attacks_list[attack_name][2]
+
+        # Show damage or effect based on attack type
+        effect = f"Damage: {damage}" if damage > 0 else "Special Effect"
+        print(f"{order}. {attack_name} ({attack_type}) - {description} - {effect}")
+# TESTING DELETE ######################################
+# display_attack_options('Bear', {
+#     'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
+#     'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
+#     'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
+# })
 
 
 # Obtain user input for attack move. Max value = 3 (number of attack moves).
-def get_user_choice():
+def get_attack_choice() -> int:
     # Keep asking for valid number
     while True:
         try:
