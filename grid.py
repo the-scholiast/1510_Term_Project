@@ -31,13 +31,12 @@ def tutorial_area():
     return tutorial_zone
 
 
-# Print board
-def print_board(rows, columns, character):
+# Print board --> FIX DOCSTRING
+def print_board(board, character):
     """
     Print the board, its borders, and the current character location.
 
-    :param rows: a positive non-zero integer
-    :param columns: a positive non-zero integer
+    :param board:
     :param character: a dictionary containing "X-coordinate":value and "Y-coordinate":value
                       (as string:ints within range [0, 4]), and "Current HP":value (as string:int of range [1, 5])
     :precondition: both rows and columns must integers == 5
@@ -49,34 +48,41 @@ def print_board(rows, columns, character):
     :postcondition: print the board and its borders (as "X") using rows and columns as the grid,
                     also print the current location of the character (as "#")
     """
-    # Unicode box characters
-    border = {
-        'top left': '┌',
-        'top right': '┐',
-        'bottom left': '└',
-        'bottom right': '┘',
+    # Define border characters
+    borders = {
+        'top_left': '┌',
+        'top_right': '┐',
+        'bottom_left': '└',
+        'bottom_right': '┘',
         'horizontal': '─',
         'vertical': '│',
         'player': '♦'
     }
-    # Get character coordinates
-    character_x, character_y = character["X-coordinate"], character["Y-coordinate"]
-    # Each cell is 2 spaces wide plus 1 for the right border
-    width = columns * 2 + 1
-    # Print top border
-    print(f"{border['top left']}{border['horizontal'] * width}{border['top right']}")
-    # Print grid rows
+    # Get character position
+    player_x, player_y = character["X-coordinate"], character["Y-coordinate"]
+    # Get board dimensions
+    rows = max(row for row, _ in board.keys()) + 1
+    columns = max(column for _, column in board.keys()) + 1
+    # Create the top border
+    top_border = borders['top_left'] + (borders['horizontal'] * 25) + borders['top_right']
+    print(top_border)
+    # Print each row
     for row in range(rows):
-        line = border['vertical']
+        row_string = borders['vertical']
         for column in range(columns):
-            if row == character_y and column == character_x:
-                line += f" {border['player']}"
+            # Display what is at each location
+            if row == player_y and column == player_x:
+                display_location = f"  {borders['player']}  "
             else:
-                line += "  "
-        # Add right border
-        line += " " + border['vertical']
-        print(line)
-    # Print bottom border
-    print(f"{border['bottom left']}{border['horizontal'] * width}{border['bottom right']}")
+                display_location = f" {board[(row, column)]} "
+            row_string += display_location
+        # Add the right border
+        row_string += borders['vertical']
+        print(row_string)
+    # Create the bottom border (same width as top)
+    bottom_border = borders['bottom_left'] + (borders['horizontal'] * 25) + borders['bottom_right']
+    print(bottom_border)
+
 #TEST ################################
-print_board(5, 5, test_character)
+test_board = make_board(5, 5)
+print_board(test_board, test_character)
