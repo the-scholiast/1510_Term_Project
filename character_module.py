@@ -50,6 +50,11 @@ def equip_items(character: dict, items: dict):
         character_items[equipment] = item
 
 
+# Apply equipment stats
+def apply_equipment(character:dict):
+    pass
+
+
 def validate_move(board, character, direction):
     """
     Return True if the character's coordinates after moving are in the board else return False.
@@ -141,6 +146,7 @@ def move_character(character, direction):
         character["X-coordinate"] -= 1
 
 
+# EDIT TO INPUT 1 CHARACTER
 def get_user_choice():
     """
     Return the direction ("Up", "Down", "Left", "Right") the user inputs.

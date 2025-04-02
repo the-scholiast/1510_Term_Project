@@ -22,9 +22,9 @@ def obtain_random_npc(npc_count: dict) -> str:
     >>> obtain_random_npc({'Monsters': 14, 'Friendly': 7, 'Environment': 4})
     Merchant
     """
-    npc_list = {'Friendly': ['Civilian', 'Merchant', 'Guard', 'Fairy'],
-                'Monsters': ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'],
-                'Environment': ['Hot Spring']
+    npc_list = {'Friendly': 'Merchant',
+                'Monsters': ('Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'),
+                'Environment': 'Hot Spring'
                 }
     # Store how many of each encounter in a zone
 
@@ -43,3 +43,39 @@ def obtain_random_npc(npc_count: dict) -> str:
     # Get random NPC from that type
     random_npc = random.choice(npc_list[random_type])
     return random_npc
+
+
+# Merchant offers equipment depending on level
+def merchant_offers(character: dict):
+    character_lvl = character.get("Level")
+    pass
+
+
+# Print merchant offers
+def print_merchant_offers():
+    pass
+
+
+# Get user equipment choice
+def user_picks_equipment():
+    pass
+
+
+# Merchant gives equipment and character equips it
+def obtain_and_equip():
+    pass
+
+
+# Hot spring encounter options
+def hot_spring_encounter():
+    pass
+
+
+# Get user choice for hot spring
+def user_input_hot_spring():
+    pass
+
+
+# Heals to full for Health and Ki or can receive items instead
+def hot_spring_reward(character: dict[]):
+    pass
