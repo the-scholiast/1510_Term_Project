@@ -29,3 +29,50 @@ def tutorial_area():
     # Linear grid for tutorial. There should be a skip option.
     tutorial_zone = {(row, column): '[?]' for row in range(1) for column in range(5)}
     return tutorial_zone
+
+
+# Print board
+def print_board(rows, columns, character):
+    """
+    Print the board, its borders, and the current character location.
+
+    :param rows: a positive non-zero integer
+    :param columns: a positive non-zero integer
+    :param character: a dictionary containing "X-coordinate":value and "Y-coordinate":value
+                      (as string:ints within range [0, 4]), and "Current HP":value (as string:int of range [1, 5])
+    :precondition: both rows and columns must integers == 5
+    :precondition: character must be a non-empty dictionary
+    :precondition: character must contain the keys "X-coordinate", "Y-coordinate", and "Current HP" as strings
+    :precondition: X- and Y-coordinates values must be integers within range [0, 4]
+    :precondition: Current HP value must be an integer within range [1, 5]
+    :postcondition: leave character unmodified
+    :postcondition: print the board and its borders (as "X") using rows and columns as the grid,
+                    also print the current location of the character (as "#")
+    """
+    # Add one to coordinates to account for outer border
+    character_x = character["X-coordinate"] + 1
+    character_y = character["Y-coordinate"] + 1
+
+    # Create total dimensions including borders
+    total_rows = rows + 2
+    total_columns = columns + 2
+
+    # Print top border
+    print("X " * total_columns)
+
+    # Print middle rows with side borders
+    for row in range(1, total_rows - 1):
+        row_string = "X "
+        for column in range(1, total_columns - 1):
+            # Print character location as "#" or empty space
+            if row == character_y and column == character_x:
+                row_string += "# "
+            else:
+                row_string += "  "
+        row_string += "X"
+        print(row_string)
+
+    # Print bottom border
+    print("X " * total_columns)
+
+print_board(5, 5, test_character)
