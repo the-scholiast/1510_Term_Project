@@ -46,9 +46,18 @@ def obtain_random_npc(npc_count: dict) -> str:
 
 
 # Merchant offers equipment depending on level
-def merchant_offers(character: dict):
-    character_lvl = character.get("Level")
-    pass
+def merchant_offers(character: dict) -> dict:
+    character_level = character.get("Level")
+    # Equipment offerings based on character level
+    equipment_by_level = {
+        1: {'Helmet': ('Iron Hat', 0.02), 'Armour': ('Copper Plate', 0.04),
+            'Ring': ('Copper Ring', 0.02), 'Amulet': ('Wooden Charm', 0.02)},
+        2: {'Helmet': ('Iron Helmet', 0.04), 'Armour': ('War Plate', 0.08),
+            'Ring': ('Ruby Ring', 0.04), 'Amulet': ('Crystal Pendant', 0.04)},
+        3: {'Helmet': ('Steel Helmet', 0.06), 'Armour': ('Sun Plate', 0.12),
+            'Ring': ('Warrior Ring', 0.06), 'Amulet': ('Focused Amulet', 0.06)}
+    }
+    return equipment_by_level.get(character_level, equipment_by_level[1])
 
 
 # Print merchant offers
@@ -77,5 +86,5 @@ def user_input_hot_spring():
 
 
 # Heals to full for Health and Ki or can receive items instead
-def hot_spring_reward(character: dict[]):
+def hot_spring_reward(character: dict):
     pass
