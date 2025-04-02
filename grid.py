@@ -49,30 +49,34 @@ def print_board(rows, columns, character):
     :postcondition: print the board and its borders (as "X") using rows and columns as the grid,
                     also print the current location of the character (as "#")
     """
-    # Add one to coordinates to account for outer border
-    character_x = character["X-coordinate"] + 1
-    character_y = character["Y-coordinate"] + 1
-
-    # Create total dimensions including borders
-    total_rows = rows + 2
-    total_columns = columns + 2
-
+    # Unicode box characters
+    border = {
+        'top left': '┌',
+        'top right': '┐',
+        'bottom left': '└',
+        'bottom right': '┘',
+        'horizontal': '─',
+        'vertical': '│',
+        'player': '♦'
+    }
+    # Get character coordinates
+    character_x, character_y = character["X-coordinate"], character["Y-coordinate"]
+    # Each cell is 2 spaces wide plus 1 for the right border
+    width = columns * 2 + 1
     # Print top border
-    print("X " * total_columns)
-
-    # Print middle rows with side borders
-    for row in range(1, total_rows - 1):
-        row_string = "X "
-        for column in range(1, total_columns - 1):
-            # Print character location as "#" or empty space
+    print(f"{border['top left']}{border['horizontal'] * width}{border['top right']}")
+    # Print grid rows
+    for row in range(rows):
+        line = border['vertical']
+        for column in range(columns):
             if row == character_y and column == character_x:
-                row_string += "# "
+                line += f" {border['player']}"
             else:
-                row_string += "  "
-        row_string += "X"
-        print(row_string)
-
+                line += "  "
+        # Add right border
+        line += " " + border['vertical']
+        print(line)
     # Print bottom border
-    print("X " * total_columns)
-
+    print(f"{border['bottom left']}{border['horizontal'] * width}{border['bottom right']}")
+#TEST ################################
 print_board(5, 5, test_character)
