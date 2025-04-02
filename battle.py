@@ -417,6 +417,7 @@ def update_status_effects(character, monster):
             monster['Status Effects'][effect] -= 1
 
 
-# Monster gives loot once defeated
-def monster_defeat():
-    pass
+# Check if monster health is <= 0
+def monster_defeat(monster: dict) -> bool:
+    monster_health = monster.get("Health")
+    return monster_health <= 0
