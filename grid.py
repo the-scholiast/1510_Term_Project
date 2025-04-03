@@ -3,11 +3,6 @@ import random
 """
 Contain the necessary functions and variables needed to create the 5x5 grid
 """
-# TEST CHARACTER --> REMOVE WHEN DONE
-test_character = {'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Strength': 15,
-                  'Speed': 10, 'Luck': 5, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
-                  'Crystals': 0, 'Shards': 10, 'Current Health': 100, 'X-coordinate': 1, 'Y-coordinate': 0,
-                  'Items': set()}
 
 
 # For each grid position, randomly choose from a set of characters which represents different encounters.
@@ -83,6 +78,12 @@ def print_board(board, character):
     bottom_border = borders['bottom_left'] + (borders['horizontal'] * 25) + borders['bottom_right']
     print(bottom_border)
 
-#TEST ################################
-test_board = make_board(5, 5)
-print_board(test_board, test_character)
+
+# Update board after character visits a location to mark it as visited
+def mark_location_visited(board, character):
+    # Get character's current location
+    character_location = (character['X-coordinate'], character['Y-coordinate'])
+    # Mark the location as visited by replacing '[!]' with an empty string
+    if board[character_location] == '[!]':
+        board[character_location] = '   '
+    return board
