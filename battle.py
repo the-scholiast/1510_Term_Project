@@ -5,45 +5,6 @@ import random
 from itertools import cycle
 from __init__ import BATTLE_STANCES
 
-# Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
-MONSTER_ATTACK_LIST = {
-    'Wendigo': {
-        'Swipe': ['A vicious claw attack dealing physical damage.', 'Attack', 10],
-        'Insatiable Hunger': ['A frenzied bite that heals the Wendigo.', 'Heal', 8],
-        'Poison Bite': ['A venomous bite that inflicts poison damage over time.', 'Poison', 10]
-    },
-    'Djinn': {
-        'Ki blast': ['A blast of magical energy.', 'Attack', 12],
-        'Soul Drain': ['Drains the target’s life force to heal the Djinn.', 'Heal', 8],
-        'Mind Crush': ['Overwhelms the target’s mind, causing mental damage and confusion.', 'Attack', 20]
-    },
-    'Skinwalker': {
-        'Savage Pounce': ['Leaps at the target with fangs and claws.', 'Attack', 8],
-        'Fear Howl': ['Unleashes a terrifying howl.', 'Attack', 12],
-        'Vengeful Claws': ['Rakes the target with vicious claws, dealing heavy damage.', 'Bleed', 15]
-    },
-    'Ghoul': {
-        'Claw Slash': ['A basic claw swipe that deals physical damage.', 'Attack', 10],
-        'Bite': ['A quick bite that deals damage and has a chance to inflict bleed.', 'Bleed', 10],
-        'Frenzied Strike': ['A rapid series of claw strikes that deal moderate damage.', 'Attack', 18]
-    },
-    'Shapeshifter': {
-        'Claw Strike': ['A basic swipe with sharp claws dealing physical damage.', 'Attack', 8],
-        'Quick Dash': ['Dashes forward, striking the enemy with a quick slash.', 'Attack', 12],
-        'Form Strike': ['Transforms a part of the body into a weapon to strike the enemy.', 'Attack', 18]
-    },
-    'Werewolf': {
-        'Feral Charge': ['Dashes forward, knocking down enemies.', 'Attack', 12],
-        'Lunar Frenzy': ['Enters a berserk state, increasing Health and Damage.', 'Buff', 0],
-        'Crippling Bite': ['Bites the target causing bleed.', 'Bleed', 16]
-    },
-    'Vampire': {
-        'Blood Drain': ['Drinks the target’s blood to restore health.', 'Heal', 6],
-        'Shadow Step': ['Teleports behind the enemy for a surprise attack.', 'Attack', 15],
-        'Fang Strike': ['Delivers a powerful bite that deals damage and drains life force.', 'Heal', 16]
-    }
-}
-
 # Store character's attack moves
 CHARACTER_ATTACKS = {
     'Bear': {
@@ -103,13 +64,51 @@ def create_monster(monster: str) -> dict:
 
 # Obtain attack move from Monster
 def get_monster_attack(monster: str) -> list:
+    # Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
+    monster_attack_list = {
+        'Wendigo': {
+            'Swipe': ['A vicious claw attack dealing physical damage.', 'Attack', 10],
+            'Insatiable Hunger': ['A frenzied bite that heals the Wendigo.', 'Heal', 8],
+            'Poison Bite': ['A venomous bite that inflicts poison damage over time.', 'Poison', 10]
+        },
+        'Djinn': {
+            'Ki blast': ['A blast of magical energy.', 'Attack', 12],
+            'Soul Drain': ['Drains the target’s life force to heal the Djinn.', 'Heal', 8],
+            'Mind Crush': ['Overwhelms the target’s mind, causing mental damage and confusion.', 'Attack', 20]
+        },
+        'Skinwalker': {
+            'Savage Pounce': ['Leaps at the target with fangs and claws.', 'Attack', 8],
+            'Fear Howl': ['Unleashes a terrifying howl.', 'Attack', 12],
+            'Vengeful Claws': ['Rakes the target with vicious claws, dealing heavy damage.', 'Bleed', 15]
+        },
+        'Ghoul': {
+            'Claw Slash': ['A basic claw swipe that deals physical damage.', 'Attack', 10],
+            'Bite': ['A quick bite that deals damage and has a chance to inflict bleed.', 'Bleed', 10],
+            'Frenzied Strike': ['A rapid series of claw strikes that deal moderate damage.', 'Attack', 18]
+        },
+        'Shapeshifter': {
+            'Claw Strike': ['A basic swipe with sharp claws dealing physical damage.', 'Attack', 8],
+            'Quick Dash': ['Dashes forward, striking the enemy with a quick slash.', 'Attack', 12],
+            'Form Strike': ['Transforms a part of the body into a weapon to strike the enemy.', 'Attack', 18]
+        },
+        'Werewolf': {
+            'Feral Charge': ['Dashes forward, knocking down enemies.', 'Attack', 12],
+            'Lunar Frenzy': ['Enters a berserk state, increasing Health and Damage.', 'Buff', 0],
+            'Crippling Bite': ['Bites the target causing bleed.', 'Bleed', 16]
+        },
+        'Vampire': {
+            'Blood Drain': ['Drinks the target’s blood to restore health.', 'Heal', 6],
+            'Shadow Step': ['Teleports behind the enemy for a surprise attack.', 'Attack', 15],
+            'Fang Strike': ['Delivers a powerful bite that deals damage and drains life force.', 'Heal', 16]
+        }
+    }
     # Get list of attacks
-    attack_names = list(MONSTER_ATTACK_LIST[monster].keys())
+    attack_names = list(monster_attack_list[monster].keys())
     # Weighted list of monster attacks
     monster_attack_weights = [0.5, 0.35, 0.15]
     # Select weighted random attack
     attack_name = random.choices(attack_names, weights=monster_attack_weights, k=1)[0]
-    attack_details = MONSTER_ATTACK_LIST[monster][attack_name]
+    attack_details = monster_attack_list[monster][attack_name]
     # Return list of attack name and its details
     return [attack_name] + attack_details
 
@@ -290,7 +289,7 @@ def display_attack_options(stance, attacks_moves):
 
 
 # Obtain user input for attack move. Max value = 3 (number of attack moves). 0 to go back to display_battle_menu
-def get_attack_choice(character: dict, attacks_dict: dict) -> tuple:
+def get_attack_choice(attacks_dict: dict) -> tuple:
     # Keep asking for valid number
     while True:
         try:
@@ -390,6 +389,7 @@ def monster_rewards(character: dict):
     # Award experience
     character['Experience'] += 35
     print(f"You gained 35 experience!")
+
 
 def main():
     display_items({'Items': {'Health Pots': 1, 'Shards': 1}})
