@@ -5,23 +5,6 @@ import random
 from itertools import cycle
 from __init__ import BATTLE_STANCES
 
-# TEST CHARACTER DELETE #####################################################
-test_character = {
-    'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
-    'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 1, 'Damage Modifier': 1,
-    'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 1, 'Shards': 3},
-    'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-    'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0}, 'Active Stance': 'Bear',
-    'Active Defense Modifier': 1
-}
-test_monster = {
-    'Name': 'Vampire',
-    'Health': 95,
-    'Current Health': 95,
-    'Status Effects': {'Buff': 0, 'Snared': 0},
-    'Damage Modifier': 1.0,
-    'Health Modifier': 1.0
-}
 # Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
 MONSTER_ATTACK_LIST = {
     'Wendigo': {
@@ -151,15 +134,16 @@ def apply_monster_attack(attack: list, character: dict):
 
 
 # Figure out turn order depending on who got "First Strike" -> use itertools.cycle?
-def turn_order(monster, character):
+def turn_order(monster):
     # 50% chance to go first
-    if random.random() < 0.5:
+    if random.randint(1, 2) == 1:
         first_strike_message = "You strike first!"
         turns = cycle(['character', 'monster'])
     else:
         first_strike_message = f"The {monster} strikes first!"
         turns = cycle(['monster', 'character'])
     return turns, first_strike_message
+
 
 # Skip monster turn if snared
 def skip_turn(monster):
@@ -184,9 +168,6 @@ def display_battle_menu():
     print("│   FIGHT    │")
     print("└────────────┘")
 
-
-# TESTING DELETE ######################################
-# display_battle_menu()
 
 def get_user_choice_battle_menu() -> str:
     # Get user choice from battle menu
@@ -217,14 +198,6 @@ def display_stances(character):
     print("└" + "─" * 22 + "┘")
 
 
-# print(display_stances({
-#         'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
-#         'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
-#         'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
-#         'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-#         'Status': {"Poison": 0, "Bleed": 0}
-#     }))
-
 # Get user input for stances or back to display_battle_menu
 def get_stance(character):
     available_stances = character['Stance']
@@ -237,7 +210,7 @@ def get_stance(character):
             print(f"You adopt the {user_choice} stance!")
             # Obtain the stance_description
             stance_descriptions = {stance[0]: stance[1] for stance in BATTLE_STANCES}
-            description = stance_descriptions.get(user_choice)
+            description = stance_descriptions[user_choice]
             print(f"{description}")
             # Return the stance
             return user_choice
@@ -246,10 +219,6 @@ def get_stance(character):
             return
         else:
             print("Invalid stance. Please select from the available options.")
-
-
-# TESTING DELETE ############################################################
-# print(get_stance(test_character))
 
 
 # Display items when clicking from display_battle_menu
@@ -267,8 +236,6 @@ def display_items(character):
     print("├" + "─" * 22 + "┤")
     print(f"│ {"Back":<20} │")
     print("└" + "─" * 22 + "┘")
-# TESTING DELETE ######################################
-# display_items(test_character)
 
 
 # Get user input for items or back to display_battle_menu
@@ -287,8 +254,6 @@ def get_item(character):
             return None
         else:
             print("Invalid item. Please select from the available options.")
-# TESTING DELETE ######################################
-# print(get_item(test_character))
 
 
 # Obtain character attack moves by stance
@@ -312,14 +277,6 @@ def display_attack_options(stance, attacks_moves):
         print(f"{order}. {attack_name} ({attack_type}) - {description} - {effect}")
 
 
-# TESTING DELETE ######################################
-# display_attack_options('Bear', {
-#     'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
-#     'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
-#     'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
-# })
-
-
 # Obtain user input for attack move. Max value = 3 (number of attack moves). 0 to go back to display_battle_menu
 def get_attack_choice(character: dict, attacks_dict: dict) -> tuple:
     # Keep asking for valid number
@@ -336,19 +293,6 @@ def get_attack_choice(character: dict, attacks_dict: dict) -> tuple:
             else:
                 print("Invalid choice. Please enter a number between 0 and 3")
             # Condition to exit when input is 0
-
-# TESTING DELETE ######################################
-# print(get_attack_choice({
-#     'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
-#     'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 0, 'Damage Modifier': 1,
-#     'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
-#     'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-#     'Status': {"Poison": 0, "Bleed": 0, "Shell": 0}, 'Active Stance': ['Bear']
-# }, {
-#     'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 15],
-#     'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 25],
-#     'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
-# }))
 
 
 # Apply character attack to monster ### DECOMPOSE
@@ -393,11 +337,6 @@ def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
             message = "You don't have enough Ki to use this attack!"
     print(message)
 
-print(f"before: {test_monster['Current Health']}")
-apply_attack_move(('Heavy Strike', ['A powerful blow with massive physical damage.', 'Physical', 15]),
-                  test_character, test_monster)
-print(f"after: {test_monster['Current Health']}")
-
 
 # Update status effects for both character and monster
 def update_status_effects(character, monster):
@@ -438,5 +377,3 @@ def monster_rewards(character: dict):
     # Award experience
     character['Experience'] += 35
     print(f"You gained 35 experience!")
-
-monster_rewards(test_character)
