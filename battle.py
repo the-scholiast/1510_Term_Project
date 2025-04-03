@@ -236,14 +236,16 @@ def display_items(character):
     print("Available Items:")
     print("┌" + "─" * 22 + "┐")
     # Display each item and its quantity
+    index = 1
     for item_name, quantity in items.items():
         if quantity > 0:
-            print(f"│ {item_name:<12} x{quantity:<6} │")
+            print(f"│ {index}. {item_name:<12} x{quantity:<3} │")
+            index += 1
     # If no items available
     if all(quantity == 0 for quantity in items.values()):
         print(f"│ {'No items available':<20} │")
     print("├" + "─" * 22 + "┤")
-    print(f"│ {"Back":<20} │")
+    print(f"│ 0. {"Back":<17} │")
     print("└" + "─" * 22 + "┘")
 
 
@@ -389,8 +391,8 @@ def monster_rewards(character: dict):
     print(f"You gained 35 experience!")
 
 def main():
-    display_stances({'Stance': ['Bear']})
-    print(get_stance({'Stance': ['Bear'], 'Active Stance': 'Bear'}))
+    display_items({'Items': {'Health Pots': 1, 'Shards': 1}})
+    print(get_item({'Stance': ['Bear'], 'Active Stance': 'Bear', 'Items': {'Health Pots': 1, 'Shards': 1}}))
 
 
 if __name__ == "__main__":
