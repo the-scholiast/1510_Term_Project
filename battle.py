@@ -209,22 +209,23 @@ def display_stances(character):
 # Get user input for stances or back to display_battle_menu
 def get_stance(character):
     available_stances = character['Stance']
+    available_stances_index = [str(index) for index, stance in enumerate(character['Stance'], 1)]
     # Ask user for stance or back to display_battle_menu
     while True:
-        user_choice = input("Select a stance or type 'Back' to return: ").strip().title()
-        if user_choice in available_stances:
+        user_choice = input("Select a stance by number or type 0 to return: ").strip()
+        # Back to display_battle_menu
+        if user_choice == '0':
+            return
+        elif user_choice in available_stances_index:
             # Update character's active stance
-            character['Active Stance'] = user_choice
-            print(f"You adopt the {user_choice} stance!")
+            character['Active Stance'] = available_stances[int(user_choice) - 1]
+            print(f"You adopt the {character['Active Stance']} stance!")
             # Obtain the stance_description
             stance_descriptions = {stance[0]: stance[1] for stance in BATTLE_STANCES}
-            description = stance_descriptions[user_choice]
+            description = stance_descriptions[character['Active Stance']]
             print(f"{description}")
             # Return the stance
-            return user_choice
-        # Back to display_battle_menu
-        elif user_choice == 'Back':
-            return
+            return character['Active Stance']
         else:
             print("Invalid stance. Please select from the available options.")
 
@@ -389,6 +390,7 @@ def monster_rewards(character: dict):
 
 def main():
     display_stances({'Stance': ['Bear']})
+    print(get_stance({'Stance': ['Bear'], 'Active Stance': 'Bear'}))
 
 
 if __name__ == "__main__":
