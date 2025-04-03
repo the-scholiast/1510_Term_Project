@@ -92,7 +92,36 @@ def game():
                     battle.apply_monster_attack(monster_attack, character)
             # Character's turn -> FINISH
             else:
-                pass
+                # Display battle menu
+                battle.display_battle_menu()
+                # Get user choice
+                battle_choice = battle.get_user_choice_battle_menu()
+                # User battle options
+                if battle_choice == 'STANCE':
+                    # Display available stances
+                    battle.display_stances(character)
+                    # Get user stance choice
+                    battle.get_stance(character)
+                elif battle_choice == 'ITEM':
+                    # Display available items
+                    battle.display_items(character)
+                    # Get user item choice
+                    item_choice = battle.get_item(character)
+                    # Use item
+                    character_module.use_item(character, item_choice)
+                elif battle_choice == 'FIGHT':
+                    # Get attack moves for current stance
+                    attack_moves = battle.get_attack_moves(character, battle.CHARACTER_ATTACKS)
+                    # Display attack options
+                    battle.display_attack_options(character['Active Stance'], attack_moves)
+                    # Get user attack choice
+                    attack_choice = battle.get_attack_choice(character, attack_moves)
+                    # Apply attack to monster
+                    battle.apply_attack_move(attack_choice, character, monster)
+                # Update status effects
+            battle.update_status_effects(character, monster)
+            # Next turn
+            current_turn = next(turns)
 
     # Manages all potential encounters
     def encounter_manager(character, npc_count):
@@ -135,9 +164,9 @@ def game():
                 print("You cannot move in that direction. Please enter a different direction.")
         # Check if character still in tutorial zone
         in_tutorial = tutorial.exit_tutorial(new_character)
-    # Character obtains basic items
-    basic_items = {'Helmet': ('Leather Cap', 0.02), 'Armour': ('Leather Tunic', 0.02)}
-    character_module.equip_items(new_character, basic_items)
+    # Character obtains basic items ->>> FIX
+    basic_items = ('Helmet', 'Leather Cap', 0.02), ('Armour', 'Leather Tunic', 0.02)
+    character_module.obtain_and_equip(basic_items, new_character)
     # Character moves out of tutorial zone
     # Make main board @STARTED
     board = grid.make_board(5, 5)
