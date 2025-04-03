@@ -77,9 +77,9 @@ def game():
         # Battle loop
         current_turn = next(turns)
         character_is_alive = is_alive(character)
-        monster_alive = battle.monster_defeat(monster)
+        monster_alive = not battle.monster_defeat(monster)
         # Character and monster must be alive for the battle loop to continue
-        while character_is_alive and not monster_alive:
+        while character_is_alive and monster_alive:
             # Display health status -> decompose?
             print(f"Your Health: {character['Current Health']}/{character['Health']}")
             print(f"Your Ki: {character['Current Ki']}/{character['Ki']}")
@@ -127,7 +127,10 @@ def game():
             # Next turn
             current_turn = next(turns)
             character_is_alive = is_alive(character)
-            monster_alive = battle.monster_defeat(monster)
+            monster_alive = not battle.monster_defeat(monster)
+            # Get rewards from beating monster
+            if battle.monster_defeat(monster):
+                battle.monster_rewards(character)
 
     # Manages all potential encounters
     def encounter_manager(character, npc_count):
@@ -153,6 +156,8 @@ def game():
     # Character spawns in
     # Character goes through NPC interactions. Can skip to main zone. @DONE
     while in_tutorial:
+        # Mark visited areas with empty space
+        tutorial_zone = grid.mark_location_visited(tutorial_zone, new_character)
         # Get tutorial NPC interaction based on character location
         tutorial_npc = tutorial.tutorial_npcs((new_character["X-coordinate"], new_character["Y-coordinate"]))
         # Skip tutorial flag
