@@ -212,7 +212,7 @@ def get_stance(character):
     available_stances_index = [str(index) for index, stance in enumerate(character['Stance'], 1)]
     # Ask user for stance or back to display_battle_menu
     while True:
-        user_choice = input("Select a stance by number or type 0 to return: ").strip()
+        user_choice = input("Select a stance by index number or type 0 to return: ").strip()
         # Back to display_battle_menu
         if user_choice == '0':
             return
@@ -258,10 +258,11 @@ def get_item(character):
         input("Press Enter to return to battle menu...")
         return None
     while True:
-        user_choice = input("Select an item or type 'Back' to return: ").strip().title()
-        if user_choice in available_items:
-            return user_choice
-        elif user_choice == 'Back':
+        user_choice = input("Select an item by index number or type 0 to return: ").strip()
+        # Make sure user choice is a digit between 0 and length of available items
+        if user_choice.isdigit() and len(available_items) >= int(user_choice) >= 0:
+            return available_items[int(user_choice) - 1]
+        elif user_choice == '0':
             return None
         else:
             print("Invalid item. Please select from the available options.")
