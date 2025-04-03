@@ -372,7 +372,8 @@ def monster_rewards(character: dict):
     if character['Level'] == 3:
         character['Health'] += 25
         character['Current Health'] += 25
-        print(f"Your maximum health has increased by 25!")
+        character['Damage Modifier'] += 0.04
+        print(f"Your maximum Health has increased by 25 and Damage by 4%!")
         return
     # Award experience
     character['Experience'] += 35
