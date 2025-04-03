@@ -87,14 +87,6 @@ def user_picks_equipment(equipment) -> tuple:
             print(f"Invalid choice. Please enter a number between 1 and 3.")
 
 
-# Merchant gives equipment and character equips it
-def obtain_and_equip(equipment_choice: tuple, character: dict):
-    item_type, item_name, price = equipment_choice
-    character_equipment = character['Equipment']
-    character_equipment[item_type] = (item_name, price)
-    print(f"You have equipped {item_name}!")
-
-
 # Hot spring encounter options
 def hot_spring_encounter():
     print("You've discovered a steaming hot spring nestled between large rocks!")
