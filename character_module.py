@@ -71,7 +71,7 @@ def validate_move(board, character, direction):
                   combination are the dictionary keys, and their values are descriptions of the locations as strings
     :param character: a dictionary containing "X-coordinate":value and "Y-coordinate":value
                       (as string:int within range [0, 4]), and "Current HP":value (as string:int of range [1, 5])
-    :param direction: a string
+    :param direction: an integer between [1, 4]
     :precondition: board and character must be non-empty dictionaries
     :precondition: character must contain the keys "X-coordinate", "Y-coordinate", and "Current HP" as strings
     :precondition: board must contain all possible combinations of (X-coordinate, Y-coordinate) keys as tuples
@@ -79,36 +79,35 @@ def validate_move(board, character, direction):
     :precondition: character (X-coordinate value, Y-coordinate value) must be in board
     :precondition: X- and Y-coordinates values must be integers within range [0, 4]
     :precondition: Current HP value must be an integer within range [1, 5]
-    :precondition: direction must be a string
-    :precondition: direction must be 'Up', 'Down', 'Left', or 'Right'
+    :precondition: direction must be an integer between [1, 4] representing ('Up', 'Down', 'Left', Right')
     :postcondition: leave board and character unmodified
     :postcondition: check if the character's coordinates after moving are in the board
     :return: True if the character's coordinates after moving are in the board else return False
 
     >>> small_board = {(0, 0): "Empty room", (0, 1): "Corridor", (0, 2): "Colonnade", (0, 3): "Empty room"}
     >>> test_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
-    >>> validate_move(small_board, test_character, 'Up')
+    >>> validate_move(small_board, test_character, 1)
     False
     >>> small_board = {(0, 0): "Empty room", (1, 0): "Corridor", (2, 0): "Colonnade", (3, 0): "Empty room"}
     >>> test_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
-    >>> validate_move(small_board, test_character, 'Down')
+    >>> validate_move(small_board, test_character, 2)
     True
     >>> small_board = {(4, 4): "Empty room", (4, 3): "Corridor", (4, 2): "Colonnade", (4, 1): "Empty room"}
     >>> test_character = {"Y-coordinate": 4, "X-coordinate": 3, "Current HP": 5}
-    >>> validate_move(small_board, test_character, 'Right')
+    >>> validate_move(small_board, test_character, 3)
     True
     """
     # Leave character unmodified
     new_x_coordinate = character["X-coordinate"]
     new_y_coordinate = character["Y-coordinate"]
     # Update the coordinate depending on direction
-    if direction == 'Up':
+    if direction == 1:
         new_y_coordinate -= 1
-    elif direction == 'Down':
+    elif direction == 2:
         new_y_coordinate += 1
-    elif direction == 'Right':
+    elif direction == 3:
         new_x_coordinate += 1
-    elif direction == 'Left':
+    elif direction == 4:
         new_x_coordinate -= 1
     # Return True if coordinates in board else False
     return (new_y_coordinate, new_x_coordinate) in board
