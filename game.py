@@ -51,7 +51,21 @@ def game():
 
     # Merchant manager
     def merchant_manager(character):
-        pass
+        # Get merchant items based on character level
+        merchant_items = encounters.merchant_offers(character)
+        # Display merchant offers
+        encounters.print_merchant_offers(merchant_items)
+        # Get user choice for equipment
+        equipment_choice = encounters.user_picks_equipment(merchant_items)
+        # Equip the selected item
+        character_module.obtain_and_equip(equipment_choice, character)
+        # Apply the item stats
+        character_module.apply_equipment(character)
+        # Print Merchant Dialogue
+        print(f"The merchant hands you the {equipment_choice[1]}.")
+        print("Merchant: 'May it serve you well on your journey!'")
+        # Print stat increase
+        character_module.print_apply_equipment(equipment_choice, character)
 
     # Monster manager
     def monster_manager(character):
