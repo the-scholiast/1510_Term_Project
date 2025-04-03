@@ -175,21 +175,20 @@ def display_battle_menu():
     # Display main battle menu
     print()
     print("┌────────────┐  ┌────────────┐")
-    print("│   STANCE   │  │    ITEM    │")
+    print("│  1.STANCE  │  │   2.ITEM   │")
     print("└────────────┘  └────────────┘")
     print("┌────────────┐")
-    print("│   FIGHT    │")
+    print("│  3.FIGHT   │")
     print("└────────────┘")
 
 
 def get_user_choice_battle_menu() -> str:
     # Get user choice from battle menu
-    valid_choices = {'STANCE': 'STANCE', 'ITEM': 'ITEM', 'FIGHT': 'FIGHT'}
-
+    valid_choices = {'1', '2', '3'}
     while True:
-        choice = input("What will you do? Enter option name: ").upper().strip()
+        choice = input("What will you do? Enter option [1, 3]: ").strip()
         if choice in valid_choices:
-            return valid_choices[choice]
+            return choice
         else:
             print("Invalid choice. The option name.")
 
