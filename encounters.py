@@ -120,13 +120,36 @@ def hot_spring_encounter():
     print("│ 1. Bathe in the spring (fully restore Health/Ki) │")
     print("│ 2. Collect minerals (gain Health pots and shards)│")
     print("└" + "─" * 50 + "┘")
-hot_spring_encounter()
+# TEST DELETE
+# hot_spring_encounter()
 
 # Get user choice for hot spring
-def user_input_hot_spring():
-    pass
+def user_input_hot_spring() -> int:
+    valid_choices = {"1", "2"}
+    while True:
+        user_choice = input("Enter your choice [1-2]: ").strip()
+        if user_choice in valid_choices:
+            return int(user_choice)
+        else:
+            print("Invalid choice. Please enter a number between 1 and 2.")
 
 
 # Heals to full for Health and Ki or can receive items instead
-def hot_spring_reward(character: dict):
-    pass
+def hot_spring_reward(character: dict, user_choice: int):
+    # Character uses hot spring. Restore Health and Ki to full
+    if user_choice == 1:
+        character["Current Health"] = character["Health"]
+        character["Current Ki"] = character["Ki"]
+        print("You relax in the warm spring. Your wounds heal and your ki is restored!")
+        print(f"Health: {character['Current Health']}/{character['Health']}")
+        print(f"Ki: {character['Current Ki']}/{character['Ki']}")
+    # Collect items - health pots and shards
+    else:
+        health_pots = 2
+        shards = 2
+        character["Items"]["Health Pots"] += health_pots
+        character["Items"]["Shards"] += shards
+        print(f"You collected minerals from around the spring!")
+        print(f"Gained: {health_pots} Health Potion(s) and {shards} Shard(s)")
+# TEST DELETE
+hot_spring_reward(test_character, 2)
