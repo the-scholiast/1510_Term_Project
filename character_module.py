@@ -16,14 +16,17 @@ def proper_name():
 
 
 # Make character including the player's name
-def make_character(player_name):
+def make_character(player_name: str) -> dict:
     character = {
-        'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
-        'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 1, 'Damage Modifier': 1,
-        'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 0, 'Shards': 0},
-        'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-        'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0}, 'Active Stance': 'Bear',
-        'Active Defense Modifier': 1
+        'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Experience': 0,
+        'Health': 100, 'Current Health': 100, 'Ki': 50, 'Current Ki': 50,
+        'Defense Modifier': 1, 'Damage Modifier': 1, 'Active Defense Modifier': 1,
+        'X-coordinate': 0, 'Y-coordinate': 0,
+        'Crystals': 0,
+        'Items': {'Health Pots': 0, 'Shards': 0},
+        'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""},
+        'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0},
+        'Stance': ['Bear'], 'Active Stance': 'Bear'
     }
     return character
 
@@ -158,7 +161,7 @@ def move_character(character, direction):
         character["X-coordinate"] -= 1
 
 
-# G
+# Get direction represent as an integer between 1 and 4 ('Up', 'Down', 'Left', 'Right')
 def get_user_choice():
     """
     Return the direction as an integer between [1, 4] representing ('Up', 'Down', 'Left', 'Right').
@@ -179,6 +182,15 @@ def get_user_choice():
 
 # Character level up boost
 def level_up(character: dict):
+    """
+    Update character Health, Ki, Damage Modifier, and Stance after leveling up.
+
+    :param character: a dictionary containing character name, stats, items,
+                      coordinates, equipment, status, level, and stance
+    :precondition: character must be a dictionary containing character name, stats,
+                   items, coordinates, equipment, status, level, and stance
+
+    """
     current_level = character['Level']
     current_exp = character['Experience']
     # Experience needed for each level
