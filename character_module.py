@@ -212,3 +212,21 @@ def print_level_up(character: dict):
     # Print the new unlocked stance
     if character['Level'] > 1:
         print(f"New stance unlocked: {character['Stance'][-1]}")
+
+
+# Uses item from character inventory
+def use_item(character: dict, item_choice: str):
+    if item_choice == 'Health Pots':
+        # Use health potion if available
+        if character['Items']['Health Pots'] > 0:
+            heal_amount = 50
+            character['Current Health'] = min(character['Health'], character['Current Health'] + heal_amount)
+            character['Items']['Health Pots'] -= 1
+            print(f"You used a Health Potion and restored {heal_amount} health!")
+    elif item_choice == 'Shards':
+        # Use Ki shard if available
+        if character['Items']['Shards'] > 0:
+            ki_amount = 20
+            character['Current Ki'] = min(character['Ki'], character['Current Ki'] + ki_amount)
+            character['Items']['Shards'] -= 1
+            print(f"You used a Shard and restored {ki_amount} Ki!")
