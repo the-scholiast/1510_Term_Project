@@ -162,11 +162,10 @@ def get_user_choice():
     :return: the direction ("Up", "Down", "Left", "Right") as a string based on the user input
     """
     directions = list(enumerate(("Up", "Down", "Right", "Left"), 1))
-    print(directions)
     for direction in directions:
-        print(direction)
+        print(f"{direction[0]}. {direction[1]}")
     while True:
         valid_moves = {1, 2, 3, 4}
-        user_direction = input("Please enter Up, Down, Left, or Right to move: ").strip()
+        user_direction = input("Please enter 1, 2, 3, or 4 to move: ").strip()
         if user_direction.isdigit() and int(user_direction) in valid_moves:
             return int(user_direction)
