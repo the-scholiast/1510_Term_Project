@@ -1,7 +1,6 @@
 """
 This module contains functions that make and edit the character.
 """
-from encounters import user_input_hot_spring
 
 
 # Ask user for proper player name
@@ -169,3 +168,29 @@ def get_user_choice():
         user_direction = input("Please enter 1, 2, 3, or 4 to move: ").strip()
         if user_direction.isdigit() and int(user_direction) in valid_moves:
             return int(user_direction)
+
+
+# Character level up boost
+def level_up(character):
+    current_level = character['Level']
+    current_exp = character['Experience']
+    # Experience needed for each level
+    exp_requirements = {1: 150, 2: 300}
+    # Check if character can level up
+    if current_level < 3 and current_exp >= exp_requirements[current_level]:
+        # Level up
+        character['Level'] += 1
+        # Update title
+        update_title(character)
+        # Update stats
+        character['Health'] += 50
+        character['Current Health'] = character['Health']
+        character['Ki'] += 15
+        character['Current Ki'] = character['Ki']
+        character['Damage Modifier'] += 0.1
+        # Add new stance at level 2
+        if character['Level'] == 2:
+            character['Stance'].append('Turtle')
+        # Add another stance at level 3
+        elif character['Level'] == 3:
+            character['Stance'].append('Snake')
