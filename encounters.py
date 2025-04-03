@@ -112,8 +112,15 @@ def obtain_and_equip(equipment_choice: tuple, character: dict):
 
 # Hot spring encounter options
 def hot_spring_encounter():
-    pass
-
+    print("You've discovered a steaming hot spring nestled between large rocks!")
+    print("The water has a slight blue hue and smells faintly of minerals.")
+    print("┌" + "─" * 50 + "┐")
+    print("│ What would you like to do?                       │")
+    print("├" + "─" * 50 + "┤")
+    print("│ 1. Bathe in the spring (fully restore Health/Ki) │")
+    print("│ 2. Collect minerals (gain Health pots and shards)│")
+    print("└" + "─" * 50 + "┘")
+hot_spring_encounter()
 
 # Get user choice for hot spring
 def user_input_hot_spring():
