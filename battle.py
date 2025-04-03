@@ -421,3 +421,22 @@ def update_status_effects(character, monster):
 def monster_defeat(monster: dict) -> bool:
     monster_health = monster.get("Health")
     return monster_health <= 0
+
+
+# Get rewards after defeating monster, gain 8 Crystals, and 35 experience. Gain 25 to Health if level 3.
+def monster_rewards(character: dict):
+    # Award Crystals
+    character['Crystals'] += 8
+    print(f"You gained 8 Crystals!")
+    print(f"Total Crystals: {character['Crystals']}")
+    # Provide special reward for level 3 characters
+    if character['Level'] == 3:
+        character['Health'] += 25
+        character['Current Health'] += 25
+        print(f"Your maximum health has increased by 25!")
+        return
+    # Award experience
+    character['Experience'] += 35
+    print(f"You gained 35 experience!")
+
+monster_rewards(test_character)
