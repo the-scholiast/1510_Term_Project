@@ -42,7 +42,12 @@ def game_lost(alive):
 def game():
     # Hot spring manager
     def hot_spring_manager(character):
-        pass
+        # Display hot spring options
+        encounters.hot_spring_encounter()
+        # Get user choice
+        user_choice = encounters.user_input_hot_spring()
+        # Apply reward based on choice
+        encounters.hot_spring_reward(character, user_choice)
 
     # Merchant manager
     def merchant_manager(character):
@@ -66,8 +71,6 @@ def game():
     # Character spawns in
     # Character goes through NPC interactions. Can skip to main zone. @DONE
     while in_tutorial:
-        # Print tutorial zone
-        grid.print_board(tutorial_zone, new_character)
         # Get tutorial NPC interaction based on character location
         tutorial_npc = tutorial.tutorial_npcs((new_character["X-coordinate"], new_character["Y-coordinate"]))
         # Skip tutorial flag
@@ -76,6 +79,7 @@ def game():
             break
         # Begin tutorial
         while True:
+            grid.print_board(tutorial_zone, new_character)
             direction = character_module.get_user_choice()
             if character_module.validate_move(tutorial_zone, new_character, direction):
                 character_module.move_character(new_character, direction)
