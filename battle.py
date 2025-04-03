@@ -147,7 +147,7 @@ def apply_monster_attack(attack: list, character: dict):
 
 
 # Figure out turn order depending on who got "First Strike" -> use itertools.cycle?
-def turn_order(monster):
+def turn_order(monster: str) -> tuple:
     # 50% chance to go first
     if random.randint(1, 2) == 1:
         first_strike_message = "You strike first!"
