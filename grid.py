@@ -14,7 +14,7 @@ def make_board(rows, columns):
 
 # Check if character movement will lead to random encounter '[!]'
 def check_encounter(character, board):
-    character_location = (character['X-coordinate'], character['Y-coordinate'])
+    character_location = (character['Y-coordinate'], character['X-coordinate'])
     board_symbol = board[character_location[0]][character_location[1]]
     return board_symbol == '[!]'
 
@@ -82,8 +82,10 @@ def print_board(board, character):
 # Update board after character visits a location to mark it as visited
 def mark_location_visited(board, character):
     # Get character's current location
-    character_location = (character['X-coordinate'], character['Y-coordinate'])
+    character_location = (character['Y-coordinate'], character['X-coordinate'])
     # Mark the location as visited by replacing '[!]' with an empty string
     if board[character_location] == '[!]':
+        board[character_location] = '   '
+    elif board[character_location] == '[?]':
         board[character_location] = '   '
     return board
