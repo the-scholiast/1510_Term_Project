@@ -41,7 +41,7 @@ def game_lost(alive):
 
 def game():
     # Hot spring manager
-    def hot_spring_manager(character):
+    def hot_spring_manager(character: dict):
         # Display hot spring options
         encounters.hot_spring_encounter()
         # Get user choice
@@ -50,7 +50,7 @@ def game():
         encounters.hot_spring_reward(character, user_choice)
 
     # Merchant manager
-    def merchant_manager(character):
+    def merchant_manager(character: dict):
         # Get merchant items based on character level
         merchant_items = encounters.merchant_offers(character)
         # Display merchant offers
@@ -68,12 +68,22 @@ def game():
         character_module.print_apply_equipment(equipment_choice, character)
 
     # Monster manager
-    def monster_manager(character):
+    def monster_manager(character: dict, monster: str):
         pass
 
     # Manages all potential encounters
     def encounter_manager(character, npc_count):
-        pass
+        # Get random encounter
+        new_random_encounter = encounters.obtain_random_npc(npc_count)
+        print(f"You encountered: {new_random_encounter}")
+        # Handle different encounter types
+        if new_random_encounter == 'Hot Spring':
+            hot_spring_manager(character)
+        elif new_random_encounter == 'Merchant':
+            merchant_manager(character)
+        # Monster encounter -->> fix NPC_DICT
+        elif new_random_encounter in NPC_DICT['Monsters']:
+            monster_manager(character, new_random_encounter)
 
     # Ask user for proper character name @DONE
     name = character_module.proper_name()
