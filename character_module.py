@@ -38,16 +38,12 @@ def update_title(character):
     return character
 
 
-def equip_items(character: dict, items: dict):
-    """
-    Equip items onto character.
-
-    :param character:
-    :param items:
-    """
-    character_items = character['Equipment']
-    for equipment, item in items.items():
-        character_items[equipment] = item
+# Character equipments item
+def obtain_and_equip(equipment_choice: tuple, character: dict):
+    item_type, item_name, price = equipment_choice
+    character_equipment = character['Equipment']
+    character_equipment[item_type] = (item_name, price)
+    print(f"You have equipped {item_name}!")
 
 
 # Apply equipment stats
@@ -61,6 +57,16 @@ def apply_equipment(character: dict):
             character["Defense Modifier"] += equipment[1]
         elif equipment[0] in damage_equipment:
             character["Damage Modifier"] += equipment[1]
+
+
+# Print increase in stats from equipment
+def print_apply_equipment(equipment: tuple, character: dict):
+    defense_equipment = {"Helmet", "Armour"}
+    damage_equipment = {"Ring", "Amulet"}
+    if equipment[0] in defense_equipment:
+        print(f"Your Defense Modifier increased to {character['Defense Modifier']}!")
+    elif equipment[0] in damage_equipment:
+        print(f"Your Damage Modifier increased to {character['Damage Modifier']}!")
 
 
 def validate_move(board, character, direction):
