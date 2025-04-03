@@ -199,14 +199,10 @@ def display_stances(character):
     print("Available Stances:")
     print("┌" + "─" * 22 + "┐")
     # Display each available stance
-    for stance_name in available_stances:
-        # Find the stance BATTLE_STANCES
-        for stance_tuple in BATTLE_STANCES:
-            if stance_tuple[0] == stance_name:
-                break
-        print(f"│ {stance_name:<20} │")
+    for index, stance_name in enumerate(available_stances, 1):
+        print(f"│ {index}. {stance_name:<17} │")
     print("├" + "─" * 22 + "┤")
-    print(f"│ {"Back":<20} │")
+    print(f"│ {"0. Back":<20} │")
     print("└" + "─" * 22 + "┘")
 
 
@@ -390,3 +386,10 @@ def monster_rewards(character: dict):
     # Award experience
     character['Experience'] += 35
     print(f"You gained 35 experience!")
+
+def main():
+    display_stances({'Stance': ['Bear']})
+
+
+if __name__ == "__main__":
+    main()
