@@ -18,7 +18,8 @@ def proper_name():
 # Make character including the player's name
 def make_character(player_name: str) -> dict:
     character = {
-        'Name': f'{player_name}', 'Title': 'the Amateur', 'Level': 1, 'Experience': 0,
+        'Name': f'{player_name}', 'Title': 'the Amateur',
+        'Level': 1, 'Experience': 0, 'Leveled Recently': False,
         'Health': 100, 'Current Health': 100, 'Ki': 50, 'Current Ki': 50,
         'Defense Modifier': 1, 'Damage Modifier': 1, 'Active Defense Modifier': 1,
         'X-coordinate': 0, 'Y-coordinate': 0,
@@ -194,9 +195,9 @@ def level_up(character: dict):
     current_level = character['Level']
     current_exp = character['Experience']
     # Experience needed for each level
-    exp_requirements = {1: 150, 2: 300}
+    exp_requirements = 150
     # Check if character can level up
-    if current_level < 3 and current_exp >= exp_requirements[current_level]:
+    if current_level < 3 and current_exp >= exp_requirements:
         # Level up
         character['Level'] += 1
         # Update title
@@ -213,6 +214,8 @@ def level_up(character: dict):
         # Add another stance at level 3
         elif character['Level'] == 3:
             character['Stance'].append('Snake')
+        # Reset character experience
+        character['Experience'] = 0
 
 
 # Print character leveling up
