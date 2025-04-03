@@ -119,7 +119,7 @@ def game():
                     # Display attack options
                     battle.display_attack_options(character['Active Stance'], attack_moves)
                     # Get user attack choice
-                    attack_choice = battle.get_attack_choice(character, attack_moves)
+                    attack_choice = battle.get_attack_choice(attack_moves)
                     # Apply attack to monster
                     battle.apply_attack_move(attack_choice, character, monster)
                 # Update status effects
@@ -133,9 +133,9 @@ def game():
                 battle.monster_rewards(character)
 
     # Manages all potential encounters
-    def encounter_manager(character, npc_count):
+    def encounter_manager(character, npc_counts):
         # Get random encounter
-        new_random_encounter = encounters.obtain_random_npc(npc_count)
+        new_random_encounter = encounters.obtain_random_npc(npc_counts)
         print(f"You encountered: {new_random_encounter}")
         # Handle different encounter types
         if new_random_encounter == 'Hot Spring':
