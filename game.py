@@ -50,15 +50,15 @@ def game():
     # Character spawns in
     # Character goes through NPC interactions. Can skip to main zone. @DONE
     while in_tutorial:
-        # Dialogue with Darrow explaining the goal @DONE
-        # Dialogue with Misaki explaining stats and monsters @STARTED
-        # Dialogue with Ragnar explaining battle mechanics and quick battle tutorial @ MAKE
+        # Print tutorial zone
         grid.print_board(tutorial_zone, character)
+        # Get tutorial NPC interaction based on character location
         tutorial_npc = tutorial.tutorial_npcs((character["X-coordinate"], character["Y-coordinate"]))
+        # Skip tutorial flag
         skip_tutorial = tutorial.tutorial_interaction(tutorial_npc, character)
-        # Skip tutorial flag.
         if skip_tutorial:
             break
+        # Begin tutorial
         while True:
             direction = character_module.get_user_choice()
             if character_module.validate_move(tutorial_zone, character, direction):
@@ -66,9 +66,10 @@ def game():
                 break
             else:
                 print("You cannot move in that direction. Please enter a different direction.")
+        # Check if character still in tutorial zone
         in_tutorial = tutorial.exit_tutorial(character)
-    # Character obtains basic items @DONE
-    basic_items = {'Helmet': 'Leather Cap', 'Armour': 'Leather Tunic'}
+    # Character obtains basic items
+    basic_items = {'Helmet': ('Leather Cap', 0.02), 'Armour': ('Leather Tunic', 0.02)}
     character_module.equip_items(character, basic_items)
     # Character moves out of tutorial zone
     # Make main board @STARTED
