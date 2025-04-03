@@ -68,8 +68,31 @@ def game():
         character_module.print_apply_equipment(equipment_choice, character)
 
     # Monster manager
-    def monster_manager(character: dict, monster: str):
-        pass
+    def monster_manager(character: dict, monster_name: str):
+        # Create monster
+        monster = battle.create_monster(monster_name)
+        # Determine turn order
+        turns, first_strike_message = battle.turn_order(monster_name)
+        print(first_strike_message)
+        # Battle loop
+        current_turn = next(turns)
+        # Character and monster must be alive for the battle loop to continue
+        while is_alive(character) and not battle.monster_defeat(monster):
+            # Display health status -> decompose?
+            print(f"Your Health: {character['Current Health']}/{character['Health']}")
+            print(f"Your Ki: {character['Current Ki']}/{character['Ki']}")
+            print(f"{monster_name}'s Health: {monster['Current Health']}/{monster['Health']}")
+            # Monster's turn
+            if current_turn == 'monster':
+                # Check if monster is snared
+                if not battle.skip_turn(monster):
+                    # Get monster attack
+                    monster_attack = battle.get_monster_attack(monster_name)
+                    # Apply monster attack to character
+                    battle.apply_monster_attack(monster_attack, character)
+            # Character's turn -> FINISH
+            else:
+                pass
 
     # Manages all potential encounters
     def encounter_manager(character, npc_count):
