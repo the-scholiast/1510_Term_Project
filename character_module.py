@@ -85,7 +85,7 @@ def validate_move(board, character, direction):
     :precondition: character (X-coordinate value, Y-coordinate value) must be in board
     :precondition: X- and Y-coordinates values must be integers within range [0, 4]
     :precondition: Current HP value must be an integer within range [1, 5]
-    :precondition: direction must be an integer between [1, 4] representing ('Up', 'Down', 'Left', Right')
+    :precondition: direction must be an integer between [1, 4] representing ('Up', 'Down', 'Left', 'Right')
     :postcondition: leave board and character unmodified
     :postcondition: check if the character's coordinates after moving are in the board
     :return: True if the character's coordinates after moving are in the board else return False
@@ -130,7 +130,7 @@ def move_character(character, direction):
     :precondition: character must contain the keys "X-coordinate", "Y-coordinate", and "Current HP" as strings
     :precondition: X- and Y-coordinates values must be integers within range [0, 4]
     :precondition: Current HP value must be an integer within range [1, 5]
-    :precondition: direction must be an integer between [1, 4] representing ('Up', 'Down', 'Left', Right')
+    :precondition: direction must be an integer between [1, 4] representing ('Up', 'Down', 'Left', 'Right')
     :postcondition: X- and Y-coordinates values are integers within range [0, 4]
     :postcondition: increment or decrement character's X- or Y-coordinate depending on the direction
 
@@ -158,13 +158,14 @@ def move_character(character, direction):
         character["X-coordinate"] -= 1
 
 
-# EDIT TO INPUT 1 CHARACTER
+# G
 def get_user_choice():
     """
-    Return the direction ("Up", "Down", "Left", "Right") the user inputs.
+    Return the direction as an integer between [1, 4] representing ('Up', 'Down', 'Left', 'Right').
 
-    :postcondition: obtain a direction ("Up", "Down", "Left", "Right") as a string from the user
-    :return: the direction ("Up", "Down", "Left", "Right") as a string based on the user input
+    :postcondition: obtain a direction as an integer between [1, 4] representing ('Up', 'Down', 'Left', 'Right')
+                    from user input
+    :return: the direction as an integer between [1, 4] representing ('Up', 'Down', 'Left', 'Right')
     """
     directions = list(enumerate(("Up", "Down", "Right", "Left"), 1))
     for direction in directions:
