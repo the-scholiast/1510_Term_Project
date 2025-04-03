@@ -16,9 +16,9 @@ def obtain_random_npc(npc_count: dict) -> str:
     :param:
     :return:
     """
-    npc_list = {'Friendly': 'Merchant',
-                'Monsters': ('Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'),
-                'Environment': 'Hot Spring'
+    npc_list = {'Friendly': ['Merchant'],
+                'Monsters': ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'],
+                'Environment': ['Hot Spring']
                 }
     # Store how many of each encounter in a zone
 
