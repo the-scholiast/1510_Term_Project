@@ -81,20 +81,18 @@ def user_picks_equipment(equipment) -> tuple:
     equipment_types = list(equipment.keys())
     equipment_choice = {str(index): item_type for index, item_type in enumerate(equipment_types, 1)}
     while True:
-        user_input = input("Enter the number of the item you wish to purchase (or 0 to leave): ").strip()
-        if user_input == "0":
-            return None, None, None
+        user_input = input("Enter the number of the item you wish to purchase: ").strip()
         if user_input in equipment_choice:
             item_type = equipment_choice[user_input]
             item_name, price = equipment[item_type]
             return item_type, item_name, price
         else:
-            print(f"Invalid choice. Please enter a number between 0 and 3.")
+            print(f"Invalid choice. Please enter a number between 1 and 3.")
 # TESTING DELETE
 print(user_picks_equipment(test_equipment))
 
 # Merchant gives equipment and character equips it
-def obtain_and_equip():
+def obtain_and_equip(equipment: tuple, character: dict):
     pass
 
 
