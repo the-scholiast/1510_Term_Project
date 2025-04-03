@@ -76,8 +76,10 @@ def game():
         print(first_strike_message)
         # Battle loop
         current_turn = next(turns)
+        character_is_alive = is_alive(character)
+        monster_alive = battle.monster_defeat(monster)
         # Character and monster must be alive for the battle loop to continue
-        while is_alive(character) and not battle.monster_defeat(monster):
+        while character_is_alive and not monster_alive:
             # Display health status -> decompose?
             print(f"Your Health: {character['Current Health']}/{character['Health']}")
             print(f"Your Ki: {character['Current Ki']}/{character['Ki']}")
@@ -96,20 +98,22 @@ def game():
                 battle.display_battle_menu()
                 # Get user choice
                 battle_choice = battle.get_user_choice_battle_menu()
-                # User battle options
-                if battle_choice == 'STANCE':
+                # Option 1 is Stance
+                if battle_choice == '1':
                     # Display available stances
                     battle.display_stances(character)
                     # Get user stance choice
                     battle.get_stance(character)
-                elif battle_choice == 'ITEM':
+                # Option 2 is Item
+                elif battle_choice == '2':
                     # Display available items
                     battle.display_items(character)
                     # Get user item choice
                     item_choice = battle.get_item(character)
                     # Use item
                     character_module.use_item(character, item_choice)
-                elif battle_choice == 'FIGHT':
+                # Option 3 is Fight
+                elif battle_choice == '3':
                     # Get attack moves for current stance
                     attack_moves = battle.get_attack_moves(character, battle.CHARACTER_ATTACKS)
                     # Display attack options
@@ -122,6 +126,8 @@ def game():
             battle.update_status_effects(character, monster)
             # Next turn
             current_turn = next(turns)
+            character_is_alive = is_alive(character)
+            monster_alive = battle.monster_defeat(monster)
 
     # Manages all potential encounters
     def encounter_manager(character, npc_count):
@@ -165,7 +171,7 @@ def game():
         # Check if character still in tutorial zone
         in_tutorial = tutorial.exit_tutorial(new_character)
     # Character obtains basic items ->>> FIX
-    basic_items = ('Helmet', 'Leather Cap', 0.02), ('Armour', 'Leather Tunic', 0.02)
+    basic_items = ('Armour', 'Leather Tunic', 0.02)
     character_module.obtain_and_equip(basic_items, new_character)
     # Character moves out of tutorial zone
     # Make main board @STARTED
@@ -180,29 +186,27 @@ def game():
     # Store NPC and Monster weights
     npc_count = {'Monsters': 13, 'Friendly': 7, 'Environment': 4}
     # Main board game loop
-    while character_alive and crystals_100:
+    while character_alive and not crystals_100:
+        grid.print_board(board, new_character)
         # Validate character direction and move character is possible or ask for direction again
         while True:
             direction = character_module.get_user_choice()
-            if character_module.validate_move(tutorial_zone, new_character, direction):
+            if character_module.validate_move(board, new_character, direction):
                 character_module.move_character(new_character, direction)
                 break
             else:
                 print("You cannot move in that direction. Please enter a different direction.")
         # Check if there is an encounter
         if encounters.check_encounter(new_character, board):
-            # Randomize an encounter
-            random_encounter = encounters.obtain_random_npc(npc_count)
+            # Operate proper encounter
+            encounter_manager(new_character, npc_count)
         else:
             # Go back to movement if there are no encounters
             continue
-        # If hot spring, give option to heal or leave it for future use @ MAKE
-        if random_encounter in NPC_DICT['Environment']:
-            pass
-        # If friendly NPC, give dialogue options
-        # If monster, begin battle phase
-        # If hot spring, give option to heal or leave it for future use
         # Gain new move set, stats, and title upgrade every level up
+        if new_character['Level'] > 1:
+            character_module.level_up(new_character)
+            character_module.print_level_up(new_character)
     # If true, notify Character a Calamity Monster approaches
     # Character healed for battle
     # Final boss battle
