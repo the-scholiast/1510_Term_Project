@@ -125,6 +125,7 @@ def apply_monster_attack(attack: list, character: dict):
     elif attack_type == 'Heal':
         # Monster heals itself 50% of the damage dealt
         heal_amount = damage // 2
+        character['Current Health'] -= damage
         message = f"Monster used {attack_name}! {description} Monster healed for {heal_amount} health!"
     elif attack_type == 'Poison':
         character['Current Health'] -= damage
