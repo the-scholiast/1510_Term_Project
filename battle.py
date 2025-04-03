@@ -64,8 +64,21 @@ CHARACTER_ATTACKS = {
 }
 
 
-# Create monster with Health
-def create_monster(monster):
+# Create monster with Health and stats as a dictionary
+def create_monster(monster: str) -> dict:
+    """
+    Generate a monster with stats depending on its type.
+
+    :param monster: is a string
+    :precondition: monster must be ('Wendigo', 'Djinn', 'Skinwalker', 'Ghoul', 'Shapeshifter', 'Werewolf', 'Vampire')
+    :postcondition: generate a monster represented as a dictionary containing its name and stats
+    :return: a monster represented as a dictionary containing its name and stats
+
+    >>> create_monster('Ghoul')
+    {'Name': 'Ghoul', 'Health': 80, 'Current Health': 80, 'Status Effects': {'Buff': 0, 'Snared': 0}, 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
+    >>> create_monster('Vampire')
+    {'Name': 'Vampire', 'Health': 90, 'Current Health': 90, 'Status Effects': {'Buff': 0, 'Snared': 0}, 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
+    """
     # Base health for different monster types
     monster_health = {
         'Wendigo': 100,
