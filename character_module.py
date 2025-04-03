@@ -1,6 +1,7 @@
 """
 This module contains functions that make and edit the character.
 """
+from encounters import user_input_hot_spring
 
 
 # Ask user for proper player name
@@ -119,37 +120,36 @@ def move_character(character, direction):
 
     :param character: a dictionary containing "X-coordinate":value and "Y-coordinate":value
                       (as string:int within range [0, 4]), and "Current HP":value (as string:int of range [1, 5])
-    :param direction: a string
+    :param direction: an integer between [1, 4]
     :precondition: character must be a non-empty dictionary
     :precondition: character must contain the keys "X-coordinate", "Y-coordinate", and "Current HP" as strings
     :precondition: X- and Y-coordinates values must be integers within range [0, 4]
     :precondition: Current HP value must be an integer within range [1, 5]
-    :precondition: direction must be a string
-    :precondition: direction must be 'Up', 'Down', 'Left', or 'Right'
+    :precondition: direction must be an integer between [1, 4] representing ('Up', 'Down', 'Left', Right')
     :postcondition: X- and Y-coordinates values are integers within range [0, 4]
     :postcondition: increment or decrement character's X- or Y-coordinate depending on the direction
 
     >>> test_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
-    >>> move_character(test_character, 'Down')
+    >>> move_character(test_character, 2)
     >>> test_character == {"X-coordinate": 0, "Y-coordinate": 1, "Current HP": 5}
     True
     >>> test_character = {"X-coordinate": 3, "Y-coordinate": 4, "Current HP": 5}
-    >>> move_character(test_character, 'Right')
+    >>> move_character(test_character, 3)
     >>> test_character == {"X-coordinate": 4, "Y-coordinate": 4, "Current HP": 5}
     True
     >>> test_character = {"X-coordinate": 3, "Y-coordinate": 4, "Current HP": 5}
-    >>> move_character(test_character, 'Up')
+    >>> move_character(test_character, 1)
     >>> test_character == {"Y-coordinate": 3, "Current HP": 5, "X-coordinate": 3}
     True
     """
     # Modify the original character dictionary coordinates
-    if direction == 'Up':
+    if direction == 1:
         character["Y-coordinate"] -= 1
-    elif direction == 'Down':
+    elif direction == 2:
         character["Y-coordinate"] += 1
-    elif direction == 'Right':
+    elif direction == 3:
         character["X-coordinate"] += 1
-    elif direction == 'Left':
+    elif direction == 4:
         character["X-coordinate"] -= 1
 
 
@@ -161,10 +161,12 @@ def get_user_choice():
     :postcondition: obtain a direction ("Up", "Down", "Left", "Right") as a string from the user
     :return: the direction ("Up", "Down", "Left", "Right") as a string based on the user input
     """
-    directions = enumerate(("Up", "Down", "Right", "Left"), 1)
+    directions = list(enumerate(("Up", "Down", "Right", "Left"), 1))
+    print(directions)
     for direction in directions:
         print(direction)
     while True:
-        user_direction = input("Please enter Up, Down, Left, or Right to move: ").title().strip()
-        if user_direction in directions:
-            return user_direction
+        valid_moves = {1, 2, 3, 4}
+        user_direction = input("Please enter Up, Down, Left, or Right to move: ").strip()
+        if user_direction.isdigit() and int(user_direction) in valid_moves:
+            return int(user_direction)
