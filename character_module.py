@@ -51,8 +51,16 @@ def equip_items(character: dict, items: dict):
 
 
 # Apply equipment stats
-def apply_equipment(character:dict):
-    pass
+def apply_equipment(character: dict):
+    defense_equipment = {"Helmet", "Armour"}
+    damage_equipment = {"Ring", "Amulet"}
+    character_equipment = character.get("Equipment")
+    # Apply equipment modifier to character
+    for equipment in character_equipment:
+        if equipment[0] in defense_equipment:
+            character["Defense Modifier"] += equipment[1]
+        elif equipment[0] in damage_equipment:
+            character["Damage Modifier"] += equipment[1]
 
 
 def validate_move(board, character, direction):
@@ -154,7 +162,9 @@ def get_user_choice():
     :postcondition: obtain a direction ("Up", "Down", "Left", "Right") as a string from the user
     :return: the direction ("Up", "Down", "Left", "Right") as a string based on the user input
     """
-    directions = {"Up", "Down", "Left", "Right"}
+    directions = enumerate(("Up", "Down", "Right", "Left"), 1)
+    for direction in directions:
+        print(direction)
     while True:
         user_direction = input("Please enter Up, Down, Left, or Right to move: ").title().strip()
         if user_direction in directions:
