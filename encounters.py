@@ -3,16 +3,6 @@ This module contains all possible encounters with NPCs and monsters.
 """
 import random
 
-# TEST CHARACTER DELETE #####################################################
-test_character = {
-    'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
-    'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 1, 'Damage Modifier': 1,
-    'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 1, 'Shards': 3},
-    'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
-    'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0}, 'Active Stance': 'Bear',
-    'Active Defense Modifier': 1
-}
-
 
 def check_encounter(character: dict, board: dict) -> bool:
     character_location = (character['X-coordinate'], character['Y-coordinate'])
@@ -80,10 +70,7 @@ def print_merchant_offers(equipment: dict):
     print("├" + "─" * 50 + "┤")
     print("│ 0. Leave                                         │")
     print("└" + "─" * 50 + "┘")
-# TESTING DELETE
-test_equipment = {'Helmet': ('Iron Hat', 0.02), 'Armour': ('Copper Plate', 0.04),
-                  'Ring': ('Copper Ring', 0.02), 'Amulet': ('Wooden Charm', 0.02)}
-# print_merchant_offers(test_equipment)
+
 
 # Get user equipment choice
 def user_picks_equipment(equipment) -> tuple:
@@ -98,8 +85,7 @@ def user_picks_equipment(equipment) -> tuple:
             return item_type, item_name, price
         else:
             print(f"Invalid choice. Please enter a number between 1 and 3.")
-# TESTING DELETE
-# print(user_picks_equipment(test_equipment))
+
 
 # Merchant gives equipment and character equips it
 def obtain_and_equip(equipment_choice: tuple, character: dict):
@@ -107,8 +93,7 @@ def obtain_and_equip(equipment_choice: tuple, character: dict):
     character_equipment = character['Equipment']
     character_equipment[item_type] = (item_name, price)
     print(f"You have equipped {item_name}!")
-# TESTING DELETE
-# obtain_and_equip(('Helmet', 'Iron Hat', 0.02), test_character)
+
 
 # Hot spring encounter options
 def hot_spring_encounter():
@@ -120,8 +105,7 @@ def hot_spring_encounter():
     print("│ 1. Bathe in the spring (fully restore Health/Ki) │")
     print("│ 2. Collect minerals (gain Health pots and shards)│")
     print("└" + "─" * 50 + "┘")
-# TEST DELETE
-# hot_spring_encounter()
+
 
 # Get user choice for hot spring
 def user_input_hot_spring() -> int:
@@ -151,5 +135,3 @@ def hot_spring_reward(character: dict, user_choice: int):
         character["Items"]["Shards"] += shards
         print(f"You collected minerals from around the spring!")
         print(f"Gained: {health_pots} Health Potion(s) and {shards} Shard(s)")
-# TEST DELETE
-hot_spring_reward(test_character, 2)
