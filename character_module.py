@@ -171,7 +171,7 @@ def get_user_choice():
 
 
 # Character level up boost
-def level_up(character):
+def level_up(character: dict):
     current_level = character['Level']
     current_exp = character['Experience']
     # Experience needed for each level
@@ -194,3 +194,15 @@ def level_up(character):
         # Add another stance at level 3
         elif character['Level'] == 3:
             character['Stance'].append('Snake')
+
+
+# Print character leveling up
+def print_level_up(character: dict):
+    # Print the obtained stats
+    print(f"Level Up! You are now level {character['Level']}!")
+    print(f"New title: {character['Title']}")
+    print(f"Health increased to {character['Health']}")
+    print(f"Ki increased to {character['Ki']}")
+    # Print the new unlocked stance
+    if character['Level'] > 1:
+        print(f"New stance unlocked: {character['Stance'][-1]}")
