@@ -3,6 +3,16 @@ This module contains all possible encounters with NPCs and monsters.
 """
 import random
 
+# TEST CHARACTER DELETE #####################################################
+test_character = {
+    'Name': 'Tester', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Current Health': 100,
+    'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Experience': 0, 'Defense Modifier': 1, 'Damage Modifier': 1,
+    'Crystals': 0, 'X-coordinate': 0, 'Y-coordinate': 0, 'Items': {'Health Pots': 1, 'Shards': 3},
+    'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""}, 'Stance': ['Bear'],
+    'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0}, 'Active Stance': 'Bear',
+    'Active Defense Modifier': 1
+}
+
 
 def check_encounter(character: dict, board: dict) -> bool:
     character_location = (character['X-coordinate'], character['Y-coordinate'])
@@ -89,12 +99,16 @@ def user_picks_equipment(equipment) -> tuple:
         else:
             print(f"Invalid choice. Please enter a number between 1 and 3.")
 # TESTING DELETE
-print(user_picks_equipment(test_equipment))
+# print(user_picks_equipment(test_equipment))
 
 # Merchant gives equipment and character equips it
-def obtain_and_equip(equipment: tuple, character: dict):
-    pass
-
+def obtain_and_equip(equipment_choice: tuple, character: dict):
+    item_type, item_name, price = equipment_choice
+    character_equipment = character['Equipment']
+    character_equipment[item_type] = (item_name, price)
+    print(f"You have equipped {item_name}!")
+# TESTING DELETE
+# obtain_and_equip(('Helmet', 'Iron Hat', 0.02), test_character)
 
 # Hot spring encounter options
 def hot_spring_encounter():
