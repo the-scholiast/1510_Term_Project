@@ -370,7 +370,7 @@ def update_status_effects(character, monster):
 
 # Check if monster health is <= 0
 def monster_defeat(monster: dict) -> bool:
-    monster_health = monster.get("Health")
+    monster_health = monster.get("Current Health")
     return monster_health <= 0
 
 
