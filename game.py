@@ -53,6 +53,7 @@ def game():
         # Dialogue with Darrow explaining the goal @DONE
         # Dialogue with Misaki explaining stats and monsters @STARTED
         # Dialogue with Ragnar explaining battle mechanics and quick battle tutorial @ MAKE
+        grid.print_board(tutorial_zone, character)
         tutorial_npc = tutorial.tutorial_npcs((character["X-coordinate"], character["Y-coordinate"]))
         skip_tutorial = tutorial.tutorial_interaction(tutorial_npc, character)
         # Skip tutorial flag.
@@ -100,6 +101,7 @@ def game():
             continue
         # If hot spring, give option to heal or leave it for future use @ MAKE
         if random_encounter in NPC_DICT['Environment']:
+            pass
         # If friendly NPC, give dialogue options
         # If monster, begin battle phase
         # If hot spring, give option to heal or leave it for future use
