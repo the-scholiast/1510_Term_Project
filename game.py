@@ -91,40 +91,55 @@ def game():
                     monster_attack = battle.get_monster_attack(monster_name)
                     # Apply monster attack to character
                     battle.apply_monster_attack(monster_attack, character)
-            # Character's turn -> FINISH
+                # Move to next turn after monster's action
+                current_turn = next(turns)
+            # Character's turn
             else:
-                # Display battle menu
-                battle.display_battle_menu()
-                # Get user choice
-                battle_choice = battle.get_user_choice_battle_menu()
-                # Option 1 is Stance
-                if battle_choice == '1':
-                    # Display available stances
-                    battle.display_stances(character)
-                    # Get user stance choice
-                    battle.get_stance(character)
-                # Option 2 is Item
-                elif battle_choice == '2':
-                    # Display available items
-                    battle.display_items(character)
-                    # Get user item choice
-                    item_choice = battle.get_item(character)
-                    # Use item
-                    character_module.use_item(character, item_choice)
-                # Option 3 is Fight
-                elif battle_choice == '3':
-                    # Get attack moves for current stance
-                    attack_moves = battle.get_attack_moves(character, battle.CHARACTER_ATTACKS)
-                    # Display attack options
-                    battle.display_attack_options(character['Active Stance'], attack_moves)
-                    # Get user attack choice
-                    attack_choice = battle.get_attack_choice(attack_moves)
-                    # Apply attack to monster
-                    battle.apply_attack_move(attack_choice, character, monster)
-                # Update status effects
+                # Flag to track if player completed an action
+                action_completed = False
+                # Loop until player completes an action
+                while not action_completed:
+                    # Display battle menu
+                    battle.display_battle_menu()
+                    # Get user choice
+                    battle_choice = battle.get_user_choice_battle_menu()
+                    # Option 1 is Stance
+                    if battle_choice == '1':
+                        # Display available stances
+                        battle.display_stances(character)
+                        # Get user stance choice
+                        stance_choice = battle.get_stance(character)
+                        # Only mark action as completed if a stance was chosen not back
+                        if stance_choice is not None:
+                            action_completed = True
+                    # Option 2 is Item
+                    elif battle_choice == '2':
+                        # Display available items
+                        battle.display_items(character)
+                        # Get user item choice
+                        item_choice = battle.get_item(character)
+                        # Only mark action as completed if an item was used not back
+                        if item_choice is not None:
+                            character_module.use_item(character, item_choice)
+                            action_completed = True
+                    # Option 3 is Fight
+                    elif battle_choice == '3':
+                        # Get attack moves for current stance
+                        attack_moves = battle.get_attack_moves(character, battle.CHARACTER_ATTACKS)
+                        # Display attack options
+                        battle.display_attack_options(character['Active Stance'], attack_moves)
+                        # Get user attack choice
+                        attack_choice = battle.get_attack_choice(attack_moves)
+                        # Only mark action as completed if an attack was chosen not back
+                        if attack_choice is not None:
+                            battle.apply_attack_move(attack_choice, character, monster)
+                            action_completed = True
+                # Only move to next turn if player completed an action
+                if action_completed:
+                    current_turn = next(turns)
+            # Update status effects after each complete round
             battle.update_status_effects(character, monster)
-            # Next turn
-            current_turn = next(turns)
+            # Check battle status
             character_is_alive = is_alive(character)
             monster_alive = not battle.monster_defeat(monster)
             # Get rewards from beating monster
