@@ -5,7 +5,6 @@ import encounters
 import grid
 import sys
 import tutorial
-from __init__ import NPC_DICT
 
 
 def check_crystals(character):
@@ -134,6 +133,9 @@ def game():
 
     # Manages all potential encounters
     def encounter_manager(character, npc_counts):
+        npc_dict = {'Friendly': ['Merchant'],
+                    'Monsters': ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'],
+                    'Environment': ['Hot Spring']}
         # Get random encounter
         new_random_encounter = encounters.obtain_random_npc(npc_counts)
         print(f"You encountered: {new_random_encounter}")
@@ -143,7 +145,7 @@ def game():
         elif new_random_encounter == 'Merchant':
             merchant_manager(character)
         # Monster encounter -->> fix NPC_DICT
-        elif new_random_encounter in NPC_DICT['Monsters']:
+        elif new_random_encounter in npc_dict['Monsters']:
             monster_manager(character, new_random_encounter)
 
     # Ask user for proper character name @DONE

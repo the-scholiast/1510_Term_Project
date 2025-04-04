@@ -1,8 +1,3 @@
-# Store all possible encounter NPCs
-NPC_DICT = {'Friendly': ['Civilian', 'Merchant', 'Guard', 'Fairy'],
-            'Monsters': ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'],
-            'Environment': ['Hot Spring']
-            }
 # Store character's battle stances. Start with Bear and gain each other one per level.
 BATTLE_STANCES = (
     ('Bear', "Clavem transforms into a giant greatsword. The edges aren't very sharp but it packs a huge punch."),
