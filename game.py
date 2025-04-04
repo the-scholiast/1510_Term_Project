@@ -208,12 +208,15 @@ def game():
         if encounters.check_encounter(new_character, board):
             # Operate proper encounter
             encounter_manager(new_character, npc_count)
-        else:
-            # Go back to movement if there are no encounters
-            continue
+            # Check if character is still alive after the encounter
+            character_alive = is_alive(new_character)
+            if not character_alive:
+                game_lost(character_alive)
+            # Check if character has reached 100 crystals
+            crystals_100 = check_crystals(new_character)
         # Gain new move set, stats, and title upgrade every level up
-        if 1 <= new_character['Level'] <= 3:
-            character_module.level_up(new_character)
+        leveled_up = character_module.level_up(new_character)
+        if leveled_up:
             character_module.print_level_up(new_character)
     # If true, notify Character a Calamity Monster approaches
     # Character healed for battle
