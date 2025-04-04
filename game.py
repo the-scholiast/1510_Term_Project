@@ -56,6 +56,8 @@ def game():
         encounters.print_merchant_offers(merchant_items)
         # Get user choice for equipment
         equipment_choice = encounters.user_picks_equipment(merchant_items)
+        # Remove modifiers of current equipment
+        character_module.remove_equipment_modifiers(character)
         # Equip the selected item
         character_module.obtain_and_equip(equipment_choice, character)
         # Apply the item stats
