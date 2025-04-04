@@ -1,15 +1,29 @@
 import random
 
 """
-Contain the necessary functions and variables needed to create the 5x5 grid
+Contain the necessary functions and variables needed to create the 5x5 game board.
 """
 
 
 # For each grid position, randomly choose from a set of characters which represents different encounters.
 def make_board(rows, columns):
-    # Substitute '[!]' with a data structure to randomly select other characters as well
-    grid = {(row, column): '[!]' for column in range(columns) for row in range(rows)}
-    return grid
+    """
+    Create a game board represented as a dictionary with coordinates as keys.
+
+    Each coordinate contains an encounter marker '[!]'.
+    The board uses (row, column) tuple coordinates as keys and encounter markers as values.
+
+    :param rows: a positive integer == 5
+    :param columns: a positive integer == 5
+    :precondition: rows and columns must be positive integers == 5
+    :postcondition: creates a dictionary with (row, column): '[!]' (as a tuple with ints >=5: string)
+    :return: a dictionary with (row, column): '[!]' (as a tuple with ints >=5: string)
+
+    >>> make_board(5, 5)
+    {(0, 0): '[!]', (1, 0): '[!]', (2, 0): '[!]', (3, 0): '[!]', (4, 0): '[!]', (0, 1): '[!]', (1, 1): '[!]', (2, 1): '[!]', (3, 1): '[!]', (4, 1): '[!]', (0, 2): '[!]', (1, 2): '[!]', (2, 2): '[!]', (3, 2): '[!]', (4, 2): '[!]', (0, 3): '[!]', (1, 3): '[!]', (2, 3): '[!]', (3, 3): '[!]', (4, 3): '[!]', (0, 4): '[!]', (1, 4): '[!]', (2, 4): '[!]', (3, 4): '[!]', (4, 4): '[!]'}
+    """
+    board = {(row, column): '[!]' for column in range(columns) for row in range(rows)}
+    return board
 
 
 # Check if character movement will lead to random encounter '[!]'
