@@ -290,21 +290,22 @@ def display_attack_options(stance, attacks_moves):
 
 
 # Obtain user input for attack move. Max value = 3 (number of attack moves). 0 to go back to display_battle_menu
-def get_attack_choice(attacks_dict: dict) -> tuple:
+def get_attack_choice(attacks_dict: dict):
     # Keep asking for valid number
     while True:
+        user_input = input("Choose your attack. Enter a number between 1 and 3, or 0 to go back: ")
+        if user_input == '0':
+            return None
         try:
-            user_input = input("Choose your attack. Enter a number between 1 and 3, or 0 to go back: ")
             attack_choice = int(user_input) - 1
         except ValueError:
             print("Please enter a valid number.")
         else:
-            if 0 <= attack_choice <= 3:
+            if 0 <= attack_choice <= 2:
                 attack_moves = tuple(attacks_dict.items())
                 return attack_moves[attack_choice]
             else:
                 print("Invalid choice. Please enter a number between 0 and 3")
-            # Condition to exit when input is 0
 
 
 # Apply character attack to monster ### DECOMPOSE
