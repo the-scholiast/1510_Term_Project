@@ -6,7 +6,7 @@ Contain the necessary functions and variables needed to create the 5x5 game boar
 
 
 # For each grid position, randomly choose from a set of characters which represents different encounters.
-def make_board(rows, columns):
+def make_board(rows: int, columns: int) -> dict:
     """
     Create a game board represented as a dictionary with coordinates as keys.
 
@@ -27,10 +27,32 @@ def make_board(rows, columns):
 
 
 # Check if character movement will lead to random encounter '[!]'
-def check_encounter(character, board):
+def check_encounter(character: dict, board: dict):
+    """
+    Determine if the character's current location contains an encounter marker '[!]'.
+
+    :param character: a dictionary containing all character attributes including name, stats,
+                      position, inventory, equipment, and status effects
+    :param board: a dictionary with (row, column): '[!]' (as a tuple with ints >=5: string)
+    :precondition: character must contain 'X-coordinate' and 'Y-coordinate' integer keys between [0, 4]
+    :precondition: board must be a dictionary with (row, column) tuple keys (as ints == 5)
+    :precondition: board must contain '[!]' or '   ' as values
+    :postcondition: determines if the character's current location has an encounter
+    :return: True if an encounter '[!]' is present at the character's location else False
+
+    >>> test_character = {'X-coordinate': 1, 'Y-coordinate': 2}
+    >>> test_board = {(2, 1): '[!]', (2, 2): '   '}
+    >>> check_encounter(test_character, test_board)
+    True
+    >>> test_character = {'X-coordinate': 2, 'Y-coordinate': 2}
+    >>> check_encounter(test_character, test_board)
+    >>> test_board = {(2, 1): '[!]', (2, 2): "   "}
+    False
+    """
     character_location = (character['Y-coordinate'], character['X-coordinate'])
-    board_symbol = board[character_location[0]][character_location[1]]
-    return board_symbol == '[!]'
+    # Get either encounter marker '[!]' or whitespace
+    board_location = board.get(character_location)
+    return board_location == '[!]'
 
 
 # Create tutorial zone
