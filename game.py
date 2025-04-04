@@ -212,7 +212,7 @@ def game():
             # Go back to movement if there are no encounters
             continue
         # Gain new move set, stats, and title upgrade every level up
-        if new_character['Level'] > 1:
+        if 1 <= new_character['Level'] <= 3:
             character_module.level_up(new_character)
             character_module.print_level_up(new_character)
     # If true, notify Character a Calamity Monster approaches
