@@ -16,8 +16,8 @@ def make_board(rows: int, columns: int) -> dict:
     :param rows: a positive integer == 5
     :param columns: a positive integer == 5
     :precondition: rows and columns must be positive integers == 5
-    :postcondition: creates a dictionary with (row, column): '[!]' (as a tuple with ints >=5: string)
-    :return: a dictionary with (row, column): '[!]' (as a tuple with ints >=5: string)
+    :postcondition: create a dictionary with (row, column):"[!]" (as a tuple with 0<=ints<5:string)
+    :return: a dictionary with (row, column):"[!]" (as a tuple with 0<=ints<5:string)
 
     >>> make_board(5, 5)
     {(0, 0): '[!]', (1, 0): '[!]', (2, 0): '[!]', (3, 0): '[!]', (4, 0): '[!]', (0, 1): '[!]', (1, 1): '[!]', (2, 1): '[!]', (3, 1): '[!]', (4, 1): '[!]', (0, 2): '[!]', (1, 2): '[!]', (2, 2): '[!]', (3, 2): '[!]', (4, 2): '[!]', (0, 3): '[!]', (1, 3): '[!]', (2, 3): '[!]', (3, 3): '[!]', (4, 3): '[!]', (0, 4): '[!]', (1, 4): '[!]', (2, 4): '[!]', (3, 4): '[!]', (4, 4): '[!]'}
@@ -33,11 +33,13 @@ def check_encounter(character: dict, board: dict):
 
     :param character: a dictionary containing all character attributes including name, stats,
                       position, inventory, equipment, and status effects
-    :param board: a dictionary with (row, column): '[!]' (as a tuple with ints >=5: string)
+    :param board: a dictionary with (row, column):"[!]" (as a tuple with 0<=ints<5:string)
     :precondition: character must contain 'X-coordinate' and 'Y-coordinate' integer keys between [0, 4]
     :precondition: board must be a dictionary with (row, column) tuple keys (as ints == 5)
     :precondition: board must contain '[!]' or '   ' as values
-    :postcondition: determines if the character's current location has an encounter
+    :postcondition: determine if the character's current location has an encounter
+    :postcondition: leave character unmodified
+    :postcondition: replace '[!]' value with "   " if character's location equals its key
     :return: True if an encounter '[!]' is present at the character's location else False
 
     >>> test_character = {'X-coordinate': 1, 'Y-coordinate': 2}
@@ -56,28 +58,40 @@ def check_encounter(character: dict, board: dict):
 
 
 # Create tutorial zone
-def tutorial_area():
-    # Linear grid for tutorial. There should be a skip option.
+def tutorial_area() -> dict:
+    """
+    Create a linear board for the tutorial section of the game.
+
+    Generates a 1x5 board where each position contains a tutorial marker '[?]'.
+
+    :postcondition: generate a dictionary with (row, column) tuple keys (as int = 1, int = 5) and '[?]' string values
+    :return: a dictionary representing the tutorial zone
+             with (row, column) tuple keys (as int = 1, int = 5) and '[?]' string values
+
+    >>> tutorial_area()
+    {(0, 0): '[?]', (0, 1): '[?]', (0, 2): '[?]', (0, 3): '[?]', (0, 4): '[?]'}
+    """
+    # Linear board for tutorial.
     tutorial_zone = {(row, column): '[?]' for row in range(1) for column in range(5)}
     return tutorial_zone
 
 
-# Print board --> FIX DOCSTRING
-def print_board(board, character):
+# Print board
+def print_board(board: dict, character: dict):
     """
     Print the board, its borders, and the current character location.
 
-    :param board:
-    :param character: a dictionary containing "X-coordinate":value and "Y-coordinate":value
-                      (as string:ints within range [0, 4]), and "Current HP":value (as string:int of range [1, 5])
-    :precondition: both rows and columns must integers == 5
+    :param board: a dictionary with (row, column):"[!]" (as a tuple with 0<=ints<5:string)
+    :param character: a dictionary containing all character attributes including name, stats,
+                      position, inventory, equipment, and status effects
+    :precondition: board must be a non-empty dictionary
+    :precondition: board must contain (row, column):"[!]" (as a tuple with 0<=ints<5:string)
     :precondition: character must be a non-empty dictionary
-    :precondition: character must contain the keys "X-coordinate", "Y-coordinate", and "Current HP" as strings
+    :precondition: character must contain the keys "X-coordinate", "Y-coordinate"
     :precondition: X- and Y-coordinates values must be integers within range [0, 4]
-    :precondition: Current HP value must be an integer within range [1, 5]
-    :postcondition: leave character unmodified
-    :postcondition: print the board and its borders (as "X") using rows and columns as the grid,
-                    also print the current location of the character (as "#")
+    :postcondition: leave character and board unmodified
+    :postcondition: print the board and its borders using border Unicode and
+                    print the current location of the character (as "♦")
     """
     # Define border characters
     borders = {
