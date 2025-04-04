@@ -98,21 +98,3 @@ def equip_items(character: dict, items: dict):
 def exit_tutorial(character) -> bool:
     character_location = (character['X-coordinate'], character['Y-coordinate'])
     return character_location != (4, 0)
-
-
-def main():
-    """
-    Drive the program.
-    """
-    character = {'Name': 'Test', 'Title': 'the Amateur', 'Level': 1, 'Health': 100, 'Strength': 15,
-                 'Speed': 10, 'Honour': 0, 'Ki': 50, 'Current Ki': 50, 'Spirit': 10, 'Experience': 0,
-                 'Crystals': 0, 'Current Health': 100, 'X-coordinate': 1, 'Y-coordinate': 0,
-                 'Items': {}}
-    # tutorial_interaction("Darrow", character)
-    basic_items = {'Helmet': 'Leather Cap', 'Armour': 'Leather Tunic'}
-    equip_items(character, basic_items)
-    print(character)
-
-
-if __name__ == "__main__":
-    main()
