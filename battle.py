@@ -383,6 +383,7 @@ def monster_defeat(monster: dict) -> bool:
 
 # Get rewards after defeating monster, gain 8 Crystals, and 35 experience. Gain 25 to Health if level 3.
 def monster_rewards(character: dict):
+    print("You have slain your foe!")
     # Award Crystals
     character['Crystals'] += 8
     print(f"You gained 8 Crystals!")
