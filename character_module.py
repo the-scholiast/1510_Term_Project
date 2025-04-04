@@ -28,7 +28,7 @@ def make_character(player_name: str) -> dict:
     """
     Create a new character dictionary with default starting attributes.
 
-    Initializes a character with starting stats, empty inventory, default stance,
+    Character contains starting stats, empty inventory, default stance,
     and base modifiers. The character starts at position (0, 0) with full Health and Ki.
 
     :param player_name: a string containing only alphabetic characters representing the character name
