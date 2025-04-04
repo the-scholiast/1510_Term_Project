@@ -189,9 +189,10 @@ def game():
     # Critical game loop around if Crystals >= 100 @DONE
     crystals_100 = check_crystals(new_character)
     # Store NPC and Monster weights
-    npc_count = {'Monsters': 13, 'Friendly': 7, 'Environment': 4}
+    npc_count = {'Monsters': 14, 'Friendly': 6, 'Environment': 4}
     # Main board game loop
     while character_alive and not crystals_100:
+        grid.mark_location_visited(board, new_character)
         grid.print_board(board, new_character)
         # Validate character direction and move character is possible or ask for direction again
         while True:
