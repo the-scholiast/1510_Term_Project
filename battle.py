@@ -320,6 +320,7 @@ def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
     if attack_type == 'Physical':
         monster['Current Health'] -= actual_damage
         message = f"You used {attack_name}! {description} You dealt {actual_damage} damage!"
+        return True
     elif attack_type == 'Ki':
         # Check if character has enough Ki
         if character['Current Ki'] >= 10:
@@ -346,9 +347,14 @@ def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
                     monster['Status Effects']['Snared'] = 1
                     message = (f"You used {attack_name}! {description} "
                                f"The monster is snared and will miss its next turn!")
+            print(message)
+            return True
         else:
-            message = "You don't have enough Ki to use this attack!"
+            message = "You don't have enough Ki to use this attack! Choose another action."
+            print(message)
+            return False
     print(message)
+    return True
 
 
 # Update status effects for both character and monster

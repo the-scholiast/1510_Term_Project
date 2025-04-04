@@ -132,8 +132,11 @@ def game():
                         attack_choice = battle.get_attack_choice(attack_moves)
                         # Only mark action as completed if an attack was chosen not back
                         if attack_choice is not None:
-                            battle.apply_attack_move(attack_choice, character, monster)
-                            action_completed = True
+                            # Apply attack to monster and check if it was successful
+                            attack_successful = battle.apply_attack_move(attack_choice, character, monster)
+                            # Only mark action as completed if the attack was successful
+                            if attack_successful:
+                                action_completed = True
                 # Only move to next turn if player completed an action
                 if action_completed:
                     current_turn = next(turns)
