@@ -4,7 +4,15 @@ This module contains functions that make and edit the character.
 
 
 # Ask user for proper player name
-def proper_name():
+def proper_name() -> str:
+    """
+    Prompt the user for a valid character name containing only letters.
+
+    Continually prompts the user until they provide a valid name.
+
+    :postcondition: user is prompted for input until a valid name is provided
+    :return: a string containing only alphabetic characters representing the character name
+    """
     # Keep asking user for valid name
     while True:
         player_name = input("Please enter a valid character name (letters only): ").strip()
@@ -17,6 +25,19 @@ def proper_name():
 
 # Make character including the player's name
 def make_character(player_name: str) -> dict:
+    """
+    Create a new character dictionary with default starting attributes.
+
+    Initializes a character with starting stats, empty inventory, default stance,
+    and base modifiers. The character starts at position (0, 0) with full Health and Ki.
+
+    :param player_name: a string containing only alphabetic characters representing the character name
+    :precondition: player_name must be a non-empty string
+    :precondition: player_name must be only alphabetic characters
+    :postcondition: creates a character dictionary with default starting values
+    :return: a dictionary containing all character attributes including name, stats,
+             position, inventory, equipment, and status effects
+    """
     character = {
         'Name': f'{player_name}', 'Title': 'the Amateur',
         'Level': 1, 'Experience': 0,
@@ -195,9 +216,8 @@ def level_up(character: dict):
 
     :param character: a dictionary containing character name, stats, items,
                       coordinates, equipment, status, level, and stance
-    :precondition: character must be a dictionary containing character name, stats,
-                   items, coordinates, equipment, status, level, and stance
-
+    :precondition: character must be a dictionary containing all character attributes including name, stats,
+                   position, inventory, equipment, and status effects
     """
     current_level = character['Level']
     current_exp = character['Experience']
