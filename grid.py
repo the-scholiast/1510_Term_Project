@@ -92,6 +92,37 @@ def print_board(board: dict, character: dict):
     :postcondition: leave character and board unmodified
     :postcondition: print the board and its borders using border Unicode and
                     print the current location of the character (as "♦")
+
+    >>> test_character = {"X-coordinate": 0, "Y-coordinate": 0}
+    >>> test_board = make_board(5, 5)
+    >>> print_board(test_board, test_character)
+    ┌─────────────────────────┐
+    │  ♦   [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    └─────────────────────────┘
+    >>> test_character = {"X-coordinate": 4, "Y-coordinate": 4}
+    >>> test_board = make_board(5, 5)
+    >>> print_board(test_board, test_character)
+    ┌─────────────────────────┐
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]   ♦  │
+    └─────────────────────────┘
+    >>> test_character = {"X-coordinate": 2, "Y-coordinate": 2}
+    >>> test_board = make_board(5, 5)
+    >>> print_board(test_board, test_character)
+    ┌─────────────────────────┐
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]   ♦   [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    │ [!]  [!]  [!]  [!]  [!] │
+    └─────────────────────────┘
     """
     # Define border characters
     borders = {
@@ -124,7 +155,7 @@ def print_board(board: dict, character: dict):
         # Add the right border
         row_string += borders['vertical']
         print(row_string)
-    # Create the bottom border (same width as top)
+    # Create the bottom border
     bottom_border = borders['bottom_left'] + (borders['horizontal'] * 25) + borders['bottom_right']
     print(bottom_border)
 
