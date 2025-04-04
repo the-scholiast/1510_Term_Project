@@ -5,7 +5,7 @@ import random
 
 
 def check_encounter(character: dict, board: dict) -> bool:
-    character_location = (character['X-coordinate'], character['Y-coordinate'])
+    character_location = (character['Y-coordinate'], character['X-coordinate'])
     return board[character_location] == '[!]'
 
 
