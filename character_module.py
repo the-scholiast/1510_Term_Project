@@ -54,13 +54,20 @@ def obtain_and_equip(equipment_choice: tuple, character: dict):
 def apply_equipment(character: dict):
     defense_equipment = {"Helmet", "Armour"}
     damage_equipment = {"Ring", "Amulet"}
+    # Get the dictionary storing equipment
     character_equipment = character.get("Equipment")
     # Apply equipment modifier to character
-    for equipment in character_equipment:
-        if equipment[0] in defense_equipment:
-            character["Defense Modifier"] += equipment[1]
-        elif equipment[0] in damage_equipment:
-            character["Damage Modifier"] += equipment[1]
+    for equipment_type, equipment_data in character_equipment.items():
+        # Skip if no equipment in this slot
+        if not equipment_data:
+            continue
+        # Equipment data is stored as a tuple (name, modifier)
+        item_name, modifier = equipment_data
+        # Apply modifier based on equipment type
+        if equipment_type in defense_equipment:
+            character["Defense Modifier"] += modifier
+        elif equipment_type in damage_equipment:
+            character["Damage Modifier"] += modifier
 
 
 # Print increase in stats from equipment
