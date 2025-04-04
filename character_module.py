@@ -19,9 +19,9 @@ def proper_name():
 def make_character(player_name: str) -> dict:
     character = {
         'Name': f'{player_name}', 'Title': 'the Amateur',
-        'Level': 1, 'Experience': 0, 'Leveled Recently': False,
+        'Level': 1, 'Experience': 0,
         'Health': 100, 'Current Health': 100, 'Ki': 50, 'Current Ki': 50,
-        'Defense Modifier': 1, 'Damage Modifier': 1, 'Active Defense Modifier': 1,
+        'Defense Modifier': 1.0, 'Damage Modifier': 1.0, 'Active Defense Modifier': 1.0,
         'X-coordinate': 0, 'Y-coordinate': 0,
         'Crystals': 0,
         'Items': {'Health Pots': 0, 'Shards': 0},
