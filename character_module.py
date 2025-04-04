@@ -20,7 +20,7 @@ def make_character(player_name: str) -> dict:
     character = {
         'Name': f'{player_name}', 'Title': 'the Amateur',
         'Level': 1, 'Experience': 0,
-        'Health': 100, 'Current Health': 100, 'Ki': 50, 'Current Ki': 50,
+        'Health': 150, 'Current Health': 150, 'Ki': 50, 'Current Ki': 50,
         'Defense Modifier': 1.0, 'Damage Modifier': 1.0, 'Active Defense Modifier': 1.0,
         'X-coordinate': 0, 'Y-coordinate': 0,
         'Crystals': 0,
@@ -223,6 +223,8 @@ def level_up(character: dict):
             character['Stance'].append('Snake')
         # Reset character experience
         character['Experience'] = 0
+        return True
+    return False
 
 
 # Print character leveling up
