@@ -7,14 +7,15 @@ import sys
 import tutorial
 
 
-def check_crystals(character):
+def check_crystals(character: dict) -> bool:
     """
     Return True if character has 100 Crystals or else return False.
 
     Checks if the character has gathered enough crystals to trigger the final boss battle.
 
-    :param character: dictionary containing character data with a 'Crystals' key with an integer value >= 0
+    :param character: a dictionary containing character data with a 'Crystals' key with an integer value >= 0
     :precondition: character must be a dictionary containing a 'Crystals' key with an integer value >= 0
+    :postcondition: leave character unmodified
     :postcondition: check if the character has at least 100 Crystals for the final battle
     :return: True if character Crystals value is >= 100 else False
 
@@ -33,12 +34,26 @@ def check_crystals(character):
     return crystals >= 100
 
 
-def is_alive(character) -> bool:
+def is_alive(character: dict) -> bool:
     """
-    Return True if character's Current Health is greater than 0 else return False.
+    Return True if character's Current Health is greater than 0 or else return False.
 
-    :param character:
-    :return:
+    :param character: a dictionary containing character data with a 'Current Health' key with an integer value
+    :precondition: character must be a dictionary containing character data with
+                   a 'Current Health' key with an integer value
+    :postcondition: leave character unmodified
+    :postcondition: check if character Current Health value is > 0
+    :return: True if character Current Health value is > 0 else False
+
+    >>> test_character = {"Current Health": 100}
+    >>> is_alive(test_character)
+    True
+    >>> test_character = {"Current Health": 0}
+    >>> is_alive(test_character)
+    False
+    >>> test_character = {"Current Health": -10}
+    >>> is_alive(test_character)
+    False
     """
     current_health = character['Current Health']
     return current_health > 0
