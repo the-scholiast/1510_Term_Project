@@ -156,6 +156,7 @@ def process_heal_attack(character: dict, monster: dict, damage: int, attack_name
 
     :param character: a dictionary containing character data with a 'Current Health' key with an integer value > 0
     :param monster: a dictionary containing monster data with a 'Current Health' key with an integer value > 0
+                    and 'Damage Modifier' key with a float > 0
     :param damage: a positive integer representing monster damage
     :param attack_name: a string representing monster attack name
     :param description: a string representing monster attack description
@@ -298,9 +299,43 @@ def process_bleed_attack(character: dict, monster_modifier: float, damage: int,
 
 # Process buff attacks
 def process_buff_attack(monster: dict, attack_name: str, description: str) -> str:
+    """
+    Increase Damage Modifier, Health Modifier, Current Health values, and return message of the attack description.
+
+    :param monster: a dictionary containing monster data with: a 'Current Health' key with an integer value > 0,
+                    'Damage Modifier' key with a float > 0, 'Health Modifier' key with a float > 0
+    :param attack_name: a string representing monster attack name
+    :param description: a string representing monster attack description
+    :precondition: monster must be a dictionary containing monster data with: a 'Current Health' key with
+                   an integer value > 0, 'Damage Modifier' key with a float > 0, 'Health Modifier' key with a float > 0
+    :precondition: attack_name must be a non-empty string representing monster attack name
+    :precondition: description must be a non-empty string representing monster attack description
+    :postcondition: increase 'Damage Modifier' value by 0.2
+    :postcondition: increase 'Health Modifier' value by 0.5
+    :postcondition: increase 'Current Health' value by multiple of 'Health Modifier'
+    :postcondition: generate a string message containing attack_name and description
+    :return: a string message containing attack_name and description
+
+    >>> test_monster = {'Damage Modifier': 1.0, 'Health Modifier': 1.0, 'Current Health': 100}
+    >>> test_description = 'Enters a berserk state, increasing Health and Damage.'
+    >>> expected_message = ("Monster used Lunar Frenzy! Enters a berserk state, increasing Health and Damage. "
+    ...                     "Monster's damage and Health is increased!")
+    >>> expected_message == process_buff_attack(test_monster, 'Lunar Frenzy', test_description)
+    True
+    >>> print(test_monster)
+    {'Damage Modifier': 1.2, 'Health Modifier': 1.5, 'Current Health': 150}
+    >>> test_monster = {'Damage Modifier': 1.2, 'Health Modifier': 1.5, 'Current Health': 50}
+    >>> test_description = 'Enters a berserk state, increasing Health and Damage.'
+    >>> expected_message = ("Monster used Lunar Frenzy! Enters a berserk state, increasing Health and Damage. "
+    ...                     "Monster's damage and Health is increased!")
+    >>> expected_message == process_buff_attack(test_monster, 'Lunar Frenzy', test_description)
+    True
+    >>> print(test_monster)
+    {'Damage Modifier': 1.4, 'Health Modifier': 2.0, 'Current Health': 100}
+    """
     monster['Damage Modifier'] += 0.2
     monster['Health Modifier'] += 0.5
-    monster['Current Health'] = monster['Current Health'] * monster['Health Modifier']
+    monster['Current Health'] = int(monster['Current Health'] * monster['Health Modifier'])
     return f"Monster used {attack_name}! {description} Monster's damage and Health is increased!"
 
 
@@ -350,7 +385,7 @@ def turn_order(monster: str) -> tuple:
 # Skip monster turn if snared
 def skip_turn(monster):
     # Check if monster is snared
-    if monster['Status Effects'].get('Snared') > 0:
+    if monster['Status Effects']['Snared'] > 0:
         print(f"{monster['Name']} is snared and cannot move this turn!")
         return True
     return False
