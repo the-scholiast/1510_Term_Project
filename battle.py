@@ -5,25 +5,6 @@ import random
 from itertools import cycle
 from __init__ import BATTLE_STANCES
 
-# Store character's attack moves
-CHARACTER_ATTACKS = {
-    'Bear': {
-        'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 20],
-        'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 35],
-        'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
-    },
-    'Turtle': {
-        'Bash': ['Coats the outer shield with spikes, then bashes into the enemy.', 'Physical', 15],
-        'Shell': ['Take no damage next two turns.', 'Ki', 0],
-        'Roar': ["A lion's mouth forms at the center of the shield and shoots a Ki wave.", 'Ki', 45]
-    },
-    'Snake': {
-        'Lash': ['Whip extends to lash its target.', 'Physical', 20],
-        'Snare': ['Whip entangles its target, paralyzing its victim.', 'Ki', 12],
-        'Hydra': ['Splits into hundreds of smaller whips making its attack unavoidable.', 'Ki', 50]
-    }
-}
-
 
 # Create monster with Health and stats as a dictionary
 def create_monster(monster: str) -> dict:
@@ -269,9 +250,27 @@ def get_item(character):
 
 
 # Obtain character attack moves by stance
-def get_attack_moves(character: dict, attacks_dict: dict) -> dict:
+def get_attack_moves(character: dict) -> dict:
+    # Store character's attack moves
+    character_attacks = {
+        'Bear': {
+            'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 20],
+            'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 35],
+            'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]
+        },
+        'Turtle': {
+            'Bash': ['Coats the outer shield with spikes, then bashes into the enemy.', 'Physical', 15],
+            'Shell': ['Take no damage next two turns.', 'Ki', 0],
+            'Roar': ["A lion's mouth forms at the center of the shield and shoots a Ki wave.", 'Ki', 45]
+        },
+        'Snake': {
+            'Lash': ['Whip extends to lash its target.', 'Physical', 20],
+            'Snare': ['Whip entangles its target, paralyzing its victim.', 'Ki', 12],
+            'Hydra': ['Splits into hundreds of smaller whips making its attack unavoidable.', 'Ki', 50]
+        }
+    }
     character_stance = character.get('Active Stance')
-    attack_moves = attacks_dict.get(character_stance)
+    attack_moves = character_attacks.get(character_stance)
     return attack_moves
 
 
@@ -398,12 +397,3 @@ def monster_rewards(character: dict):
     # Award experience
     character['Experience'] += 35
     print(f"You gained 35 experience!")
-
-
-def main():
-    display_items({'Items': {'Health Pots': 1, 'Shards': 1}})
-    print(get_item({'Stance': ['Bear'], 'Active Stance': 'Bear', 'Items': {'Health Pots': 1, 'Shards': 1}}))
-
-
-if __name__ == "__main__":
-    main()
