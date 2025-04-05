@@ -339,8 +339,33 @@ def process_buff_attack(monster: dict, attack_name: str, description: str) -> st
     return f"Monster used {attack_name}! {description} Monster's damage and Health is increased!"
 
 
-# Check if character is defeated and add defeat message
+# Check if character is defeated and append defeat message if True
 def check_character_defeat(character: dict, message: str) -> str:
+    """
+    Append a defeat message to the original message if character's Current Health is 0 or less.
+
+    :param character: a dictionary containing character data with a 'Current Health' key with an integer value
+    :param message: a string representing the current battle message
+    :precondition: character must be a dictionary containing character data with a 'Current Health' key
+                   with an integer value
+    :precondition: message must be a non-empty string
+    :postcondition: leave character unmodified
+    :postcondition: append defeat message to original message if character's Current Health is <= 0
+    :return: the original message or original message with defeat message appended
+
+    >>> test_character = {'Current Health': 10}
+    >>> test_message = "Monster used Swipe! You took 5 damage!"
+    >>> check_character_defeat(test_character, test_message)
+    'Monster used Swipe! You took 5 damage!'
+    >>> test_character = {'Current Health': 0}
+    >>> test_message = "Monster used Swipe! You took 10 damage!"
+    >>> check_character_defeat(test_character, test_message)
+    'Monster used Swipe! You took 10 damage!\\nYou have been defeated!'
+    >>> test_character = {'Current Health': -5}
+    >>> test_message = "Monster used Soul Drain! You took 15 damage!"
+    >>> check_character_defeat(test_character, test_message)
+    'Monster used Soul Drain! You took 15 damage!\\nYou have been defeated!'
+    """
     if character['Current Health'] <= 0:
         message += "\nYou have been defeated!"
     return message
