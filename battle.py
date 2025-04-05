@@ -147,6 +147,45 @@ def process_attack(character: dict, damage: int, attack_name: str, description: 
 
 # Process healing attacks
 def process_heal_attack(character: dict, monster: dict, damage: int, attack_name: str, description: str) -> str:
+    """
+    Apply heal monster attack to monster Current Health, character Current Health, and return damage description.
+
+    :param character: a dictionary containing character data with a 'Current Health' key with an integer value > 0
+    :param monster: a dictionary containing monster data with a 'Current Health' key with an integer value > 0
+    :param damage: a positive integer representing monster damage
+    :param attack_name: a string representing monster attack name
+    :param description: a string representing monster attack description
+    :precondition: character must be a dictionary containing character data with
+                   a 'Current Health' key with an integer value > 0
+    :precondition: character must be a dictionary containing character data with
+                   a 'Current Health' key with an integer value > 0
+    :precondition: damage must be positive integer representing monster damage
+    :precondition: attack_name must be a non-empty string representing monster attack name
+    :precondition: description must be a non-empty string representing monster attack description
+    :postcondition: increase monster Current Health by heal amount
+    :postcondition: reduce character Current Health by monster damage amount
+    :postcondition: generate a string message containing attack_name, description, damage, and heal_amount
+    :return: a string message containing attack_name, description, damage, and heal_amount
+
+    >>> test_character = {'Current Health': 100}
+    >>> test_monster = {'Current Health': 100}
+    >>> test_description = 'Drinks the target’s blood to restore health.'
+    >>> expected = ('Monster used Blood Drain! Drinks the target’s blood to restore health. '
+    ...             'You took 6 damage! Monster healed for 3 health!')
+    >>> expected == process_heal_attack(test_character, test_monster, 6, 'Blood Drain', test_description)
+    True
+    >>> print(test_character, test_monster)
+    {'Current Health': 94} {'Current Health': 103}
+    >>> test_character = {'Current Health': 1}
+    >>> test_monster = {'Current Health': 1}
+    >>> test_description = 'Drinks the target’s blood to restore health.'
+    >>> expected = ('Monster used Blood Drain! Drinks the target’s blood to restore health. '
+    ...             'You took 6 damage! Monster healed for 3 health!')
+    >>> expected == process_heal_attack(test_character, test_monster, 6, 'Blood Drain', test_description)
+    True
+    >>> print(test_character, test_monster)
+    {'Current Health': -5} {'Current Health': 4}
+    """
     heal_amount = damage // 2
     monster['Current Health'] += heal_amount
     character['Current Health'] -= damage
