@@ -156,7 +156,7 @@ def game():
                     # Option 3 is Fight
                     elif battle_choice == '3':
                         # Get attack moves for current stance
-                        attack_moves = battle.get_attack_moves(character, battle.CHARACTER_ATTACKS)
+                        attack_moves = battle.get_attack_moves(character)
                         # Display attack options
                         battle.display_attack_options(character['Active Stance'], attack_moves)
                         # Get user attack choice
