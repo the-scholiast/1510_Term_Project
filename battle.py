@@ -110,36 +110,63 @@ def get_monster_attack(monster: str) -> list:
     return [attack_name] + attack_details
 
 
-# Apply monster attack and its affect to character
+# Process standard attacks
+def process_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
+    character['Current Health'] -= damage
+    return f"Monster used {attack_name}! {description} You took {damage} damage!"
+
+
+# Process healing attacks
+def process_heal_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
+    heal_amount = damage // 2
+    character['Current Health'] -= damage
+    return f"Monster used {attack_name}! {description} Monster healed for {heal_amount} health!"
+
+
+# Process poison attacks and add poison status
+def process_poison_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
+    character['Current Health'] -= damage
+    character['Status']['Poison'] = 4  # Lasts for 4 turns
+    return f"Monster used {attack_name}! {description} You took {damage} damage and are poisoned!"
+
+
+# Process bleed attacks and add bleed status
+def process_bleed_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
+    character['Current Health'] -= damage
+    character['Status']['Bleed'] = 2  # Lasts for 2 turns
+    return f"Monster used {attack_name}! {description} You took {damage} damage and are bleeding!"
+
+
+# Process buff attacks
+def process_buff_attack(attack_name: str, description: str) -> str:
+    return f"Monster used {attack_name}! {description} Monster's damage is increased!"
+
+
+# Check if character is defeated and add defeat message
+def check_character_defeat(character: dict, message: str) -> str:
+    if character['Current Health'] <= 0:
+        message += "\nYou have been defeated!"
+    return message
+
+
+# Apply monster attack and its effect to character
 def apply_monster_attack(attack: list, character: dict):
     # Unpack attack list
     attack_name, description, attack_type, damage = attack
-    # Check if character has Shell active -> Figure out how to apply #######################################
-    # Apply monster attack based on type
+    # Process attack based on type
     if attack_type == 'Attack':
-        character['Current Health'] -= damage
-        message = f"Monster used {attack_name}! {description} You took {damage} damage!"
+        message = process_attack(character, damage, attack_name, description)
     elif attack_type == 'Heal':
-        # Monster heals itself 50% of the damage dealt
-        heal_amount = damage // 2
-        character['Current Health'] -= damage
-        message = f"Monster used {attack_name}! {description} Monster healed for {heal_amount} health!"
+        message = process_heal_attack(character, damage, attack_name, description)
     elif attack_type == 'Poison':
-        character['Current Health'] -= damage
-        # Add poison status effect
-        character['Status']['Poison'] = 4  # Lasts for 4 turns
-        message = f"Monster used {attack_name}! {description} You took {damage} damage and are poisoned!"
+        message = process_poison_attack(character, damage, attack_name, description)
     elif attack_type == 'Bleed':
-        character['Current Health'] -= damage
-        # Add bleed status effect
-        character['Status']['Bleed'] = 2  # Lasts for 2 turns
-        message = f"Monster used {attack_name}! {description} You took {damage} damage and are bleeding!"
-    else:
-        # Monster buffs itself
-        message = f"Monster used {attack_name}! {description} Monster's damage is increased!"
+        message = process_bleed_attack(character, damage, attack_name, description)
+    else:  # Buff type
+        message = process_buff_attack(attack_name, description)
     # Check if character is defeated
-    if character['Current Health'] <= 0:
-        message += "\nYou have been defeated!"
+    message = check_character_defeat(character, message)
+    # Display the message
     print(message)
 
 
