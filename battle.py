@@ -146,10 +146,13 @@ def process_attack(character: dict, damage: int, attack_name: str, description: 
 
 
 # Process healing attacks
-def process_heal_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
+def process_heal_attack(character: dict, monster: dict, damage: int, attack_name: str, description: str) -> str:
     heal_amount = damage // 2
+    monster['Current Health'] += heal_amount
     character['Current Health'] -= damage
-    return f"Monster used {attack_name}! {description} Monster healed for {heal_amount} health!"
+    message = (f"Monster used {attack_name}! {description} You took {damage} damage! "
+               f"Monster healed for {heal_amount} health!")
+    return message
 
 
 # Process poison attacks and add poison status
