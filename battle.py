@@ -196,17 +196,52 @@ def process_heal_attack(character: dict, monster: dict, damage: int, attack_name
 
 # Process poison attacks and add poison status
 def process_poison_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
+    """
+    Apply poison monster attack to character Current Health and Status, and return damage description.
+
+    :param character: a dictionary containing character data with a 'Current Health' key with an integer value > 0 and
+                      'Status' key containing a dictionary of Poison:value as (str:int >= 0)
+    :param damage: a positive integer representing monster damage
+    :param attack_name: a string representing monster attack name
+    :param description: a string representing monster attack description
+    :precondition: character must be a dictionary containing character data with a 'Current Health' key with
+                   an integer value > 0 and 'Status' key containing a dictionary of Poison:value as (str:int >= 0)
+    :precondition: damage must be positive integer representing monster damage
+    :precondition: attack_name must be a non-empty string representing monster attack name
+    :precondition: description must be a non-empty string representing monster attack description
+    :postcondition: reduce character Current Health by monster damage amount
+    :postcondition: increase character Poison Status by 4
+    :postcondition: generate a string message containing attack_name, description, and damage
+    :return: a string message containing attack_name, description, and damage
+
+    >>> test_character = {'Current Health': 100, 'Status': {'Poison': 0}}
+    >>> test_description = 'A venomous bite that inflicts poison damage over time.'
+    >>> expected = ('Monster used Poison Bite! A venomous bite that inflicts poison damage over time. '
+    ...             'You took 10 damage and are poisoned for 4 turns!')
+    >>> expected == process_poison_attack(test_character, 10, 'Poison Bite', test_description)
+    True
+    >>> print(test_character)
+    {'Current Health': 90, 'Status': {'Poison': 4}}
+    >>> test_character = {'Current Health': 10, 'Status': {'Poison': 4}}
+    >>> test_description = 'A venomous bite that inflicts poison damage over time.'
+    >>> expected = ('Monster used Poison Bite! A venomous bite that inflicts poison damage over time. '
+    ...             'You took 10 damage and are poisoned for 4 turns!')
+    >>> expected == process_poison_attack(test_character, 10, 'Poison Bite', test_description)
+    True
+    >>> print(test_character)
+    {'Current Health': 0, 'Status': {'Poison': 8}}
+    """
     character['Current Health'] -= damage
     # Lasts for 4 turns
-    character['Status']['Poison'] = 4
-    return f"Monster used {attack_name}! {description} You took {damage} damage and are poisoned!"
+    character['Status']['Poison'] += 4
+    return f"Monster used {attack_name}! {description} You took {damage} damage and are poisoned for 4 turns!"
 
 
 # Process bleed attacks and add bleed status
 def process_bleed_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
     character['Current Health'] -= damage
     # Lasts for 2 turns
-    character['Status']['Bleed'] = 2
+    character['Status']['Bleed'] += 2
     return f"Monster used {attack_name}! {description} You took {damage} damage and are bleeding!"
 
 
