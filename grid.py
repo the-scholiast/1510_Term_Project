@@ -73,8 +73,10 @@ def tutorial_area() -> dict:
     :return: a dictionary representing the tutorial zone
              with (row, column) tuple keys (as int = 1, int = 5) and '[?]' string values
 
-    >>> tutorial_area()
-    {(0, 0): '[?]', (0, 1): '[?]', (0, 2): '[?]', (0, 3): '[?]', (0, 4): '[?]'}
+    >>> actual = tutorial_area()
+    >>> expected = {(0, 0): '[?]', (0, 1): '[?]', (0, 2): '[?]', (0, 3): '[?]', (0, 4): '[?]'}
+    >>> actual == expected
+    True
     """
     # Linear board for tutorial.
     tutorial_zone = {(row, column): '[?]' for row in range(1) for column in range(5)}
@@ -166,7 +168,34 @@ def print_board(board: dict, character: dict):
 
 
 # Update board after character visits a location to mark it as visited
-def mark_location_visited(board, character):
+def mark_location_visited(board: dict, character: dict):
+    """
+    Replace '[!]' or '[?]' with "   " for the board's value using character coordinates as the key.
+
+    :param board: a dictionary with (row, column):"[!]" (as a tuple with 0<=ints<5:string)
+    :param character: a dictionary containing all character attributes including name, stats,
+                      position, inventory, equipment, and status effects
+    :precondition: board must be a non-empty dictionary
+    :precondition: board must contain (row, column):"[!]" (as a tuple with 0<=ints<5:string)
+    :precondition: character must be a non-empty dictionary
+    :precondition: character must contain the keys "X-coordinate", "Y-coordinate"
+    :precondition: X- and Y-coordinates values must be integers within range [0, 4]
+    :postcondition: leave character unmodified
+    :postcondition: replace '[!]' or '[?]' with "   " for the board's value using character coordinates as the key
+
+    >>> test_character = {"X-coordinate": 0, "Y-coordinate": 0}
+    >>> small_board = {(0, 0): '[!]', (1, 0): '[!]', (2, 0): '[!]', (3, 0): '[!]', (4, 0): '[!]'}
+    >>> mark_location_visited(small_board, test_character)
+    >>> expected = {(0, 0): '   ', (1, 0): '[!]', (2, 0): '[!]', (3, 0): '[!]', (4, 0): '[!]'}
+    >>> small_board == expected
+    True
+    >>> test_character = {"X-coordinate": 0, "Y-coordinate": 4}
+    >>> small_board = {(0, 0): '[!]', (1, 0): '[!]', (2, 0): '[!]', (3, 0): '[!]', (4, 0): '[!]'}
+    >>> mark_location_visited(small_board, test_character)
+    >>> expected = {(0, 0): '[!]', (1, 0): '[!]', (2, 0): '[!]', (3, 0): '[!]', (4, 0): "   "}
+    >>> small_board == expected
+    True
+    """
     # Get character's current location
     character_location = (character['Y-coordinate'], character['X-coordinate'])
     # Mark the location as visited by replacing '[!]' with an empty string
@@ -174,4 +203,3 @@ def mark_location_visited(board, character):
         board[character_location] = '   '
     elif board[character_location] == '[?]':
         board[character_location] = '   '
-    return board
