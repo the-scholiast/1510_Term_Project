@@ -112,6 +112,35 @@ def get_monster_attack(monster: str) -> list:
 
 # Process standard attacks
 def process_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
+    """
+    Apply standard monster attack to character Current Health and return damage description.
+
+    :param character: a dictionary containing character data with a 'Current Health' key with an integer value > 0
+    :param damage: a positive integer representing monster damage
+    :param attack_name: a string representing monster attack name
+    :param description: a string representing monster attack description
+    :precondition: character must be a dictionary containing character data with
+                   a 'Current Health' key with an integer value > 0
+    :precondition: damage must be positive integer representing monster damage
+    :precondition: attack_name must be a non-empty string representing monster attack name
+    :precondition: description must be a non-empty string representing monster attack description
+    :postcondition: reduce character Current Health by monster damage amount
+    :postcondition: generate a string message containing attack_name, description, and damage
+    :return: a string message containing attack_name, description, and damage
+
+    >>> test_character = {'Current Health': 100}
+    >>> test_description = 'A vicious claw attack dealing physical damage.'
+    >>> process_attack(test_character, 10, 'Swipe', test_description)
+    'Monster used Swipe! A vicious claw attack dealing physical damage. You took 10 damage!'
+    >>> print(test_character)
+    {'Current Health': 90}
+    >>> test_character = {'Current Health': 9}
+    >>> test_description = 'Teleports behind the enemy for a surprise attack.'
+    >>> process_attack(test_character, 15, 'Shadow Step', test_description)
+    'Monster used Shadow Step! Teleports behind the enemy for a surprise attack. You took 15 damage!'
+    >>> print(test_character)
+    {'Current Health': -6}
+    """
     character['Current Health'] -= damage
     return f"Monster used {attack_name}! {description} You took {damage} damage!"
 
@@ -126,14 +155,16 @@ def process_heal_attack(character: dict, damage: int, attack_name: str, descript
 # Process poison attacks and add poison status
 def process_poison_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
     character['Current Health'] -= damage
-    character['Status']['Poison'] = 4  # Lasts for 4 turns
+    # Lasts for 4 turns
+    character['Status']['Poison'] = 4
     return f"Monster used {attack_name}! {description} You took {damage} damage and are poisoned!"
 
 
 # Process bleed attacks and add bleed status
 def process_bleed_attack(character: dict, damage: int, attack_name: str, description: str) -> str:
     character['Current Health'] -= damage
-    character['Status']['Bleed'] = 2  # Lasts for 2 turns
+    # Lasts for 2 turns
+    character['Status']['Bleed'] = 2
     return f"Monster used {attack_name}! {description} You took {damage} damage and are bleeding!"
 
 
