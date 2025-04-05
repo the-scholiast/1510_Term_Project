@@ -179,7 +179,7 @@ def game():
     # Character goes through NPC interactions. Can skip to main zone. @DONE
     while in_tutorial:
         # Mark visited areas with empty space
-        tutorial_zone = grid.mark_location_visited(tutorial_zone, new_character)
+        grid.mark_location_visited(tutorial_zone, new_character)
         # Get tutorial NPC interaction based on character location
         tutorial_npc = tutorial.tutorial_npcs((new_character["X-coordinate"], new_character["Y-coordinate"]))
         # Skip tutorial flag
