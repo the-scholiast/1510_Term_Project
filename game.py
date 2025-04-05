@@ -11,8 +11,22 @@ def check_crystals(character):
     """
     Return True if character has 100 Crystals or else return False.
 
-    :param character:
-    :return:
+    Checks if the character has gathered enough crystals to trigger the final boss battle.
+
+    :param character: dictionary containing character data with a 'Crystals' key with an integer value >= 0
+    :precondition: character must be a dictionary containing a 'Crystals' key with an integer value >= 0
+    :postcondition: check if the character has at least 100 Crystals for the final battle
+    :return: True if character Crystals value is >= 100 else False
+
+    >>> test_character = {'Crystals': 100}
+    >>> check_crystals(test_character)
+    True
+    >>> test_character = {'Crystals': 99}
+    >>> check_crystals(test_character)
+    False
+    >>> test_character = {'Crystals': 0}
+    >>> check_crystals(test_character)
+    False
     """
     # Obtain Crystals value from character
     crystals = character['Crystals']
