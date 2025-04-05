@@ -395,8 +395,21 @@ def apply_monster_attack(attack: list, character: dict, monster: dict):
     print(message)
 
 
-# Figure out turn order depending on who got "First Strike" -> use itertools.cycle?
+# Use itertools.cycle to obtain cycling turn order for character and monster
 def turn_order(monster: str) -> tuple:
+    """
+    Determine the turn order between the character and monster with a 50% chance for either to go first.
+
+    Create an infinite cycle of turns using itertools.cycle and returns a message indicating who strikes first.
+
+    :param monster: a string representing the monster's name
+    :precondition: monster must be a non-empty string representing the monster's name
+    :postcondition: determine if character or monster goes first with 50% probability
+    :postcondition: create an infinite cycle iterator for alternating turns
+    :return: a tuple containing (turns_iterator, first_strike_message) where turns_iterator is an
+             itertools.cycle object alternating between 'character' and 'monster', and first_strike_message
+             is a string indicating who strikes first
+    """
     # 50% chance to go first
     if random.randint(1, 2) == 1:
         first_strike_message = "You strike first!"
@@ -408,7 +421,32 @@ def turn_order(monster: str) -> tuple:
 
 
 # Skip monster turn if snared
-def skip_turn(monster):
+def skip_turn(monster: dict) -> bool:
+    """
+    Check if the monster is snared and should skip its turn.
+
+    Print a message if the monster is snared and cannot move this turn.
+
+    :param monster: a dictionary containing monster data with a 'Name' key with a string value
+                    and a 'Status Effects' key with a dictionary containing a 'Snared' key with an integer value >= 0
+    :precondition: monster must be a dictionary containing monster data with a 'Name' key with a string value
+                   and a 'Status Effects' key with a dictionary containing a 'Snared' key with an integer value >= 0
+    :postcondition: leave monster unmodified
+    :postcondition: print message if monster is snared
+    :return: True if Snared value > 0 else False
+
+    >>> test_monster = {'Name': 'Werewolf', 'Status Effects': {'Snared': 0}}
+    >>> skip_turn(test_monster)
+    False
+    >>> test_monster = {'Name': 'Vampire', 'Status Effects': {'Snared': 1}}
+    >>> skip_turn(test_monster)
+    Vampire is snared and cannot move this turn!
+    True
+    >>> test_monster = {'Name': 'Wendigo', 'Status Effects': {'Snared': 2}}
+    >>> skip_turn(test_monster)
+    Wendigo is snared and cannot move this turn!
+    True
+    """
     # Check if monster is snared
     if monster['Status Effects']['Snared'] > 0:
         print(f"{monster['Name']} is snared and cannot move this turn!")
@@ -587,7 +625,6 @@ def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
     if attack_type == 'Physical':
         monster['Current Health'] -= actual_damage
         message = f"You used {attack_name}! {description} You dealt {actual_damage} damage!"
-        return True
     elif attack_type == 'Ki':
         # Check if character has enough Ki
         if character['Current Ki'] >= 10:
