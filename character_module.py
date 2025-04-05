@@ -241,7 +241,7 @@ def level_up(character: dict):
     current_level = character['Level']
     current_exp = character['Experience']
     # Experience needed for each level
-    exp_requirements = 150
+    exp_requirements = 100
     # Check if character can level up
     if current_level < 3 and current_exp >= exp_requirements:
         # Level up
