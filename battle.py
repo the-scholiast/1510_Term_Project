@@ -16,10 +16,16 @@ def create_monster(monster: str) -> dict:
     :postcondition: generate a monster represented as a dictionary containing its name and stats
     :return: a monster represented as a dictionary containing its name and stats
 
-    >>> create_monster('Ghoul')
-    {'Name': 'Ghoul', 'Health': 80, 'Current Health': 80, 'Status Effects': {'Buff': 0, 'Snared': 0}, 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
-    >>> create_monster('Vampire')
-    {'Name': 'Vampire', 'Health': 90, 'Current Health': 90, 'Status Effects': {'Buff': 0, 'Snared': 0}, 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
+    >>> actual = create_monster('Ghoul')
+    >>> expected = {'Name': 'Ghoul', 'Health': 80, 'Current Health': 80, 'Status Effects': {'Buff': 0, 'Snared': 0},
+    ... 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
+    >>> actual == expected
+    True
+    >>> actual = create_monster('Vampire')
+    >>> expected = {'Name': 'Vampire', 'Health': 90, 'Current Health': 90, 'Status Effects': {'Buff': 0, 'Snared': 0},
+    ... 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
+    >>> actual == expected
+    True
     """
     # Base health for different monster types
     monster_health = {
@@ -34,17 +40,27 @@ def create_monster(monster: str) -> dict:
     # Create monster dictionary with health and status
     monster_dict = {
         'Name': monster,
-        'Health': monster_health.get(monster),
-        'Current Health': monster_health.get(monster),
+        'Health': monster_health.get(monster), 'Current Health': monster_health.get(monster),
         'Status Effects': {'Buff': 0, 'Snared': 0},
-        'Damage Modifier': 1.0,
-        'Health Modifier': 1.0
+        'Damage Modifier': 1.0, 'Health Modifier': 1.0
     }
     return monster_dict
 
 
 # Obtain attack move from Monster
 def get_monster_attack(monster: str) -> list:
+    """
+    Randomly select an attack move from a monster's available attacks using weighted probability.
+
+    Attacks are selected with weighted probability: 50% for first attack, 35% for second, 15% for third.
+
+    :param monster: a string representing the monster type
+    :precondition: monster must be a string of: 'Wendigo', 'Djinn', 'Skinwalker', 'Ghoul',
+                   'Shapeshifter', 'Werewolf', 'Vampire'
+    :postcondition: select a random attack based on weighted probability
+    :postcondition: generate a list containing [attack_name, description, attack_type, damage] as [str, str, str, int]
+    :return: list containing [attack_name, description, attack_type, damage] as [str, str, str, int]
+    """
     # Stores 3 monster attack moves. Its values are [Description, Move Type, Damage].
     monster_attack_list = {
         'Wendigo': {
