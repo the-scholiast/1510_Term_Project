@@ -31,12 +31,12 @@ def create_monster(monster: str) -> dict:
     # Base health for different monster types
     monster_health = {
         'Wendigo': 100,
-        'Djinn': 85,
-        'Skinwalker': 90,
-        'Ghoul': 80,
-        'Shapeshifter': 95,
-        'Werewolf': 110,
-        'Vampire': 90
+        'Djinn': 90,
+        'Skinwalker': 100,
+        'Ghoul': 100,
+        'Shapeshifter': 90,
+        'Werewolf': 80,
+        'Vampire': 100
     }
     # Create monster dictionary with health and status
     monster_dict = {
