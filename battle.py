@@ -113,40 +113,49 @@ def get_monster_attack(monster: str) -> list:
 
 
 # Process standard attacks
-def process_attack(character: dict, monster_modifier: float, damage: int, attack_name: str, description: str) -> str:
+def process_attack(character: dict, monster_modifier: float, defense_modifier: float,
+                   damage: int, attack_name: str, description: str) -> str:
     """
     Apply standard monster attack to character Current Health and return damage description.
 
     :param character: a dictionary containing character data with a 'Current Health' key with an integer value > 0
     :param monster_modifier: a positive float number > 0
+    :param defense_modifier: a positive float number >= 0
     :param damage: a positive integer representing monster damage
     :param attack_name: a string representing monster attack name
     :param description: a string representing monster attack description
     :precondition: character must be a dictionary containing character data with
                    a 'Current Health' key with an integer value > 0
     :precondition: monster_modifier must be a positive float number > 0
+    :precondition: defense_modifier must be a positive float number >= 0
     :precondition: damage must be positive integer representing monster damage
     :precondition: attack_name must be a non-empty string representing monster attack name
     :precondition: description must be a non-empty string representing monster attack description
-    :postcondition: multiply damage by monster_modifier
+    :postcondition: calculate (damage * monster_modifier * defense_modifier)
     :postcondition: reduce character Current Health by monster damage amount
     :postcondition: generate a string message containing attack_name, description, and damage
     :return: a string message containing attack_name, description, and damage
 
     >>> test_character = {'Current Health': 100}
     >>> test_description = 'A vicious claw attack dealing physical damage.'
-    >>> process_attack(test_character, 1.5, 10, 'Swipe', test_description)
+    >>> process_attack(test_character, 1.5, 1.0, 10, 'Swipe', test_description)
     'Monster used Swipe! A vicious claw attack dealing physical damage. You took 15 damage!'
     >>> print(test_character)
     {'Current Health': 85}
     >>> test_character = {'Current Health': 9}
     >>> test_description = 'Teleports behind the enemy for a surprise attack.'
-    >>> process_attack(test_character, 1.0, 15, 'Shadow Step', test_description)
+    >>> process_attack(test_character, 1.0, 1.0, 15, 'Shadow Step', test_description)
     'Monster used Shadow Step! Teleports behind the enemy for a surprise attack. You took 15 damage!'
     >>> print(test_character)
     {'Current Health': -6}
+    >>> test_character = {'Current Health': 100}
+    >>> test_description = 'A vicious claw attack dealing physical damage.'
+    >>> process_attack(test_character, 1.5, 0.0, 10, 'Swipe', test_description)
+    'Monster used Swipe! A vicious claw attack dealing physical damage. You took 0 damage!'
+    >>> print(test_character)
+    {'Current Health': 100}
     """
-    damage = int(damage * monster_modifier)
+    damage = int(damage * monster_modifier * defense_modifier)
     character['Current Health'] -= damage
     return f"Monster used {attack_name}! {description} You took {damage} damage!"
 
