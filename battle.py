@@ -921,6 +921,28 @@ def apply_snare_effect(monster: dict) -> str:
 
 # Process special Ki attack based on name
 def process_special_ki_attack(attack_name: str, description: str, character: dict, monster: dict) -> str:
+    """
+    Process special Ki attack based on attack name.
+
+    :param attack_name: a string representing the name of the attack
+    :param description: a string describing the attack
+    :param character: a dictionary containing character data with
+                      'Status' key containing 'Berserk' and 'Shell' as keys with integer >= 0 as values
+    :param monster: a dictionary containing monster data with
+                    'Status' key containing 'Snared':value as (str, int >= 0)
+    :precondition: attack_name must be a string representing the name of the attack
+    :precondition: description must be a string describing the attack
+    :precondition: character must be a dictionary containing character data
+    :precondition: character['Status'] value must contain 'Shell' and 'Berserk' keys
+    :precondition: character['Status']['Shell'] value must be integer >= 0
+    :precondition: character['Status']['Berserk'] value must be integer >= 0
+    :precondition: monster must be a dictionary containing monster data
+    :precondition: monster['Status'] value must contain 'Snared' key
+    :precondition: monster['Status']['Snared'] value must be integer >= 0
+    :postcondition: increase value of the attack_name 'Status' of the character
+    :postcondition: obtain the message describing the attack results of the attack_name
+    :return: a string message describing the attack results
+    """
     if attack_name == 'Berserk':
         return apply_berserk_buff(attack_name, description, character)
     elif attack_name == 'Shell':
