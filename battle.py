@@ -1310,6 +1310,17 @@ def reset_statuses(character: dict) -> None:
         character_statuses[status] = 0
 
 
+# Process status effects --> move to game()?
+def process_status_effects(character: dict, monster: dict) -> None:
+    # First apply damage from active status effects to character
+    character_status_message = apply_status_damage(character)
+    # Print status effect damage messages
+    if character_status_message:
+        print(character_status_message)
+    # Then update status effect durations
+    update_status_effects(character, monster)
+
+
 # Check if monster health is <= 0
 def monster_defeat(monster: dict) -> bool:
     monster_health = monster.get("Current Health")
