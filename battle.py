@@ -476,7 +476,18 @@ def display_battle_menu():
     print("└────────────┘")
 
 
+# Get user input for battle menu interaction
 def get_user_choice_battle_menu() -> str:
+    """
+    Prompt the user to select an option from the battle menu and validate their input.
+
+    Continuously prompts the user until they provide a valid choice (1, 2, 3),
+    which corresponds to STANCE, ITEM, or FIGHT from the battle menu.
+
+    :postcondition: prompt user for input until a valid choice is provided
+    :postcondition: validate that user input is one of the valid choices ('1', '2', '3')
+    :return: a string containing the user's validated choice ('1', '2', '3')
+    """
     # Get user choice from battle menu
     valid_choices = {'1', '2', '3'}
     while True:
