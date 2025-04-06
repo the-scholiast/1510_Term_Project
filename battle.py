@@ -457,7 +457,14 @@ def skip_turn(monster: dict) -> bool:
 # Display battle menu with options in Pokemon-style format
 def display_battle_menu():
     """
-    Display the main battle menu options in Pokemon-style.
+    Display the main battle menu option in Pokemon-style.
+
+    Print a visual menu with three options: STANCE, ITEM, and FIGHT, each enclosed in a box
+    drawn with Unicode box drawing characters.
+
+    :postcondition: print a blank line followed by a formatted battle menu to the console
+    :postcondition: menu displays three numbered options: 1.STANCE, 2.ITEM, and 3.FIGHT
+    :postcondition: options are enclosed in Unicode box drawing characters to create a visual menu
     """
     # Display main battle menu
     print()
