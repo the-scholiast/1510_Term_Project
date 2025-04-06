@@ -789,6 +789,68 @@ def get_attack_choice(attacks_dict: dict):
                 print("Invalid choice. Please enter a number between 0 and 3")
 
 
+# Apply physical attack to monster
+def apply_physical_attack(attack_name: str, description: str, damage: int,
+                          damage_modifier: float, monster: dict) -> str:
+    damage = int(damage * damage_modifier)
+    monster['Current Health'] -= damage
+    return f"You used {attack_name}! {description} You dealt {damage} damage!"
+
+
+# Apply damaging Ki attack to monster
+def apply_ki_damage_attack(attack_name: str, description: str, damage: int,
+                           damage_modifier: float, monster: dict) -> str:
+    damage = int(damage * damage_modifier)
+    # Apply damage to monster
+    monster['Current Health'] -= damage
+    return f"You used {attack_name}! {description} You dealt {damage} Ki damage!"
+
+
+# Apply Berserk buff to character
+def apply_berserk_buff(attack_name: str, description: str, character: dict) -> str:
+    character['Damage Modifier'] += 0.5
+    # Add duration tracking for Berserk. Lasts for 3 turns
+    character['Status']['Berserk'] = 3
+    return f"You used {attack_name}! {description} Your damage is increased by 50% for 3 turns!"
+
+
+# Apply Shell buff to character
+def apply_shell_buff(attack_name: str, description: str, character: dict) -> str:
+    # Add Shell status with duration. Lasts for 2 turns
+    character['Status']['Shell'] = 2
+    character['Active Defense Modifier'] = 0
+    return f"You used {attack_name}! {description} You take no damage for the next two turns!"
+
+
+# Apply snare effect to monster
+def apply_snare_effect(attack_name: str, description: str, monster: dict) -> str:
+    # Monster loses a turn
+    monster['Status Effects']['Snared'] = 1
+    return (f"You used {attack_name}! {description} "
+            f"The monster is snared and will miss its next turn!")
+
+
+# Process special Ki attack based on name
+def process_special_ki_attack(attack_name: str, description: str, character: dict, monster: dict) -> str:
+    pass
+
+
+# Apply ki attack cost
+def apply_ki_cost(character: dict) -> None:
+    pass
+
+
+# Process damaging Ki attack
+def process_damaging_ki_attack(attack_name: str, description: str, damage: int,
+                               damage_modifier: float, character: dict, monster: dict) -> str:
+    pass
+
+
+# Manager function to apply attack move
+# def apply_attack_move(attack_move: tuple, character: dict, monster: dict) -> None:
+#     pass
+
+
 # Apply character attack to monster ### DECOMPOSE
 def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
     attack_name, attack_details = attack_move
