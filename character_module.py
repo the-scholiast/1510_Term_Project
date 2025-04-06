@@ -41,7 +41,7 @@ def make_character(player_name: str) -> dict:
     character = {
         'Name': f'{player_name}', 'Title': 'the Amateur',
         'Level': 1, 'Experience': 0,
-        'Health': 150, 'Current Health': 150, 'Ki': 50, 'Current Ki': 50,
+        'Health': 200, 'Current Health': 200, 'Ki': 50, 'Current Ki': 50,
         'Defense Modifier': 1.0, 'Damage Modifier': 1.0, 'Active Defense Modifier': 1.0,
         'X-coordinate': 0, 'Y-coordinate': 0,
         'Crystals': 0,
@@ -294,3 +294,6 @@ def use_item(character: dict, item_choice: str):
             character['Current Ki'] = min(character['Ki'], character['Current Ki'] + ki_amount)
             character['Items']['Shards'] -= 1
             print(f"You used a Shard and restored {ki_amount} Ki!")
+
+
+# Apply damaging status effects
