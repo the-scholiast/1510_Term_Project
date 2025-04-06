@@ -111,7 +111,7 @@ def game():
         monster_alive = not battle.monster_defeat(monster)
         # Character and monster must be alive for the battle loop to continue
         while character_is_alive and monster_alive:
-            # Display health status -> decompose?
+            # Display health status
             print(f"Your Health: {character['Current Health']}/{character['Health']}")
             print(f"Your Ki: {character['Current Ki']}/{character['Ki']}")
             print(f"{monster_name}'s Health: {monster['Current Health']}/{monster['Health']}")
@@ -176,14 +176,16 @@ def game():
                 # Only move to next turn if player completed an action
                 if action_completed:
                     current_turn = next(turns)
-            # Update status effects after each complete round
-            battle.update_status_effects(character, monster)
+            # Process status effects after each turn
+            battle.process_status_effects(character, monster)
             # Check battle status
             character_is_alive = is_alive(character)
             monster_alive = not battle.monster_defeat(monster)
-            # Get rewards from beating monster
-            if battle.monster_defeat(monster):
-                battle.monster_rewards(character)
+        # Reset character statuses at the end of battle
+        battle.reset_statuses(character)
+        # Get rewards from beating monster if monster was defeated
+        if battle.monster_defeat(monster):
+            battle.monster_rewards(character)
 
     # Manages all potential encounters
     def encounter_manager(character, npc_counts):
@@ -231,9 +233,6 @@ def game():
                 print("You cannot move in that direction. Please enter a different direction.")
         # Check if character still in tutorial zone
         in_tutorial = tutorial.exit_tutorial(new_character)
-    # Character obtains basic items ->>> FIX
-    basic_items = ('Armour', 'Leather Tunic', 0.02)
-    character_module.obtain_and_equip(basic_items, new_character)
     # Character moves out of tutorial zone
     # Make main board @STARTED
     board = grid.make_board(5, 5)
