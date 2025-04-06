@@ -599,7 +599,46 @@ def get_stance(character: dict) -> Optional[str]:
 
 
 # Display items when clicking from display_battle_menu
-def display_items(character):
+def display_items(character: dict):
+    """
+    Display the character's available items in a menu box.
+
+    Show each item with its quantity for items that have a quantity greater than 0.
+    If no items are available, displays a message indicating this. Always include a "Back" option as option 0.
+
+    :param character: a dictionary containing character data with an 'Items' key
+                      that contains a dictionary of item name:quantity pairs (as str: int >= 0)
+    :precondition: character must be a dictionary containing an 'Items' key
+    :precondition: character['Items'] must be a dictionary with 'Health Pots' and 'Shards' string keys
+                   and integer values >= 0
+    :postcondition: print a menu of available items with quantities and a back option
+
+    >>> test_character = {'Items': {'Health Pots': 2, 'Shards': 0}}
+    >>> display_items(test_character)
+    Available Items:
+    ┌──────────────────────┐
+    │ 1. Health Pots  x2   │
+    ├──────────────────────┤
+    │ 0. Back              │
+    └──────────────────────┘
+    >>> test_character = {'Items': {'Health Pots': 0, 'Shards': 0}}
+    >>> display_items(test_character)
+    Available Items:
+    ┌──────────────────────┐
+    │ No items available   │
+    ├──────────────────────┤
+    │ 0. Back              │
+    └──────────────────────┘
+    >>> test_character = {'Items': {'Health Pots': 2, 'Shards': 1}}
+    >>> display_items(test_character)
+    Available Items:
+    ┌──────────────────────┐
+    │ 1. Health Pots  x2   │
+    │ 2. Shards       x1   │
+    ├──────────────────────┤
+    │ 0. Back              │
+    └──────────────────────┘
+    """
     items = character['Items']
     print("Available Items:")
     print("┌" + "─" * 22 + "┐")
