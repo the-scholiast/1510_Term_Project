@@ -842,19 +842,25 @@ def process_special_ki_attack(attack_name: str, description: str, character: dic
 
 # Apply ki attack cost
 def apply_ki_cost(character: dict) -> None:
-    pass
+    character['Current Ki'] -= 10
 
 
 # Process damaging Ki attack
 def process_damaging_ki_attack(attack_name: str, description: str, damage: int,
                                damage_modifier: float, character: dict, monster: dict) -> str:
-    pass
+    # Apply Ki cost
+    apply_ki_cost(character)
+    # Apply damage and get message
+    return apply_ki_damage_attack(attack_name, description, damage, damage_modifier, monster)
 
 
 # Process special Ki attack with ki cost
 def process_special_ki_attack_with_cost(attack_name: str, description: str,
                                         character: dict, monster: dict) -> str:
-    pass
+    # Apply Ki cost
+    apply_ki_cost(character)
+    # Apply special effect and get message
+    return process_special_ki_attack(attack_name, description, character, monster)
 
 
 # Determine if attack is valid
