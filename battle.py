@@ -872,6 +872,26 @@ def apply_berserk_buff(attack_name: str, description: str, character: dict) -> s
 
 # Apply Shell buff to character
 def apply_shell_buff(attack_name: str, description: str, character: dict) -> str:
+    """
+    Apply Shell buff to character and return result message.
+
+    :param attack_name: a string representing the name of the attack
+    :param description: a string describing the attack
+    :param character: a dictionary containing character data with:
+                      'Status' key containing dict of different status effects
+                      'Active Defense Modifier' key with float value >= 0
+    :precondition: attack_name must be a string representing the name of the attack
+    :precondition: description must be a string describing the attack
+    :precondition: character must be a dictionary containing character data
+                   with 'Active Defense Modifier' and 'Status' keys
+    :precondition: character['Active Defense Modifier'] value must be a float >= 0
+    :precondition: character['Status'] value must contain 'Shell' key
+    :precondition: character['Status']['Shell'] value must be a positive integer >= 0
+    :postcondition: set 'Active Defense Modifier' value to 0.0
+    :postcondition: increase 'Shell' value by 2
+    :postcondition: generate a string message describing the buff results
+    :return: a string message describing the buff results
+    """
     # Add Shell status with duration. Lasts for 2 turns
     character['Status']['Shell'] += 2
     character['Active Defense Modifier'] = 0.0
