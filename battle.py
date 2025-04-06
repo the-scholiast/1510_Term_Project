@@ -953,6 +953,24 @@ def process_special_ki_attack(attack_name: str, description: str, character: dic
 
 # Apply ki attack cost
 def apply_ki_cost(character: dict) -> None:
+    """
+    Deduct the Ki cost from the character.
+
+    :param character: a dictionary containing character data with 'Current Ki':value as (str:int >= 10)
+    :precondition: character must be a dictionary containing character data with 'Current Ki':value as (str:int >= 10)
+    :postcondition: reduce 'Current Ki' value by 10
+
+    >>> test_character = {'Current Ki': 50}
+    >>> expected = {'Current Ki': 40}
+    >>> apply_ki_cost(test_character)
+    >>> expected == test_character
+    True
+    >>> test_character = {'Current Ki': 10}
+    >>> expected = {'Current Ki': 0}
+    >>> apply_ki_cost(test_character)
+    >>> expected == test_character
+    True
+    """
     character['Current Ki'] -= 10
 
 
