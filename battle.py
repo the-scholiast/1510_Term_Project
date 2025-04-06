@@ -91,8 +91,8 @@ def get_monster_attack(monster: str) -> list:
         },
         'Werewolf': {
             'Feral Charge': ['Dashes forward, knocking down enemies.', 'Attack', 12],
-            'Lunar Frenzy': ['Enters a berserk state, increasing Health and Damage.', 'Buff', 0],
-            'Crippling Bite': ['Bites the target causing bleed.', 'Bleed', 16]
+            'Crippling Bite': ['Bites the target causing bleed.', 'Bleed', 16],
+            'Lunar Frenzy': ['Enters a berserk state, increasing Health and Damage.', 'Buff', 0]
         },
         'Vampire': {
             'Blood Drain': ['Drinks the target’s blood to restore health.', 'Heal', 6],
@@ -1351,7 +1351,7 @@ def process_status_effects(character: dict, monster: dict) -> None:
 
 # Check if monster health is <= 0
 def monster_defeat(monster: dict) -> bool:
-    monster_health = monster.get("Current Health")
+    monster_health = monster.get("Current Health", 0)
     return monster_health <= 0
 
 
