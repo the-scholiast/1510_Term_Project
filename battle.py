@@ -810,22 +810,22 @@ def apply_ki_damage_attack(attack_name: str, description: str, damage: int,
 def apply_berserk_buff(attack_name: str, description: str, character: dict) -> str:
     character['Damage Modifier'] += 0.5
     # Add duration tracking for Berserk. Lasts for 3 turns
-    character['Status']['Berserk'] = 3
+    character['Status']['Berserk'] += 3
     return f"You used {attack_name}! {description} Your damage is increased by 50% for 3 turns!"
 
 
 # Apply Shell buff to character
 def apply_shell_buff(attack_name: str, description: str, character: dict) -> str:
     # Add Shell status with duration. Lasts for 2 turns
-    character['Status']['Shell'] = 2
-    character['Active Defense Modifier'] = 0
+    character['Status']['Shell'] += 2
+    character['Active Defense Modifier'] = 0.0
     return f"You used {attack_name}! {description} You take no damage for the next two turns!"
 
 
 # Apply snare effect to monster
 def apply_snare_effect(attack_name: str, description: str, monster: dict) -> str:
     # Monster loses a turn
-    monster['Status Effects']['Snared'] = 1
+    monster['Status Effects']['Snared'] += 1
     return (f"You used {attack_name}! {description} "
             f"The monster is snared and will miss its next turn!")
 
@@ -864,13 +864,23 @@ def process_special_ki_attack_with_cost(attack_name: str, description: str,
 
 
 # Determine if attack is valid
-def is_valid_attack(attack_type: str, character: dict, damage: int) -> bool:
-    pass
+def is_valid_attack(attack_type: str, character: dict) -> bool:
+    # All physical attacks are valid
+    if attack_type == 'Physical':
+        return True
+    # Ki attacks require sufficient Ki
+    else:
+        return character['Current Ki'] >= 10
 
 
-# Print attack message
+# Print attack message if valid
 def print_attack_result(attack_type: str, success: bool, message: str) -> None:
-    pass
+    # Print attack message if attack is valid
+    if success:
+        print(message)
+    # Print not enough Ki message
+    elif attack_type == 'Ki':
+        print("You don't have enough Ki to use this attack! Choose another action.")
 
 
 # Execute attack
