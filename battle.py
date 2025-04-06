@@ -832,7 +832,12 @@ def apply_snare_effect(attack_name: str, description: str, monster: dict) -> str
 
 # Process special Ki attack based on name
 def process_special_ki_attack(attack_name: str, description: str, character: dict, monster: dict) -> str:
-    pass
+    if attack_name == 'Berserk':
+        return apply_berserk_buff(attack_name, description, character)
+    elif attack_name == 'Shell':
+        return apply_shell_buff(attack_name, description, character)
+    elif attack_name == 'Snare':
+        return apply_snare_effect(attack_name, description, monster)
 
 
 # Apply ki attack cost
@@ -844,6 +849,25 @@ def apply_ki_cost(character: dict) -> None:
 def process_damaging_ki_attack(attack_name: str, description: str, damage: int,
                                damage_modifier: float, character: dict, monster: dict) -> str:
     pass
+
+
+# Process special Ki attack with ki cost
+def process_special_ki_attack_with_cost(attack_name: str, description: str,
+                                        character: dict, monster: dict) -> str:
+    pass
+
+
+# Determine if attack is valid
+def is_valid_attack(attack_type: str, character: dict, damage: int) -> bool:
+    pass
+
+
+# Print attack message
+def print_attack_result(attack_type: str, success: bool, message: str) -> None:
+    pass
+
+
+# Execute attack
 
 
 # Manager function to apply attack move
