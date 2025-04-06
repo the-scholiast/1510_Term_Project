@@ -4,7 +4,6 @@ This module contains functions for the battle mechanic.
 import random
 from itertools import cycle
 from typing import Optional
-
 from __init__ import BATTLE_STANCES
 
 
@@ -1183,6 +1182,35 @@ def print_attack_result(attack_type: str, success: bool, message: str) -> None:
 # Execute attack
 def execute_attack(attack_type: str, attack_name: str, description: str,
                    damage: int, damage_modifier: float, character: dict, monster: dict) -> tuple:
+    """
+    Execute an attack against a monster based on the attack type and return the result.
+
+    For Physical attacks, it applies the damage to the monster.
+    For Ki attacks, it first checks if the character has enough Ki (10),
+    then processes the attack based on whether it deals damage and/or has special effects.
+
+    :param attack_type: a string indicating the type of attack ('Physical' or 'Ki')
+    :param attack_name: a string representing the name of the attack
+    :param description: a string describing the attack
+    :param damage: a positive integer representing the base damage of the attack (0 for non-damaging abilities)
+    :param damage_modifier: a float > 0
+    :param character: a dictionary containing character data including 'Current Ki' with an integer value >= 0
+    :param monster: a dictionary containing monster data with 'Current Health' key with an integer value > 0
+    :precondition: attack_type must be either 'Physical' or 'Ki'
+    :precondition: attack_name must be a string representing the name of the attack
+    :precondition: description must be a string describing the attack
+    :precondition: damage must be a positive integer >= 0
+    :precondition: damage_modifier must be a float > 0
+    :precondition: character must be a dictionary containing 'Current Ki' key with an integer value >= 0
+    :precondition: monster must be a dictionary containing 'Current Health' key with an integer value > 0
+    :postcondition: if attack_type is 'Physical', call apply_physical_attack
+    :postcondition: if attack_type is 'Ki' and character has enough Ki, process the Ki attack based on its type
+    :postcondition: if attack_type is 'Ki' and character doesn't have enough Ki, return False with an empty message
+    :postcondition: for 'Snare' apply both damage and special effects
+    :return: a tuple containing (success_boolean, result_message) where:
+             success_boolean is True if the attack was executed successfully else False
+             result_message is a string describing the attack result, or an empty string if the attack failed
+    """
     # Apply physical attack. Return True and result message
     if attack_type == 'Physical':
         message = apply_physical_attack(attack_name, description, damage, damage_modifier, monster)
