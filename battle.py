@@ -757,7 +757,57 @@ def get_attack_moves(character: dict) -> dict:
 
 
 # Display attack list depending on stance
-def display_attack_options(stance, attacks_moves):
+def display_attack_options(stance: str, attacks_moves: dict) -> None:
+    """
+    Print all available attack moves for the character's current stance.
+
+    :param stance: a string representing the character's current stance ('Bear', 'Turtle', 'Snake')
+    :param attacks_moves: a dictionary where keys are attack names and values are lists containing
+                         [description, attack_type, damage] as (str, str, int >= 0)
+    :precondition: stance must be a non-empty string representing one of the character's available stances
+    :precondition: attacks_moves must be a non-empty dictionary containing attack moves for the stance
+    :precondition: each attack in attacks_moves must have a list with exactly 3 elements:
+                   [description, attack_type, damage] as (str, str, int >= 0)
+    :postcondition: print the current stance name
+    :postcondition: print available attacks:
+    :postcondition: print each attack with its number, name, type, description, and damage or effect
+    :postcondition: for attacks with damage > 0, show the damage value
+    :postcondition: for attacks with damage == 0, show "Special Effect" instead of damage
+
+    >>> test_stance = 'Bear'
+    >>> test_attack_moves = {
+    ... 'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 20],
+    ... 'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 35],
+    ... 'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]}
+    >>> display_attack_options(test_stance, test_attack_moves)
+    Your stance: Bear
+    Available attacks:
+    1. Heavy Strike (Physical) - A powerful blow with massive physical damage. - Damage: 20
+    2. Sunder (Ki) - Slams the ground in front of you creating a wave of Ki. - Damage: 35
+    3. Berserk (Ki) - Enters a state of rage, increasing both physical damage and Ki attacks. - Special Effect
+    >>> test_stance = 'Turtle'
+    >>> test_attack_moves = {
+    ... 'Bash': ['Coats the outer shield with spikes, then bashes into the enemy.', 'Physical', 15],
+    ... 'Shell': ['Take no damage next two turns.', 'Ki', 0],
+    ... 'Roar': ["A lion's mouth forms at the center of the shield and shoots a Ki wave.", 'Ki', 45]}
+    >>> display_attack_options(test_stance, test_attack_moves)
+    Your stance: Turtle
+    Available attacks:
+    1. Bash (Physical) - Coats the outer shield with spikes, then bashes into the enemy. - Damage: 15
+    2. Shell (Ki) - Take no damage next two turns. - Special Effect
+    3. Roar (Ki) - A lion's mouth forms at the center of the shield and shoots a Ki wave. - Damage: 45
+    >>> test_stance = 'Snake'
+    >>> test_attack_moves = {
+    ... 'Lash': ['Whip extends to lash its target.', 'Physical', 20],
+    ... 'Snare': ['Whip entangles its target, paralyzing its victim.', 'Ki', 12],
+    ... 'Hydra': ['Splits into hundreds of smaller whips making its attack unavoidable.', 'Ki', 50]}
+    >>> display_attack_options(test_stance, test_attack_moves)
+    Your stance: Snake
+    Available attacks:
+    1. Lash (Physical) - Whip extends to lash its target. - Damage: 20
+    2. Snare (Ki) - Whip entangles its target, paralyzing its victim. - Damage: 12
+    3. Hydra (Ki) - Splits into hundreds of smaller whips making its attack unavoidable. - Damage: 50
+    """
     print(f"Your stance: {stance}")
     print("Available attacks:")
     attack_names = list(attacks_moves.keys())
