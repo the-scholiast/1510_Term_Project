@@ -60,7 +60,7 @@ def is_alive(character: dict) -> bool:
     return current_health > 0
 
 
-def game_lost(alive):
+def game_lost():
     print("Your quest to become Accepted has ended.")
     print("So much blood spills from your guts.")
     print("You let go of your family heirloom.")
@@ -264,7 +264,7 @@ def game():
             # Check if character is still alive after the encounter
             character_alive = is_alive(new_character)
             if not character_alive:
-                game_lost(character_alive)
+                game_lost()
             # Check if character has reached 100 crystals
             crystals_100 = check_crystals(new_character)
         # Gain new move set, stats, and title upgrade every level up
@@ -283,14 +283,16 @@ def game():
         print("You prepare yourself for the final battle!")
         # Create monster for final boss. Modified version of a regular monster
         monsters = ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire']
-        boss_monster = battle.create_monster(random.choice(monsters))
-        boss_monster['Name'] = "Calamity Beast " + boss_monster['Name']
+        boss_monster_type = random.choice(monsters)
+        # Create a regular monster first
+        boss_monster = battle.create_monster(boss_monster_type)
+        # Enhance the boss monster stats
         boss_monster['Health'] = 300
         boss_monster['Current Health'] = 300
         boss_monster['Damage Modifier'] = 1.5
         # Handle final boss battle
-        print(f"The {boss_monster['Name']} appears!")
-        monster_manager(new_character, boss_monster['Name'])
+        print(f"The Calamity Beast {boss_monster_type} appears!")
+        monster_manager(new_character, boss_monster_type)
         # Check if character survived the battle
         character_alive = is_alive(new_character)
         if character_alive:
@@ -300,7 +302,7 @@ def game():
             print(f"{new_character['Name']}, you have completed your quest.")
             sys.exit(0)
         else:
-            game_lost(False)
+            game_lost()
 
 
 def main():
