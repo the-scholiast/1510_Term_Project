@@ -841,7 +841,7 @@ def get_attack_choice(attacks_dict: dict) -> Optional[tuple]:
     """
     # Keep asking for valid number
     while True:
-        user_input = input("Choose your attack. Enter a number between 1 and 3, or 0 to go back: ")
+        user_input = input("Choose your attack. Enter a number between 1 and 3, or 0 to go back: ").strip()
         if user_input == '0':
             return None
         try:
@@ -877,6 +877,22 @@ def apply_physical_attack(attack_name: str, description: str, damage: int,
     :postcondition: reduce monster 'Current Health' value by damage amount
     :postcondition: generate a string message describing the attack results
     :return: a string message describing the attack results
+
+    >>> test_monster = {'Current Health': 100}
+    >>> apply_physical_attack('Heavy Strike', 'A powerful blow with massive physical damage.', 20, 1.0, test_monster)
+    'You used Heavy Strike! A powerful blow with massive physical damage. You dealt 20 damage!'
+    >>> test_monster
+    {'Current Health': 80}
+    >>> test_monster = {'Current Health': 100}
+    >>> apply_physical_attack('Lash', 'Whip extends to lash its target.', 20, 1.5, test_monster)
+    'You used Lash! Whip extends to lash its target. You dealt 30 damage!'
+    >>> test_monster
+    {'Current Health': 70}
+    >>> test_monster = {'Current Health': 10}
+    >>> apply_physical_attack('Heavy Strike', 'A powerful blow with massive physical damage.', 20, 1.0, test_monster)
+    'You used Heavy Strike! A powerful blow with massive physical damage. You dealt 20 damage!'
+    >>> test_monster
+    {'Current Health': -10}
     """
     damage = int(damage * damage_modifier)
     monster['Current Health'] -= damage
