@@ -19,12 +19,12 @@ def create_monster(monster: str) -> dict:
     :return: a monster represented as a dictionary containing its name and stats
 
     >>> actual = create_monster('Ghoul')
-    >>> expected = {'Name': 'Ghoul', 'Health': 80, 'Current Health': 80, 'Status Effects': {'Buff': 0, 'Snared': 0},
+    >>> expected = {'Name': 'Ghoul', 'Health': 80, 'Current Health': 80, 'Status': {'Buff': 0, 'Snared': 0},
     ... 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
     >>> actual == expected
     True
     >>> actual = create_monster('Vampire')
-    >>> expected = {'Name': 'Vampire', 'Health': 90, 'Current Health': 90, 'Status Effects': {'Buff': 0, 'Snared': 0},
+    >>> expected = {'Name': 'Vampire', 'Health': 90, 'Current Health': 90, 'Status': {'Buff': 0, 'Snared': 0},
     ... 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
     >>> actual == expected
     True
@@ -825,7 +825,7 @@ def apply_shell_buff(attack_name: str, description: str, character: dict) -> str
 # Apply snare effect to monster
 def apply_snare_effect(monster: dict) -> str:
     # Monster loses a turn
-    monster['Status Effects']['Snared'] += 1
+    monster['Status']['Snared'] += 1
     return "The monster is snared and will miss its next turn!"
 
 
@@ -973,9 +973,9 @@ def update_status_effects(character, monster):
                 elif effect == 'Berserk':
                     character['Damage Modifier'] -= .5
     # Update monster status effects
-    for effect, duration in list(monster['Status Effects'].items()):
+    for effect, duration in list(monster['Status'].items()):
         if duration > 0:
-            monster['Status Effects'][effect] -= 1
+            monster['Status'][effect] -= 1
 
 
 # Check if monster health is <= 0
