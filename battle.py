@@ -373,7 +373,7 @@ def check_character_defeat(character: dict, message: str) -> str:
     return message
 
 
-# Apply monster attack and its effect to character
+# Apply monster attack and its effect to character -->> move to game()?
 def apply_monster_attack(attack: list, character: dict, monster: dict):
     # Unpack attack list
     attack_name, description, attack_type, damage = attack
@@ -792,6 +792,25 @@ def get_attack_choice(attacks_dict: dict):
 # Apply physical attack to monster
 def apply_physical_attack(attack_name: str, description: str, damage: int,
                           damage_modifier: float, monster: dict) -> str:
+    """
+    Apply physical attack damage to monster and return result message.
+
+    :param attack_name: a string representing the name of the attack
+    :param description: a string describing the attack
+    :param damage: a positive integer > 0
+    :param damage_modifier: a float > 0
+    :param monster: a dictionary containing monster data with 'Current Health' key with an integer value > 0
+    :precondition: attack_name must be a string representing the name of the attack
+    :precondition: description must be a string describing the attack
+    :precondition: damage must be a positive integer > 0
+    :precondition: damage_modifier must be a float > 0
+    :precondition: monster must be a dictionary containing monster data
+                   with 'Current Health' key with an integer value > 0
+    :postcondition: multiply damage by damage_modifier
+    :postcondition: reduce monster 'Current Health' value by damage amount
+    :postcondition: generate a string message describing the attack results
+    :return: a string message describing the attack results
+    """
     damage = int(damage * damage_modifier)
     monster['Current Health'] -= damage
     return f"You used {attack_name}! {description} You dealt {damage} damage!"
