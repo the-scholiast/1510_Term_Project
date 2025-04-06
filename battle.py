@@ -283,7 +283,7 @@ def process_poison_attack(character: dict, monster_modifier: float, defense_modi
 
 
 # Process bleed attacks and add bleed status
-def process_bleed_attack(character: dict, monster_modifier: float, damage: int,
+def process_bleed_attack(character: dict, monster_modifier: float, defense_modifier: float, damage: int,
                          attack_name: str, description: str) -> str:
     """
     Apply bleed monster attack to character Current Health and Status, and return damage description.
@@ -291,16 +291,18 @@ def process_bleed_attack(character: dict, monster_modifier: float, damage: int,
     :param character: a dictionary containing character data with a 'Current Health' key with an integer value > 0 and
                       'Status' key containing a dictionary of Bleed:value as (str:int >= 0)
     :param monster_modifier: a positive float number > 0
+    :param defense_modifier: a positive float number >= 0
     :param damage: a positive integer representing monster damage
     :param attack_name: a string representing monster attack name
     :param description: a string representing monster attack description
     :precondition: character must be a dictionary containing character data with a 'Current Health' key with
                    an integer value > 0 and 'Status' key containing a dictionary of Bleed:value as (str:int >= 0)
     :precondition: monster_modifier must be a positive float number > 0
+    :precondition: defense_modifier must be a positive float number >= 0
     :precondition: damage must be positive integer representing monster damage
     :precondition: attack_name must be a non-empty string representing monster attack name
     :precondition: description must be a non-empty string representing monster attack description
-    :postcondition: multiply damage by monster_modifier
+    :postcondition: calculate (damage * monster_modifier * defense_modifier)
     :postcondition: reduce character Current Health by monster damage amount
     :postcondition: increase character Bleed Status by 2
     :postcondition: generate a string message containing attack_name, description, and damage
@@ -310,7 +312,7 @@ def process_bleed_attack(character: dict, monster_modifier: float, damage: int,
     >>> test_description = 'A quick bite that deals damage and has a chance to inflict bleed.'
     >>> expected = ('Monster used Bite! A quick bite that deals damage and has a chance to inflict bleed. '
     ...             'You took 15 damage and are bleeding!')
-    >>> expected == process_bleed_attack(test_character, 1.5, 10, 'Bite', test_description)
+    >>> expected == process_bleed_attack(test_character, 1.5, 1.0, 10, 'Bite', test_description)
     True
     >>> print(test_character)
     {'Current Health': 85, 'Status': {'Bleed': 2}}
@@ -318,12 +320,20 @@ def process_bleed_attack(character: dict, monster_modifier: float, damage: int,
     >>> test_description = 'A quick bite that deals damage and has a chance to inflict bleed.'
     >>> expected = ('Monster used Bite! A quick bite that deals damage and has a chance to inflict bleed. '
     ...             'You took 10 damage and are bleeding!')
-    >>> expected == process_bleed_attack(test_character, 1.0, 10, 'Bite', test_description)
+    >>> expected == process_bleed_attack(test_character, 1.0, 1.0, 10, 'Bite', test_description)
     True
     >>> print(test_character)
     {'Current Health': 0, 'Status': {'Bleed': 4}}
+    >>> test_character = {'Current Health': 10, 'Status': {'Bleed': 2}}
+    >>> test_description = 'A quick bite that deals damage and has a chance to inflict bleed.'
+    >>> expected = ('Monster used Bite! A quick bite that deals damage and has a chance to inflict bleed. '
+    ...             'You took 0 damage and are bleeding!')
+    >>> expected == process_bleed_attack(test_character, 1.0, 0.0, 10, 'Bite', test_description)
+    True
+    >>> print(test_character)
+    {'Current Health': 10, 'Status': {'Bleed': 4}}
     """
-    damage = int(damage * monster_modifier)
+    damage = int(damage * monster_modifier * defense_modifier)
     character['Current Health'] -= damage
     # Lasts for 2 turns
     character['Status']['Bleed'] += 2
@@ -352,7 +362,7 @@ def process_buff_attack(monster: dict, attack_name: str, description: str) -> st
     >>> test_monster = {'Damage Modifier': 1.0, 'Health Modifier': 1.0, 'Current Health': 100}
     >>> test_description = 'Enters a berserk state, increasing Health and Damage.'
     >>> expected_message = ("Monster used Lunar Frenzy! Enters a berserk state, increasing Health and Damage. "
-    ...                     "Monster's damage and Health is increased!")
+    ...                     "Monster's damage and Health are increased!")
     >>> expected_message == process_buff_attack(test_monster, 'Lunar Frenzy', test_description)
     True
     >>> print(test_monster)
@@ -360,7 +370,7 @@ def process_buff_attack(monster: dict, attack_name: str, description: str) -> st
     >>> test_monster = {'Damage Modifier': 1.2, 'Health Modifier': 1.5, 'Current Health': 50}
     >>> test_description = 'Enters a berserk state, increasing Health and Damage.'
     >>> expected_message = ("Monster used Lunar Frenzy! Enters a berserk state, increasing Health and Damage. "
-    ...                     "Monster's damage and Health is increased!")
+    ...                     "Monster's damage and Health are increased!")
     >>> expected_message == process_buff_attack(test_monster, 'Lunar Frenzy', test_description)
     True
     >>> print(test_monster)
@@ -369,7 +379,7 @@ def process_buff_attack(monster: dict, attack_name: str, description: str) -> st
     monster['Damage Modifier'] += 0.2
     monster['Health Modifier'] += 0.5
     monster['Current Health'] = int(monster['Current Health'] * monster['Health Modifier'])
-    return f"Monster used {attack_name}! {description} Monster's damage and Health is increased!"
+    return f"Monster used {attack_name}! {description} Monster's damage and Health are increased!"
 
 
 # Check if character is defeated and append defeat message if True
@@ -410,15 +420,17 @@ def apply_monster_attack(attack: list, character: dict, monster: dict):
     attack_name, description, attack_type, damage = attack
     # Obtain 'Damage Modifier' value from monster
     monster_modifier = monster['Damage Modifier']
+    # Obtain 'Active Defense Modifier' value from character
+    defense_modifier = character['Active Defense Modifier']
     # Process attack based on type
     if attack_type == 'Attack':
-        message = process_attack(character, monster_modifier, damage, attack_name, description)
+        message = process_attack(character, monster_modifier, defense_modifier, damage, attack_name, description)
     elif attack_type == 'Heal':
-        message = process_heal_attack(character, monster, damage, attack_name, description)
+        message = process_heal_attack(character, monster, damage, defense_modifier, attack_name, description)
     elif attack_type == 'Poison':
-        message = process_poison_attack(character, monster_modifier, damage, attack_name, description)
+        message = process_poison_attack(character, monster_modifier, defense_modifier, damage, attack_name, description)
     elif attack_type == 'Bleed':
-        message = process_bleed_attack(character, monster_modifier, damage, attack_name, description)
+        message = process_bleed_attack(character, monster_modifier, defense_modifier, damage, attack_name, description)
     # Buff type
     else:
         message = process_buff_attack(monster, attack_name, description)
