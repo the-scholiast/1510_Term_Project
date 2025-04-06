@@ -3,6 +3,8 @@ This module contains functions for the battle mechanic.
 """
 import random
 from itertools import cycle
+from typing import Optional
+
 from __init__ import BATTLE_STANCES
 
 
@@ -558,7 +560,22 @@ def display_stances(character: dict):
 
 
 # Get user input for stances or back to display_battle_menu
-def get_stance(character):
+def get_stance(character: dict) -> Optional[str]:
+    """
+    Prompt the user to select a stance from available options or return to the main battle menu.
+
+    Update the character's active stance based on user selection and display the stance description.
+    Return the selected stance name or None if the user chooses to go back.
+
+    :param character: a dictionary containing character data with 'Stance' and 'Active Stance' keys
+    :precondition: character must be a dictionary containing 'Stance' (list of available stances)
+                   and 'Active Stance' (current stance) keys
+    :precondition: character['Stance'] must be a non-empty list of strings representing stance names
+    :precondition: BATTLE_STANCES must contain tuples of (stance_name, description)
+    :postcondition: if user selects a valid stance, update character 'Active Stance' and print the description
+    :postcondition: if user selects '0' return to main menu without changes
+    :return: the selected stance name as a string if a valid stance is selected or None if user selects to go back
+    """
     available_stances = character['Stance']
     available_stances_index = [str(index) for index, stance in enumerate(character['Stance'], 1)]
     # Ask user for stance or back to display_battle_menu
