@@ -897,57 +897,67 @@ def execute_attack(attack_type: str, attack_name: str, description: str,
                 return True, message
         return False, ""
 
+
 # Manager function to apply attack move
-# def apply_attack_move(attack_move: tuple, character: dict, monster: dict) -> None:
-#     pass
+def apply_attack_move(attack_move: tuple, character: dict, monster: dict) -> None:
+    # Unpack attack details
+    attack_name, attack_details = attack_move
+    description, attack_type, damage = attack_details
+    # Get damage modifier from character
+    damage_modifier = character['Damage Modifier']
+    # Check if the attack is valid and execute it
+    success, message = execute_attack(attack_type, attack_name, description,
+                                      damage, damage_modifier, character, monster)
+    # Print the result
+    print_attack_result(attack_type, success, message)
 
 
 # Apply character attack to monster ### DECOMPOSE
-def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
-    attack_name, attack_details = attack_move
-    description, attack_type, base_damage = attack_details
-    # Apply damage modifier from character
-    damage_modifier = character.get('Damage Modifier')
-    actual_damage = int(base_damage * damage_modifier)
-    message = ""
-    # Apply attack based on type
-    if attack_type == 'Physical':
-        monster['Current Health'] -= actual_damage
-        message = f"You used {attack_name}! {description} You dealt {actual_damage} damage!"
-    elif attack_type == 'Ki':
-        # Check if character has enough Ki
-        if character['Current Ki'] >= 10:
-            # Ki attacks cost 10 Ki points
-            character['Current Ki'] -= 10
-            # Damaging Ki attack
-            if base_damage > 0:
-                monster['Current Health'] -= actual_damage
-                message = f"You used {attack_name}! {description} You dealt {actual_damage} Ki damage!"
-            # Buff/special Ki attack
-            else:
-                if attack_name == 'Berserk':
-                    character['Damage Modifier'] += 0.5
-                    # Add duration tracking for Berserk. Lasts for 3 turns
-                    character['Status']['Berserk'] = 3
-                    message = f"You used {attack_name}! {description} Your damage is increased by 50% for 3 turns!"
-                elif attack_name == 'Shell':
-                    # Add Shell status with duration. # Lasts for 2 turns
-                    character['Status']['Shell'] = 2
-                    character['Active Defense Modifier'] = 0
-                    message = f"You used {attack_name}! {description} You take no damage for the next two turns!"
-                elif attack_name == 'Snare':
-                    # Monster loses a turn
-                    monster['Status Effects']['Snared'] = 1
-                    message = (f"You used {attack_name}! {description} "
-                               f"The monster is snared and will miss its next turn!")
-            print(message)
-            return True
-        else:
-            message = "You don't have enough Ki to use this attack! Choose another action."
-            print(message)
-            return False
-    print(message)
-    return True
+# def apply_attack_move(attack_move: tuple, character: dict, monster: dict):
+#     attack_name, attack_details = attack_move
+#     description, attack_type, base_damage = attack_details
+#     # Apply damage modifier from character
+#     damage_modifier = character.get('Damage Modifier')
+#     actual_damage = int(base_damage * damage_modifier)
+#     message = ""
+#     # Apply attack based on type
+#     if attack_type == 'Physical':
+#         monster['Current Health'] -= actual_damage
+#         message = f"You used {attack_name}! {description} You dealt {actual_damage} damage!"
+#     elif attack_type == 'Ki':
+#         # Check if character has enough Ki
+#         if character['Current Ki'] >= 10:
+#             # Ki attacks cost 10 Ki points
+#             character['Current Ki'] -= 10
+#             # Damaging Ki attack
+#             if base_damage > 0:
+#                 monster['Current Health'] -= actual_damage
+#                 message = f"You used {attack_name}! {description} You dealt {actual_damage} Ki damage!"
+#             # Buff/special Ki attack
+#             else:
+#                 if attack_name == 'Berserk':
+#                     character['Damage Modifier'] += 0.5
+#                     # Add duration tracking for Berserk. Lasts for 3 turns
+#                     character['Status']['Berserk'] = 3
+#                     message = f"You used {attack_name}! {description} Your damage is increased by 50% for 3 turns!"
+#                 elif attack_name == 'Shell':
+#                     # Add Shell status with duration. # Lasts for 2 turns
+#                     character['Status']['Shell'] = 2
+#                     character['Active Defense Modifier'] = 0
+#                     message = f"You used {attack_name}! {description} You take no damage for the next two turns!"
+#                 elif attack_name == 'Snare':
+#                     # Monster loses a turn
+#                     monster['Status Effects']['Snared'] = 1
+#                     message = (f"You used {attack_name}! {description} "
+#                                f"The monster is snared and will miss its next turn!")
+#             print(message)
+#             return True
+#         else:
+#             message = "You don't have enough Ki to use this attack! Choose another action."
+#             print(message)
+#             return False
+#     print(message)
+#     return True
 
 
 # Update status effects for both character and monster
