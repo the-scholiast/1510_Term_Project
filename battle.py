@@ -225,7 +225,7 @@ def process_heal_attack(character: dict, monster: dict, damage: int, defense_mod
 
 
 # Process poison attacks and add poison status
-def process_poison_attack(character: dict, monster_modifier: float, damage: int,
+def process_poison_attack(character: dict, monster_modifier: float, defense_modifier: float, damage: int,
                           attack_name: str, description: str) -> str:
     """
     Apply poison monster attack to character Current Health and Status, and return damage description.
@@ -233,16 +233,18 @@ def process_poison_attack(character: dict, monster_modifier: float, damage: int,
     :param character: a dictionary containing character data with a 'Current Health' key with an integer value > 0 and
                       'Status' key containing a dictionary of Poison:value as (str:int >= 0)
     :param monster_modifier: a positive float number > 0
+    :param defense_modifier: a positive float number >= 0
     :param damage: a positive integer representing monster damage
     :param attack_name: a string representing monster attack name
     :param description: a string representing monster attack description
     :precondition: character must be a dictionary containing character data with a 'Current Health' key with
                    an integer value > 0 and 'Status' key containing a dictionary of Poison:value as (str:int >= 0)
     :precondition: monster_modifier must be a positive float number > 0
+    :precondition: defense_modifier must be a positive float number >= 0
     :precondition: damage must be positive integer representing monster damage
     :precondition: attack_name must be a non-empty string representing monster attack name
     :precondition: description must be a non-empty string representing monster attack description
-    :postcondition: multiply damage by monster_modifier
+    :postcondition: calculate (damage * monster_modifier * defense_modifier)
     :postcondition: reduce character Current Health by monster damage amount
     :postcondition: increase character Poison Status by 4
     :postcondition: generate a string message containing attack_name, description, and damage
@@ -252,7 +254,7 @@ def process_poison_attack(character: dict, monster_modifier: float, damage: int,
     >>> test_description = 'A venomous bite that inflicts poison damage over time.'
     >>> expected = ('Monster used Poison Bite! A venomous bite that inflicts poison damage over time. '
     ...             'You took 15 damage and are poisoned!')
-    >>> expected == process_poison_attack(test_character, 1.5, 10, 'Poison Bite', test_description)
+    >>> expected == process_poison_attack(test_character, 1.5, 1.0, 10, 'Poison Bite', test_description)
     True
     >>> print(test_character)
     {'Current Health': 85, 'Status': {'Poison': 4}}
@@ -260,12 +262,20 @@ def process_poison_attack(character: dict, monster_modifier: float, damage: int,
     >>> test_description = 'A venomous bite that inflicts poison damage over time.'
     >>> expected = ('Monster used Poison Bite! A venomous bite that inflicts poison damage over time. '
     ...             'You took 10 damage and are poisoned!')
-    >>> expected == process_poison_attack(test_character, 1.0, 10, 'Poison Bite', test_description)
+    >>> expected == process_poison_attack(test_character, 1.0, 1.0, 10, 'Poison Bite', test_description)
     True
     >>> print(test_character)
     {'Current Health': 0, 'Status': {'Poison': 8}}
+    >>> test_character = {'Current Health': 10, 'Status': {'Poison': 4}}
+    >>> test_description = 'A venomous bite that inflicts poison damage over time.'
+    >>> expected = ('Monster used Poison Bite! A venomous bite that inflicts poison damage over time. '
+    ...             'You took 0 damage and are poisoned!')
+    >>> expected == process_poison_attack(test_character, 1.0, 0.0, 10, 'Poison Bite', test_description)
+    True
+    >>> print(test_character)
+    {'Current Health': 10, 'Status': {'Poison': 8}}
     """
-    damage = int(damage * monster_modifier)
+    damage = int(damage * monster_modifier * defense_modifier)
     character['Current Health'] -= damage
     # Lasts for 4 turns
     character['Status']['Poison'] += 4
