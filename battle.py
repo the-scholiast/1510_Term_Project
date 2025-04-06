@@ -657,8 +657,23 @@ def display_items(character: dict):
 
 
 # Get user input for items or back to display_battle_menu
-def get_item(character):
-    items = character.get('Items')
+def get_item(character: dict) -> Optional[str]:
+    """
+    Obtain the user's item selection from the available items in the character's inventory.
+
+    Prompt the user to select an item by index number from their available items,
+    or allows user to return to the battle menu. Only items with quantity > 0 are available.
+
+    :param character: a dictionary containing character data with an 'Items' key
+                      that contains a dictionary of item name:quantity pairs (as str: int >= 0)
+    :precondition: character must be a dictionary containing an 'Items' key
+    :precondition: character['Items'] must be a dictionary with
+                   'Health Pots' and 'Shards' string keys and integer values >= 0
+    :postcondition: validate user input to ensure it corresponds to an available item or back option
+    :postcondition: obtain the selected item name as a string, or None if the user chooses to go back or has no items
+    :return: the selected item name as a string, or None if the user chooses to go back or has no items
+    """
+    items = character['Items']
     available_items = [item for item, quantity in items.items() if quantity > 0]
     # If no items available, return to battle menu
     if not available_items:
