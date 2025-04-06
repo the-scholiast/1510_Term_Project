@@ -121,7 +121,7 @@ def game():
                     # Get monster attack
                     monster_attack = battle.get_monster_attack(monster_name)
                     # Apply monster attack to character
-                    battle.apply_monster_attack(monster_attack, character)
+                    battle.apply_monster_attack(monster_attack, character, monster)
                 # Move to next turn after monster's action
                 current_turn = next(turns)
             # Character's turn
@@ -161,12 +161,16 @@ def game():
                         battle.display_attack_options(character['Active Stance'], attack_moves)
                         # Get user attack choice
                         attack_choice = battle.get_attack_choice(attack_moves)
-                        # Only mark action as completed if an attack was chosen not back
+                        # Only proceed if an attack was chosen, not back
                         if attack_choice is not None:
-                            # Apply attack to monster and check if it was successful
-                            attack_successful = battle.apply_attack_move(attack_choice, character, monster)
-                            # Only mark action as completed if the attack was successful
-                            if attack_successful:
+                            # Check if it's a Ki attack and if there's enough Ki
+                            attack_name, attack_details = attack_choice
+                            attack_type = attack_details[1]
+                            if attack_type == 'Ki' and character['Current Ki'] < 10:
+                                print("You don't have enough Ki to use this attack! Choose another action.")
+                            else:
+                                # Apply attack to monster
+                                battle.apply_attack_move(attack_choice, character, monster)
                                 action_completed = True
                 # Only move to next turn if player completed an action
                 if action_completed:
