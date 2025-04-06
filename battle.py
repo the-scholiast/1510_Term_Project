@@ -1116,6 +1116,19 @@ def process_special_ki_attack_with_cost(attack_name: str, description: str,
 
 # Print attack message if valid
 def print_attack_result(attack_type: str, success: bool, message: str) -> None:
+    """
+    Print the result of an attack attempt.
+
+    :param attack_type: a string representing the type of attack ('Physical' or 'Ki')
+    :param success: a boolean indicating whether the attack was successful
+    :param message: a string describing the attack result
+    :precondition: attack_type must be a string ('Physical' or 'Ki')
+    :precondition: success must be a boolean indicating if the attack succeeded
+    :precondition: message must be a string containing attack result description
+    :postcondition: if success is True, print the message
+    :postcondition: if success is False and attack_type is 'Ki', print not enough Ki message
+    :postcondition: if success is False and attack_type is not 'Ki', do nothing
+    """
     # Print attack message if attack is valid
     if success:
         print(message)
