@@ -900,6 +900,20 @@ def apply_shell_buff(attack_name: str, description: str, character: dict) -> str
 
 # Apply snare effect to monster
 def apply_snare_effect(monster: dict) -> str:
+    """
+    Apply Snared status to monster and return result message.
+
+    :param monster: a dictionary containing monster data with
+                    'Status' key containing 'Snared':value as (str, int >= 0)
+    :precondition: monster must be a dictionary containing monster data with
+                   'Status' key containing 'Snared':value as (str, int >= 0)
+    :precondition: monster must be a dictionary containing monster data
+    :precondition: monster['Status'] value must contain 'Snared' key
+    :precondition: monster['Status']['Snared'] value must be a positive integer >= 0
+    :postcondition: increase 'Snared' value by 1
+    :postcondition: generate a string message describing the attack results
+    :return: a string message describing the attack results
+    """
     # Monster loses a turn
     monster['Status']['Snared'] += 1
     return "The monster is snared and will miss its next turn!"
