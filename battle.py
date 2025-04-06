@@ -1284,6 +1284,32 @@ def apply_status_damage(character: dict) -> str:
     return ""
 
 
+# Reset character Statuses to 0 after battle ends
+def reset_statuses(character: dict) -> None:
+    """
+    Reset all character status effects to 0 after battle ends.
+
+    :param character: a dictionary containing character data with a 'Status' key
+                      that contains a dictionary of status effect name:duration as (str:int >= 0)
+    :precondition: character must be a dictionary containing a 'Status' key
+    :precondition: character['Status'] must be a dictionary with status effects as keys
+                   and integer values >= 0
+    :postcondition: set all status effect durations to 0
+
+    >>> test_character = {'Status': {'Poison': 3, 'Bleed': 2, 'Shell': 1, 'Berserk': 0}}
+    >>> reset_statuses(test_character)
+    >>> test_character
+    {'Status': {'Poison': 0, 'Bleed': 0, 'Shell': 0, 'Berserk': 0}}
+    >>> test_character = {'Status': {'Poison': 0, 'Bleed': 0, 'Shell': 0, 'Berserk': 0}}
+    >>> reset_statuses(test_character)
+    >>> test_character
+    {'Status': {'Poison': 0, 'Bleed': 0, 'Shell': 0, 'Berserk': 0}}
+    """
+    character_statuses = character['Status']
+    for status in character_statuses.keys():
+        character_statuses[status] = 0
+
+
 # Check if monster health is <= 0
 def monster_defeat(monster: dict) -> bool:
     monster_health = monster.get("Current Health")
