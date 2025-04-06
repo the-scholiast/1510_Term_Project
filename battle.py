@@ -465,6 +465,15 @@ def display_battle_menu():
     :postcondition: print a blank line followed by a formatted battle menu to the console
     :postcondition: menu displays three numbered options: 1.STANCE, 2.ITEM, and 3.FIGHT
     :postcondition: options are enclosed in Unicode box drawing characters to create a visual menu
+
+    >>> display_battle_menu()
+    <BLANKLINE>
+    ┌────────────┐  ┌────────────┐
+    │  1.STANCE  │  │   2.ITEM   │
+    └────────────┘  └────────────┘
+    ┌────────────┐
+    │  3.FIGHT   │
+    └────────────┘
     """
     # Display main battle menu
     print()
@@ -499,7 +508,16 @@ def get_user_choice_battle_menu() -> str:
 
 
 # Display available stances when clicking from display_battle_menu
-def display_stances(character):
+def display_stances(character: dict):
+    """
+    Display all available stances for the character in a box with numbered options.
+
+    :param character: a dictionary containing character data with a 'Stance' key that contains a list of stance names
+    :precondition: character must be a dictionary containing character data with a 'Stance' key
+    :precondition: character['Stance'] must be a non-empty list of strings representing stance names
+    :postcondition: print a formatted box of available stances with numbered options
+    :postcondition: print a back option as the last option in the menu
+    """
     available_stances = character['Stance']
     print("Available Stances:")
     print("┌" + "─" * 22 + "┐")
