@@ -692,6 +692,45 @@ def get_item(character: dict) -> Optional[str]:
 
 # Obtain character attack moves by stance
 def get_attack_moves(character: dict) -> dict:
+    """
+    Obtain the attack moves available to a character based on their active stance.
+
+    Each stance (Bear, Turtle, Snake) has three unique attack moves.
+    Attack moves are returned as a dictionary where keys are attack names and values are lists
+    containing [description, attack_type, damage] as (str, str, int > 0).
+
+    :param character: a dictionary containing character data with an 'Active Stance' key
+                      that specifies which stance the character is currently using
+    :precondition: character must be a dictionary containing an 'Active Stance' key
+    :precondition: character['Active Stance'] must be one of: 'Bear', 'Turtle', 'Snake'
+    :postcondition: obtain a dictionary of attack moves where keys are attack names and values are lists
+                    containing [description, attack_type, damage] as (str, str, int > 0)
+    :postcondition: leave character unmodified
+    :return: a dictionary of attack moves where keys are attack names and values are lists
+             containing [description, attack_type, damage] as (str, str, int > 0)
+
+    >>> test_character = {'Active Stance': 'Bear'}
+    >>> actual = get_attack_moves(test_character)
+    >>> expected = {'Heavy Strike': ['A powerful blow with massive physical damage.', 'Physical', 20],
+    ...             'Sunder': ['Slams the ground in front of you creating a wave of Ki.', 'Ki', 35],
+    ...             'Berserk': ['Enters a state of rage, increasing both physical damage and Ki attacks.', 'Ki', 0]}
+    >>> actual == expected
+    True
+    >>> test_character = {'Active Stance': 'Turtle'}
+    >>> actual = get_attack_moves(test_character)
+    >>> expected = {'Bash': ['Coats the outer shield with spikes, then bashes into the enemy.', 'Physical', 15],
+    ...             'Shell': ['Take no damage next two turns.', 'Ki', 0],
+    ...             'Roar': ["A lion's mouth forms at the center of the shield and shoots a Ki wave.", 'Ki', 45]}
+    >>> actual == expected
+    True
+    >>> test_character = {'Active Stance': 'Snake'}
+    >>> actual = get_attack_moves(test_character)
+    >>> expected = {'Lash': ['Whip extends to lash its target.', 'Physical', 20],
+    ...             'Snare': ['Whip entangles its target, paralyzing its victim.', 'Ki', 12],
+    ...             'Hydra': ['Splits into hundreds of smaller whips making its attack unavoidable.', 'Ki', 50]}
+    >>> actual == expected
+    True
+    """
     # Store character's attack moves
     character_attacks = {
         'Bear': {
@@ -710,8 +749,10 @@ def get_attack_moves(character: dict) -> dict:
             'Hydra': ['Splits into hundreds of smaller whips making its attack unavoidable.', 'Ki', 50]
         }
     }
-    character_stance = character.get('Active Stance')
-    attack_moves = character_attacks.get(character_stance)
+    # Retrieve current character stance
+    character_stance = character['Active Stance']
+    # Obtain stance attack moves as a dictionary
+    attack_moves = character_attacks[character_stance]
     return attack_moves
 
 
