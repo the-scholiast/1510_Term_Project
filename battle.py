@@ -821,7 +821,24 @@ def display_attack_options(stance: str, attacks_moves: dict) -> None:
 
 
 # Obtain user input for attack move. Max value = 3 (number of attack moves). 0 to go back to display_battle_menu
-def get_attack_choice(attacks_dict: dict):
+def get_attack_choice(attacks_dict: dict) -> Optional[tuple]:
+    """
+    Obtain the user's attack choice from the available attack moves.
+
+    Prompt the user to select an attack by number from the displayed attack options,
+    or allow user to return to the battle menu. Validate the input to ensure it corresponds to an available attack.
+
+    :param attacks_dict: a dictionary where keys are attack names and values are lists containing
+                         [description, attack_type, damage] as (str, str, int >= 0)
+    :precondition: attacks_dict must be a non-empty dictionary containing exactly three attack moves
+    :postcondition: validate user input to ensure it corresponds to an available attack or back option
+    :postcondition: convert user's numeric choice to the corresponding attack move
+    :postcondition: if a valid attack is selected, obtain a tuple containing
+                    (attack_name, [description, attack_type, damage])
+    :postcondition: if user input == '0', obtain None value
+    :return: a tuple containing (attack_name, [description, attack_type, damage]) if a valid attack is selected,
+             or None if the user chooses to go back to the battle menu
+    """
     # Keep asking for valid number
     while True:
         user_input = input("Choose your attack. Enter a number between 1 and 3, or 0 to go back: ")
