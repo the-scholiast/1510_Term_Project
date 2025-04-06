@@ -3,6 +3,7 @@ import battle
 import character_module
 import encounters
 import grid
+import random
 import sys
 import tutorial
 
@@ -271,13 +272,36 @@ def game():
         leveled_up = character_module.level_up(new_character)
         if leveled_up:
             character_module.print_level_up(new_character)
-    # If true, notify Character a Calamity Monster approaches
-    # Character healed for battle
-    # Final boss battle
-    # If won, obtain quest item
-    # Recall back to tutorial zone
-    # Give quest item to Darrow
-    # Win dialogue and end game
+    # If player has collected 100 crystals, start final boss sequence
+    if crystals_100:
+        # Notify player about approaching calamity
+        print("You feel a powerful presence approaching...")
+        print("The ground trembles beneath your feet.")
+        print("A massive creature emerges from the shadows!")
+        # Heal character for final battle
+        new_character['Current Health'] = new_character['Health']
+        new_character['Current Ki'] = new_character['Ki']
+        print("You prepare yourself for the final battle!")
+        # Create monster for final boss. Modified version of a regular monster
+        monsters = ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire']
+        boss_monster = battle.create_monster(random.choice(monsters))
+        boss_monster['Name'] = "Calamity Beast " + boss_monster['Name']
+        boss_monster['Health'] = 300
+        boss_monster['Current Health'] = 300
+        boss_monster['Damage Modifier'] = 1.5
+        # Handle final boss battle
+        print(f"The {boss_monster['Name']} appears!")
+        monster_manager(new_character, boss_monster['Name'])
+        # Check if character survived the battle
+        character_alive = is_alive(new_character)
+        if character_alive:
+            print("\nCongratulations! You have defeated the Calamity Beast!")
+            print("You collect its rare Crystal and return to the Reaper's Guild.")
+            print("\nDarrow: 'ZEHAHAHAHA! You've done it! You are now an Accepted member of the Reaper's Guild!'")
+            print(f"{new_character['Name']}, you have completed your quest.")
+            sys.exit(0)
+        else:
+            game_lost(False)
 
 
 def main():
