@@ -977,6 +977,26 @@ def apply_ki_cost(character: dict) -> None:
 # Process damaging Ki attack
 def process_damaging_ki_attack(attack_name: str, description: str, damage: int,
                                damage_modifier: float, character: dict, monster: dict) -> str:
+    """
+    Process a Ki attack that deals damage.
+
+    :param attack_name: a string representing the name of the attack
+    :param description: a string describing the attack
+    :param damage: a positive integer > 0
+    :param damage_modifier: a float > 0
+    :param character: a dictionary containing character data
+    :param monster: a dictionary containing monster data
+    :precondition: attack_name must be a string representing the name of the attack
+    :precondition: description must be a string describing the attack
+    :precondition: damage must be a positive integer > 0
+    :precondition: damage_modifier must be a float > 0
+    :precondition: character must be a dictionary containing character data
+    :precondition: monster must be a dictionary containing monster data
+    :postcondition: reduce character Current Ki by 10
+    :postcondition: reduce monster Current Health by damage * damage_modifier
+    :postcondition: generate a message string describing the attack results
+    :return: a string message describing the attack results
+    """
     # Apply Ki cost
     apply_ki_cost(character)
     # Apply damage and get message
