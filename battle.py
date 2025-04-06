@@ -846,6 +846,24 @@ def apply_ki_damage_attack(attack_name: str, description: str, damage: int,
 
 # Apply Berserk buff to character
 def apply_berserk_buff(attack_name: str, description: str, character: dict) -> str:
+    """
+    Apply Berserk buff to character and return result message.
+
+    :param attack_name: a string representing the name of the attack
+    :param description: a string describing the attack
+    :param character: a dictionary containing character data with: 'Damage Modifier' key with float value > 0,
+                      'Status' key containing 'Berserk':value as (str:int >= 0)
+    :precondition: attack_name must be a string representing the name of the attack
+    :precondition: description must be a string describing the attack
+    :precondition: character must be a dictionary containing character data with 'Damage Modifier' and 'Status' keys
+    :precondition: character['Damage Modifier'] value must be a float > 0
+    :precondition: character['Status'] value must contain 'Berserk' key
+    :precondition: character['Status']['Berserk'] value must be a positive integer >= 0
+    :postcondition: increase 'Damage Modifier' value by 0.5
+    :postcondition: increase 'Berserk' value by 3
+    :postcondition: generate a string message describing the buff results
+    :return: a string message describing the buff results
+    """
     character['Damage Modifier'] += 0.5
     # Add duration tracking for Berserk. Lasts for 3 turns
     character['Status']['Berserk'] += 3
@@ -936,7 +954,7 @@ def execute_attack(attack_type: str, attack_name: str, description: str,
         return False, ""
 
 
-# Manager function to apply attack move
+# Manager function to apply attack move -->> move to game()?
 def apply_attack_move(attack_move: tuple, character: dict, monster: dict) -> None:
     # Unpack attack details
     attack_name, attack_details = attack_move
