@@ -1238,6 +1238,52 @@ def update_status_effects(character, monster):
             monster['Status'][effect] -= 1
 
 
+# Apply damaging status effects to character
+def apply_status_damage(character: dict) -> str:
+    """
+    Apply damage from active status effects like Poison and Bleed to the character.
+
+    :param character: a dictionary containing character data with:
+                      'Current Health':value as (str:int value > 0),
+                      'Status' key with a dictionary containing 'Poison' and 'Bleed':duration as (str:int value >= 0)
+    :precondition: character must be a dictionary containing character data with:
+                   'Current Health':value as (str:int value > 0),
+                   'Status' key with a dictionary containing 'Poison' and 'Bleed':duration as (str:int value >= 0)
+    :postcondition: if Poison, reduce character Current Health by 5
+    :postcondition: if Bleed, reduce character Current Health by 15
+    :postcondition: generate a message describing the status effect damage
+    :return: a string message describing the status effect damage applied, or empty string if no effects
+
+    >>> test_character = {'Current Health': 100, 'Status': {'Poison': 3, 'Bleed': 0}}
+    >>> apply_status_damage(test_character)
+    'You take 5 damage from Poison!'
+    >>> test_character
+    {'Current Health': 95, 'Status': {'Poison': 3, 'Bleed': 0}}
+    >>> test_character = {'Current Health': 100, 'Status': {'Poison': 0, 'Bleed': 2}}
+    >>> apply_status_damage(test_character)
+    'You take 15 damage from Bleed!'
+    >>> test_character
+    {'Current Health': 85, 'Status': {'Poison': 0, 'Bleed': 2}}
+    >>> test_character = {'Current Health': 100, 'Status': {'Poison': 0, 'Bleed': 0}}
+    >>> apply_status_damage(test_character)
+    ''
+    >>> test_character
+    {'Current Health': 100, 'Status': {'Poison': 0, 'Bleed': 0}}
+    """
+    # Apply poison damage (5 damage per turn)
+    if character['Status']['Poison'] > 0:
+        poison_damage = 5
+        character['Current Health'] -= poison_damage
+        return f"You take {poison_damage} damage from Poison!"
+    # Apply bleed damage (15 damage per turn)
+    elif character['Status']['Bleed'] > 0:
+        bleed_damage = 15
+        character['Current Health'] -= bleed_damage
+        return f"You take {bleed_damage} damage from Bleed!"
+    # No active status effects
+    return ""
+
+
 # Check if monster health is <= 0
 def monster_defeat(monster: dict) -> bool:
     monster_health = monster.get("Current Health")
