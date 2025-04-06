@@ -898,6 +898,11 @@ def execute_attack(attack_type: str, attack_name: str, description: str,
         return False, ""
 
 
+# Check if character has enough Ki for an attack
+def has_enough_ki(character: dict) -> bool:
+    return character['Current Ki'] >= 10
+
+
 # Manager function to apply attack move
 def apply_attack_move(attack_move: tuple, character: dict, monster: dict) -> None:
     # Unpack attack details
