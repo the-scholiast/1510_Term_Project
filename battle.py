@@ -43,7 +43,7 @@ def create_monster(monster: str) -> dict:
     monster_dict = {
         'Name': monster,
         'Health': monster_health.get(monster), 'Current Health': monster_health.get(monster),
-        'Status Effects': {'Buff': 0, 'Snared': 0},
+        'Status': {'Buff': 0, 'Snared': 0},
         'Damage Modifier': 1.0, 'Health Modifier': 1.0
     }
     return monster_dict
@@ -430,27 +430,27 @@ def skip_turn(monster: dict) -> bool:
     Print a message if the monster is snared and cannot move this turn.
 
     :param monster: a dictionary containing monster data with a 'Name' key with a string value
-                    and a 'Status Effects' key with a dictionary containing a 'Snared' key with an integer value >= 0
+                    and a 'Status' key with a dictionary containing a 'Snared' key with an integer value >= 0
     :precondition: monster must be a dictionary containing monster data with a 'Name' key with a string value
-                   and a 'Status Effects' key with a dictionary containing a 'Snared' key with an integer value >= 0
+                   and a 'Status' key with a dictionary containing a 'Snared' key with an integer value >= 0
     :postcondition: leave monster unmodified
     :postcondition: print message if monster is snared
     :return: True if Snared value > 0 else False
 
-    >>> test_monster = {'Name': 'Werewolf', 'Status Effects': {'Snared': 0}}
+    >>> test_monster = {'Name': 'Werewolf', 'Status': {'Snared': 0}}
     >>> skip_turn(test_monster)
     False
-    >>> test_monster = {'Name': 'Vampire', 'Status Effects': {'Snared': 1}}
+    >>> test_monster = {'Name': 'Vampire', 'Status': {'Snared': 1}}
     >>> skip_turn(test_monster)
     Vampire is snared and cannot move this turn!
     True
-    >>> test_monster = {'Name': 'Wendigo', 'Status Effects': {'Snared': 2}}
+    >>> test_monster = {'Name': 'Wendigo', 'Status': {'Snared': 2}}
     >>> skip_turn(test_monster)
     Wendigo is snared and cannot move this turn!
     True
     """
     # Check if monster is snared
-    if monster['Status Effects']['Snared'] > 0:
+    if monster['Status']['Snared'] > 0:
         print(f"{monster['Name']} is snared and cannot move this turn!")
         return True
     return False
@@ -823,11 +823,10 @@ def apply_shell_buff(attack_name: str, description: str, character: dict) -> str
 
 
 # Apply snare effect to monster
-def apply_snare_effect(attack_name: str, description: str, monster: dict) -> str:
+def apply_snare_effect(monster: dict) -> str:
     # Monster loses a turn
     monster['Status Effects']['Snared'] += 1
-    return (f"You used {attack_name}! {description} "
-            f"The monster is snared and will miss its next turn!")
+    return "The monster is snared and will miss its next turn!"
 
 
 # Process special Ki attack based on name
@@ -837,7 +836,7 @@ def process_special_ki_attack(attack_name: str, description: str, character: dic
     elif attack_name == 'Shell':
         return apply_shell_buff(attack_name, description, character)
     elif attack_name == 'Snare':
-        return apply_snare_effect(attack_name, description, monster)
+        return apply_snare_effect(monster)
 
 
 # Apply ki attack cost
@@ -863,16 +862,6 @@ def process_special_ki_attack_with_cost(attack_name: str, description: str,
     return process_special_ki_attack(attack_name, description, character, monster)
 
 
-# Determine if attack is valid
-def is_valid_attack(attack_type: str, character: dict) -> bool:
-    # All physical attacks are valid
-    if attack_type == 'Physical':
-        return True
-    # Ki attacks require sufficient Ki
-    else:
-        return character['Current Ki'] >= 10
-
-
 # Print attack message if valid
 def print_attack_result(attack_type: str, success: bool, message: str) -> None:
     # Print attack message if attack is valid
@@ -884,7 +873,29 @@ def print_attack_result(attack_type: str, success: bool, message: str) -> None:
 
 
 # Execute attack
-
+def execute_attack(attack_type: str, attack_name: str, description: str,
+                   damage: int, damage_modifier: float, character: dict, monster: dict) -> tuple:
+    # Apply physical attack. Return True and result message
+    if attack_type == 'Physical':
+        message = apply_physical_attack(attack_name, description, damage, damage_modifier, monster)
+        return True, message
+    else:
+        # Apply Ki attack. Return True if character has enough Ki with result message. Else return False with "".
+        if character['Current Ki'] >= 10:
+            if damage > 0 and attack_name != 'Snare':
+                message = process_damaging_ki_attack(attack_name, description, damage,
+                                                     damage_modifier, character, monster)
+                return True, message
+            # Snare has special effect and does damage
+            elif attack_name == 'Snare':
+                message = process_damaging_ki_attack(attack_name, description, damage,
+                                                     damage_modifier, character, monster)
+                message += "\n" + process_special_ki_attack_with_cost(attack_name, description, character, monster)
+                return True, message
+            else:
+                message = process_special_ki_attack_with_cost(attack_name, description, character, monster)
+                return True, message
+        return False, ""
 
 # Manager function to apply attack move
 # def apply_attack_move(attack_move: tuple, character: dict, monster: dict) -> None:
