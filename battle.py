@@ -517,6 +517,34 @@ def display_stances(character: dict):
     :precondition: character['Stance'] must be a non-empty list of strings representing stance names
     :postcondition: print a formatted box of available stances with numbered options
     :postcondition: print a back option as the last option in the menu
+
+    >>> test_character = {'Stance': ['Bear', 'Turtle']}
+    >>> display_stances(test_character)
+    Available Stances:
+    ┌──────────────────────┐
+    │ 1. Bear              │
+    │ 2. Turtle            │
+    ├──────────────────────┤
+    │ 0. Back              │
+    └──────────────────────┘
+    >>> test_character = {'Stance': ['Bear']}
+    >>> display_stances(test_character)
+    Available Stances:
+    ┌──────────────────────┐
+    │ 1. Bear              │
+    ├──────────────────────┤
+    │ 0. Back              │
+    └──────────────────────┘
+    >>> test_character = {'Stance': ['Bear', 'Turtle', 'Snake']}
+    >>> display_stances(test_character)
+    Available Stances:
+    ┌──────────────────────┐
+    │ 1. Bear              │
+    │ 2. Turtle            │
+    │ 3. Snake             │
+    ├──────────────────────┤
+    │ 0. Back              │
+    └──────────────────────┘
     """
     available_stances = character['Stance']
     print("Available Stances:")
