@@ -1023,6 +1023,7 @@ def process_special_ki_attack(attack_name: str, description: str, character: dic
     :precondition: monster['Status'] value must contain 'Snared' key
     :precondition: monster['Status']['Snared'] value must be integer >= 0
     :postcondition: increase value of the attack_name 'Status' of the character
+    :postcondition: if attack_name == 'Snare', increase value of monster['Status']['Snared'] by 1
     :postcondition: obtain the message describing the attack results of the attack_name
     :return: a string message describing the attack results
     """
@@ -1089,6 +1090,24 @@ def process_damaging_ki_attack(attack_name: str, description: str, damage: int,
 # Process special Ki attack with ki cost
 def process_special_ki_attack_with_cost(attack_name: str, description: str,
                                         character: dict, monster: dict) -> str:
+    """
+    Process a special Ki attack and apply its cost.
+
+    :param attack_name: a string representing the name of the attack
+    :param description: a string describing the attack
+    :param character: a dictionary containing character data
+    :param monster: a dictionary containing monster data
+    :precondition: attack_name must be a string representing the name of the attack
+    :precondition: description must be a string describing the attack
+    :precondition: character must be a dictionary containing character data
+    :precondition: monster must be a dictionary containing monster data
+    :postcondition: reduce character Current Ki by 10
+    :postcondition: if attack_name == 'Shell' or 'Berserk' increase value of the
+                    attack_name 'Status' of the character by 2 or 3
+    :postcondition: if attack_name == 'Snare', increase value of monster['Status']['Snared'] by 1
+    :postcondition: obtain the message describing the attack results of the attack_name
+    :return: a string message describing the attack results
+    """
     # Apply Ki cost
     apply_ki_cost(character)
     # Apply special effect and get message
