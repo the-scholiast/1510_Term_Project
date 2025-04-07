@@ -447,7 +447,7 @@ def process_buff_attack(monster: dict, attack_name: str, description: str) -> st
     :param description: a string representing monster attack description
     :precondition: monster must be a dictionary containing monster data with: a 'Current Health' key with
                    an integer value > 0, 'Damage Modifier' key with a float > 0, 'Health Modifier' key with a float > 0
-    :precondition: attack_name must be a non-empty string representing monster attack name
+    :precondition: attack_name must be a non-empty string 'Lunar Frenzy'
     :precondition: description must be a non-empty string representing monster attack description
     :postcondition: increase 'Damage Modifier' value by 0.2
     :postcondition: increase 'Health Modifier' value by 0.5
@@ -508,32 +508,6 @@ def check_character_defeat(character: dict, message: str) -> str:
     if character['Current Health'] <= 0:
         message += "\nYou have been defeated!"
     return message
-
-
-# Apply monster attack and its effect to character -->> move to game()?
-def apply_monster_attack(attack: list, character: dict, monster: dict):
-    # Unpack attack list
-    attack_name, description, attack_type, damage = attack
-    # Obtain 'Damage Modifier' value from monster
-    monster_modifier = monster['Damage Modifier']
-    # Obtain 'Active Defense Modifier' value from character
-    defense_modifier = character['Active Defense Modifier']
-    # Process attack based on type
-    if attack_type == 'Attack':
-        message = process_attack(character, monster_modifier, defense_modifier, damage, attack_name, description)
-    elif attack_type == 'Heal':
-        message = process_heal_attack(character, monster, damage, defense_modifier, attack_name, description)
-    elif attack_type == 'Poison':
-        message = process_poison_attack(character, monster_modifier, defense_modifier, damage, attack_name, description)
-    elif attack_type == 'Bleed':
-        message = process_bleed_attack(character, monster_modifier, defense_modifier, damage, attack_name, description)
-    # Buff type
-    else:
-        message = process_buff_attack(monster, attack_name, description)
-    # Check if character is defeated
-    message = check_character_defeat(character, message)
-    # Display the message
-    print(message)
 
 
 # Use itertools.cycle to obtain cycling turn order for character and monster

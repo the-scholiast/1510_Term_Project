@@ -98,6 +98,35 @@ def game():
         # Print stat increase
         character_module.print_apply_equipment(equipment_choice, character)
 
+    # Handles monster attack
+    def apply_monster_attack(attack: list, character: dict, monster: dict):
+        # Unpack attack list
+        attack_name, description, attack_type, damage = attack
+        # Obtain 'Damage Modifier' value from monster
+        monster_modifier = monster['Damage Modifier']
+        # Obtain 'Active Defense Modifier' value from character
+        defense_modifier = character['Active Defense Modifier']
+        # Process attack based on type
+        if attack_type == 'Attack':
+            message = battle.process_attack(character, monster_modifier, defense_modifier, damage, attack_name,
+                                            description)
+        elif attack_type == 'Heal':
+            message = battle.process_heal_attack(character, monster, damage, defense_modifier, attack_name,
+                                                 description)
+        elif attack_type == 'Poison':
+            message = battle.process_poison_attack(character, monster_modifier, defense_modifier, damage,
+                                                   attack_name, description)
+        elif attack_type == 'Bleed':
+            message = battle.process_bleed_attack(character, monster_modifier, defense_modifier, damage,
+                                                  attack_name, description)
+        # Buff type
+        else:
+            message = battle.process_buff_attack(monster, attack_name, description)
+        # Check if character is defeated
+        message = battle.check_character_defeat(character, message)
+        # Display the message
+        print(message)
+
     # Monster manager
     def monster_manager(character: dict, monster_name: str, custom_monster=None):
         # Create monster or use custom one if provided
@@ -122,7 +151,7 @@ def game():
                     # Get monster attack. Split handles situation for final boss.
                     monster_attack = battle.get_monster_attack(monster['Name'].split()[-1])
                     # Apply monster attack to character
-                    battle.apply_monster_attack(monster_attack, character, monster)
+                    apply_monster_attack(monster_attack, character, monster)
                 # Move to next turn after monster's action
                 current_turn = next(turns)
             # Character's turn
