@@ -1408,9 +1408,10 @@ def print_attack_result(attack_type: str, success: bool, message: str) -> None:
 
     >>> print_attack_result('Physical', True, 'You hit the monster for 20 damage!')
     You hit the monster for 20 damage!
-    >>> print_attack_result('Ki', False, 'This message should not be printed')
+    >>> print_attack_result('Ki', False, 'Print not enough Ki message')
     You don't have enough Ki to use this attack! Choose another action.
-    >>> print_attack_result('Physical', False, 'This message should not be printed')
+    >>> print_attack_result('Physical', False, 'Nothing printed and nothing returned')
+
     """
     # Print attack message if attack is valid
     if success:
