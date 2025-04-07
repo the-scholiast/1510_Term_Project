@@ -1364,6 +1364,31 @@ def process_special_ki_attack_with_cost(attack_name: str, description: str,
     :postcondition: if attack_name == 'Snare', increase value of monster['Status']['Snared'] by 1
     :postcondition: obtain the message describing the attack results of the attack_name
     :return: a string message describing the attack results
+
+    >>> test_character = {'Current Ki': 50, 'Damage Modifier': 1.0, 'Status': {'Berserk': 0}}
+    >>> test_monster = {'Status': {'Snared': 0}}
+    >>> process_special_ki_attack_with_cost('Berserk', 'Battle description.', test_character, test_monster)
+    'You used Berserk! Battle description. Your damage is increased by 50% for 3 turns!'
+    >>> test_character['Current Ki']
+    40
+    >>> test_character['Damage Modifier']
+    1.5
+    >>> test_character = {'Current Ki': 30, 'Active Defense Modifier': 1.0, 'Status': {'Shell': 0}}
+    >>> test_monster = {'Status': {'Snared': 0}}
+    >>> process_special_ki_attack_with_cost('Shell', 'Battle description.', test_character, test_monster)
+    'You used Shell! Battle description.'
+    >>> test_character['Current Ki']
+    20
+    >>> test_character['Status']['Shell'] > 0
+    True
+    >>> test_character = {'Current Ki': 15, 'Status': {'Berserk': 0}}
+    >>> test_monster = {'Status': {'Snared': 0}}
+    >>> process_special_ki_attack_with_cost('Snare', 'Not used.', test_character, test_monster)
+    'The monster is snared and will miss its next turn!'
+    >>> test_character['Current Ki']
+    5
+    >>> test_monster['Status']['Snared']
+    2
     """
     # Apply Ki cost
     apply_ki_cost(character)
