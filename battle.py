@@ -1225,6 +1225,32 @@ def process_special_ki_attack(attack_name: str, description: str, character: dic
     :postcondition: if attack_name == 'Snare', increase value of monster['Status']['Snared'] by 1
     :postcondition: obtain the message describing the attack results of the attack_name
     :return: a string message describing the attack results
+
+    >>> test_character = {'Damage Modifier': 1.0, 'Status': {'Berserk': 0, 'Shell': 0}}
+    >>> test_monster = {'Status': {'Snared': 0}}
+    >>> test_description = 'Enters a state of rage, increasing both physical damage and Ki attacks.'
+    >>> expected_message = ('You used Berserk! Enters a state of rage, increasing both physical damage and Ki attacks. '
+    ...                     'Your damage is increased by 50% for 3 turns!')
+    >>> expected_character = {'Damage Modifier': 1.5, 'Status': {'Berserk': 6, 'Shell': 0}}
+    >>> actual_message = process_special_ki_attack('Berserk', test_description, test_character, test_monster)
+    >>> (expected_message, expected_character) == (actual_message, test_character)
+    True
+    >>> test_character = {'Active Defense Modifier': 1.0, 'Status': {'Berserk': 0, 'Shell': 0}}
+    >>> test_monster = {'Status': {'Snared': 0}}
+    >>> test_description = 'Take no damage next two turns.'
+    >>> expected_message = 'You used Shell! Take no damage next two turns.'
+    >>> expected_character = {'Active Defense Modifier': 0.0, 'Status': {'Berserk': 0, 'Shell': 4}}
+    >>> actual_message = process_special_ki_attack('Shell', test_description, test_character, test_monster)
+    >>> (expected_message, expected_character) == (actual_message, test_character)
+    True
+    >>> test_character = {'Status': {'Berserk': 0, 'Shell': 0}}
+    >>> test_monster = {'Status': {'Snared': 0}}
+    >>> expected_message = 'The monster is snared and will miss its next turn!'
+    >>> expected_monster = {'Status': {'Snared': 2}}
+    >>> actual_message = process_special_ki_attack('Snare', test_description, test_character, test_monster)
+    >>> (expected_message, expected_monster) == (actual_message, test_monster)
+    True
+
     """
     if attack_name == 'Berserk':
         return apply_berserk_buff(attack_name, description, character)
