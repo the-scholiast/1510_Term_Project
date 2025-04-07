@@ -127,6 +127,19 @@ def game():
         # Display the message
         print(message)
 
+    # Manager function to apply character attack move
+    def apply_attack_move(attack_move: tuple, character: dict, monster: dict) -> None:
+        # Unpack attack details
+        attack_name, attack_details = attack_move
+        description, attack_type, damage = attack_details
+        # Get damage modifier from character
+        damage_modifier = character['Damage Modifier']
+        # Check if the attack is valid and execute it
+        success, message = battle.execute_attack(attack_type, attack_name, description,
+                                                 damage, damage_modifier, character, monster)
+        # Print the result
+        battle.print_attack_result(attack_type, success, message)
+
     # Monster manager
     def monster_manager(character: dict, monster_name: str, custom_monster=None):
         # Create monster or use custom one if provided
@@ -162,7 +175,7 @@ def game():
                 while not action_completed:
                     # Display battle menu
                     battle.display_battle_menu()
-                    # Get user choice
+                    # Get user choice for battle menu
                     battle_choice = battle.get_user_choice_battle_menu()
                     # Option 1 is Stance
                     if battle_choice == '1':
@@ -200,7 +213,7 @@ def game():
                                 print("You don't have enough Ki to use this attack! Choose another action.")
                             else:
                                 # Apply attack to monster
-                                battle.apply_attack_move(attack_choice, character, monster)
+                                apply_attack_move(attack_choice, character, monster)
                                 action_completed = True
                 # Only move to next turn if player completed an action
                 if action_completed:

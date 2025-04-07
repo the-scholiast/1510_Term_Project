@@ -1510,20 +1510,6 @@ def execute_attack(attack_type: str, attack_name: str, description: str,
         return False, ""
 
 
-# Manager function to apply attack move -->> move to game()?
-def apply_attack_move(attack_move: tuple, character: dict, monster: dict) -> None:
-    # Unpack attack details
-    attack_name, attack_details = attack_move
-    description, attack_type, damage = attack_details
-    # Get damage modifier from character
-    damage_modifier = character['Damage Modifier']
-    # Check if the attack is valid and execute it
-    success, message = execute_attack(attack_type, attack_name, description,
-                                      damage, damage_modifier, character, monster)
-    # Print the result
-    print_attack_result(attack_type, success, message)
-
-
 # Update status effects for both character and monster
 def update_status_effects(character, monster):
     # Update character status effects
