@@ -1,3 +1,6 @@
+"""
+This module tests get_attack_choice from battle.py
+"""
 import io
 from battle import get_attack_choice
 from unittest import TestCase
