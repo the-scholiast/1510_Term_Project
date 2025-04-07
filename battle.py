@@ -1651,6 +1651,26 @@ def reset_statuses(character: dict) -> None:
 
 # Check if monster health is <= 0
 def monster_defeat(monster: dict) -> bool:
+    """
+    Return True if monster Current Health is <= 0 else False
+
+    :param monster: a dictionary containing monster data with a 'Current Health' key with an integer value
+    :precondition: monster must be a dictionary containing 'Current Health' key with an integer value
+    :postcondition: leave monster unmodified
+    :postcondition: determine if monster is defeated (Current Health <= 0)
+    :return: True if monster Current Health is <= 0 else False
+
+    >>> test_monster = {'Current Health': 0}
+    >>> monster_defeat(test_monster)
+    True
+    >>> test_monster = {'Current Health': -5}
+    >>> monster_defeat(test_monster)
+    True
+    >>> test_monster = {'Current Health': 10}
+    >>> monster_defeat(test_monster)
+    False
+    """
+    # Default get 0 to avoid crashes
     monster_health = monster.get("Current Health", 0)
     return monster_health <= 0
 
