@@ -170,11 +170,16 @@ def user_picks_equipment(equipment: dict) -> tuple:
             item_name, price = equipment[item_type]
             return item_type, item_name, price
         else:
-            print(f"Invalid choice. Please enter a number between 1 and 3.")
+            print(f"Invalid choice. Please enter a number between 1 and 4.")
 
 
 # Hot spring encounter options
-def hot_spring_encounter():
+def hot_spring_encounter() -> None:
+    """
+    Print the hot spring encounter options to the user.
+
+    :postcondition: print the hot spring description and available options
+    """
     print("You've discovered a steaming hot spring nestled between large rocks!")
     print("The water has a slight blue hue and smells faintly of minerals.")
     print("┌" + "─" * 50 + "┐")
