@@ -1676,7 +1676,51 @@ def monster_defeat(monster: dict) -> bool:
 
 
 # Get rewards after defeating monster, gain 8 Crystals, and 35 experience. Gain 25 to Health if level 3.
-def monster_rewards(character: dict):
+def monster_rewards(character: dict) -> None:
+    """
+    Award rewards to character after defeating a monster.
+
+    Always awards 8 Crystals. For level 3 characters, increases max Health by
+    25 and Damage Modifier by 0.04. For characters below level 3, awards 35 experience.
+
+    :param character: a dictionary containing character data with 'Crystals', 'Level', 'Experience',
+                     'Health', 'Current Health', and 'Damage Modifier' keys
+    :precondition: character must be a dictionary containing 'Crystals', 'Level', 'Experience',
+                   'Health', 'Current Health', and 'Damage Modifier' keys
+    :precondition: character['Level'] must be an integer between [1, 3]
+    :precondition: character['Crystals'] must be an integer between [0, 99]
+    :precondition: character['Experience'] must be an integer >= 0
+    :precondition: character['Health'] and character['Current Health'] must be integers > 0
+    :precondition: character['Damage Modifier'] must be a float > 0
+    :postcondition: increase character['Crystals'] by 8
+    :postcondition: if character['Level'] == 3, increase character['Health'] and character['Current Health'] by 25
+                    and increase character['Damage Modifier'] by 0.04
+    :postcondition: if character['Level'] < 3, increase character['Experience'] by 35
+    :postcondition: print slain foe message and character stats increases
+
+    >>> test_character = {'Crystals': 10, 'Level': 1, 'Experience': 0, 'Health': 200,
+    ... 'Current Health': 150, 'Damage Modifier': 1.0}
+    >>> expected_character = {'Crystals': 18, 'Level': 1, 'Experience': 35, 'Health': 200,
+    ... 'Current Health': 150, 'Damage Modifier': 1.0}
+    >>> monster_rewards(test_character)
+    You have slain your foe!
+    You gained 8 Crystals!
+    Total Crystals: 18
+    You gained 35 experience!
+    >>> test_character == expected_character
+    True
+    >>> test_character = {'Crystals': 92, 'Level': 3, 'Experience': 50, 'Health': 300,
+    ... 'Current Health': 200, 'Damage Modifier': 1.2}
+    >>> expected_character = {'Crystals': 100, 'Level': 3, 'Experience': 50, 'Health': 325,
+    ... 'Current Health': 225, 'Damage Modifier': 1.24}
+    >>> monster_rewards(test_character)
+    You have slain your foe!
+    You gained 8 Crystals!
+    Total Crystals: 100
+    Your maximum Health has increased by 25 and Damage by 4%!
+    >>> test_character == expected_character
+    True
+    """
     print("You have slain your foe!")
     # Award Crystals
     character['Crystals'] += 8
