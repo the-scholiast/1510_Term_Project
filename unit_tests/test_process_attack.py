@@ -30,6 +30,18 @@ class TestProcessAttack(TestCase):
         expected = {'Current Health': 90}
         self.assertEqual(expected, test_character)
 
+    def test_process_attack_character_loses_health_with_fractional_damage(self):
+        test_character = {'Current Health': 100}
+        monster_modifier = 1.25
+        defense_modifier = 1.0
+        damage = 10
+        test_attack = 'Swipe'
+        test_description = 'A vicious claw attack dealing physical damage.'
+        process_attack(test_character, monster_modifier, defense_modifier,
+                       damage, test_attack, test_description)
+        expected = {'Current Health': 88}
+        self.assertEqual(expected, test_character)
+
     def test_process_attack_increased_monster_modifier_retrieve_proper_message(self):
         test_character = {'Current Health': 120}
         monster_modifier = 1.5
