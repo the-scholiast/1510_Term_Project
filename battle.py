@@ -629,7 +629,8 @@ def display_stances(character: dict):
 
     :param character: a dictionary containing character data with a 'Stance' key that contains a list of stance names
     :precondition: character must be a dictionary containing character data with a 'Stance' key
-    :precondition: character['Stance'] must be a non-empty list of strings representing stance names
+    :precondition: character['Stance'] must be a non-empty list of strings
+                   representing stance names ['Bear', 'Turtle', 'Snake']
     :postcondition: print a formatted box of available stances with numbered options
     :postcondition: print a back option as the last option in the menu
 
@@ -1078,6 +1079,31 @@ def apply_berserk_buff(attack_name: str, description: str, character: dict) -> s
     :postcondition: increase 'Berserk' value by 3
     :postcondition: generate a string message describing the buff results
     :return: a string message describing the buff results
+
+    >>> test_character = {'Damage Modifier': 1.0, 'Status': {'Berserk': 0}}
+    >>> test_description = 'Enters a state of rage, increasing both physical damage and Ki attacks.'
+    >>> actual_message = apply_berserk_buff('Berserk', test_description, test_character)
+    >>> expected_message = ('You used Berserk! Enters a state of rage, increasing both physical damage and Ki attacks.'
+    ... ' Your damage is increased by 50% for 3 turns!')
+    >>> expected_character = {'Damage Modifier': 1.5, 'Status': {'Berserk': 6}}
+    >>> (expected_message, expected_character) == (actual_message, test_character)
+    True
+    >>> test_character = {'Damage Modifier': 1.0, 'Status': {'Berserk': 2}}
+    >>> test_description = 'Enters a state of rage, increasing both physical damage and Ki attacks.'
+    >>> actual_message = apply_berserk_buff('Berserk', test_description, test_character)
+    >>> expected_message = ('You used Berserk! Enters a state of rage, increasing both physical damage and Ki attacks.'
+    ... ' Your damage is increased by 50% for 3 turns!')
+    >>> expected_character = {'Damage Modifier': 1.5, 'Status': {'Berserk': 8}}
+    >>> (expected_message, expected_character) == (actual_message, test_character)
+    True
+    >>> test_character = {'Damage Modifier': 1.5, 'Status': {'Berserk': 6}}
+    >>> test_description = 'Enters a state of rage, increasing both physical damage and Ki attacks.'
+    >>> actual_message = apply_berserk_buff('Berserk', test_description, test_character)
+    >>> expected_message = ('You used Berserk! Enters a state of rage, increasing both physical damage and Ki attacks.'
+    ... ' Your damage is increased by 50% for 3 turns!')
+    >>> expected_character = {'Damage Modifier': 2.0, 'Status': {'Berserk': 12}}
+    >>> (expected_message, expected_character) == (actual_message, test_character)
+    True
     """
     character['Damage Modifier'] += 0.5
     # Add duration tracking for Berserk. Lasts for 3 turns
