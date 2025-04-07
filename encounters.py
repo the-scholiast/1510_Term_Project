@@ -67,17 +67,45 @@ def obtain_random_npc(npc_count: dict) -> str:
 
 # Merchant offers equipment depending on level
 def merchant_offers(character: dict) -> dict:
-    character_level = character.get("Level")
+    """
+    Return a dictionary of equipment offers based on the character level.
+
+    :param character: a dictionary containing character data including 'Level' key with an integer value between [1, 3]
+    :precondition: character must be a dictionary containing 'Level' key with an integer value between [1, 3]
+    :postcondition: select the correct equipment dictionary based on character level
+    :return: a dictionary containing equipment types ('Helmet', 'Armour', 'Ring', 'Amulet') as string keys and
+             tuples of (item name, modifier) as values as (str:float)
+
+    >>> test_character = {"Level": 1}
+    >>> expected = {'Helmet': ('Iron Hat', 0.05), 'Armour': ('Copper Plate', 0.05),
+    ...             'Ring': ('Copper Ring', 0.05), 'Amulet': ('Wooden Charm', 0.05)}
+    >>> actual = merchant_offers(test_character)
+    >>> expected == actual
+    True
+    >>> test_character = {"Level": 2}
+    >>> expected = {'Helmet': ('Iron Helmet', 0.1), 'Armour': ('War Plate', 0.1),
+    ...             'Ring': ('Ruby Ring', 0.1), 'Amulet': ('Crystal Pendant', 0.1)}
+    >>> actual = merchant_offers(test_character)
+    >>> expected == actual
+    True
+        >>> test_character = {"Level": 3}
+    >>> expected = {'Helmet': ('Steel Helmet', 0.15), 'Armour': ('Sun Plate', 0.15),
+    ...             'Ring': ('Warrior Ring', 0.15), 'Amulet': ('Focused Amulet', 0.15)}
+    >>> actual = merchant_offers(test_character)
+    >>> expected == actual
+    True
+    """
+    character_level = character["Level"]
     # Equipment offerings based on character level
     equipment_by_level = {
-        1: {'Helmet': ('Iron Hat', 0.02), 'Armour': ('Copper Plate', 0.04),
-            'Ring': ('Copper Ring', 0.02), 'Amulet': ('Wooden Charm', 0.02)},
-        2: {'Helmet': ('Iron Helmet', 0.04), 'Armour': ('War Plate', 0.08),
-            'Ring': ('Ruby Ring', 0.04), 'Amulet': ('Crystal Pendant', 0.04)},
-        3: {'Helmet': ('Steel Helmet', 0.06), 'Armour': ('Sun Plate', 0.12),
-            'Ring': ('Warrior Ring', 0.06), 'Amulet': ('Focused Amulet', 0.06)}
+        1: {'Helmet': ('Iron Hat', 0.05), 'Armour': ('Copper Plate', 0.05),
+            'Ring': ('Copper Ring', 0.05), 'Amulet': ('Wooden Charm', 0.05)},
+        2: {'Helmet': ('Iron Helmet', 0.1), 'Armour': ('War Plate', 0.1),
+            'Ring': ('Ruby Ring', 0.1), 'Amulet': ('Crystal Pendant', 0.1)},
+        3: {'Helmet': ('Steel Helmet', 0.15), 'Armour': ('Sun Plate', 0.15),
+            'Ring': ('Warrior Ring', 0.15), 'Amulet': ('Focused Amulet', 0.15)}
     }
-    return equipment_by_level.get(character_level)
+    return equipment_by_level[character_level]
 
 
 # Print merchant offers
