@@ -75,6 +75,45 @@ def calculate_monster_health_modifier(character_level: int) -> float:
 def apply_difficulty_scaling(monster: dict, character_level: int) -> dict:
     """
     Apply difficulty scaling to a monster based on character level.
+
+    Update the monster's damage modifier, health modifier, maximum health, and current health
+    based on the character's level.
+
+    :param monster: a dictionary containing monster data with 'Health', 'Current Health',
+                    'Damage Modifier', and 'Health Modifier' keys
+    :param character_level: an integer between [1, 3] representing the character's level
+    :precondition: monster must be a dictionary containing 'Health', 'Current Health',
+                   'Damage Modifier', and 'Health Modifier' keys
+    :precondition: character_level must be an integer between [1, 3]
+    :postcondition: update monster's 'Damage Modifier' based on character_level
+    :postcondition: update monster's 'Health Modifier' based on character_level
+    :postcondition: update monster's 'Health' and 'Current Health' based on the new 'Health Modifier'
+    :return: the modified monster dictionary containing its data
+
+    >>> test_monster = {'Name': 'Ghoul', 'Health': 100, 'Current Health': 100,
+    ...                 'Status': {'Buff': 0, 'Snared': 0},
+    ...                 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
+    >>> actual = apply_difficulty_scaling(test_monster, 2)
+    >>> expected = {'Name': 'Ghoul', 'Health': 125, 'Current Health': 125, 'Status': {'Buff': 0, 'Snared': 0},
+    ...             'Damage Modifier': 1.2, 'Health Modifier': 1.25}
+    >>> expected == actual
+    True
+    >>> test_monster = {'Name': 'Werewolf', 'Health': 80, 'Current Health': 80,
+    ...                 'Status': {'Buff': 0, 'Snared': 0},
+    ...                 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
+    >>> actual = apply_difficulty_scaling(test_monster, 3)
+    >>> expected = {'Name': 'Werewolf', 'Health': 120, 'Current Health': 120, 'Status': {'Buff': 0, 'Snared': 0},
+    ...             'Damage Modifier': 1.5, 'Health Modifier': 1.5}
+    >>> expected == actual
+    True
+    >>> test_monster = {'Name': 'Vampire', 'Health': 100, 'Current Health': 60,
+    ...                 'Status': {'Buff': 0, 'Snared': 0},
+    ...                 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
+    >>> actual= apply_difficulty_scaling(test_monster, 2)
+    >>> expected = {'Name': 'Vampire', 'Health': 125, 'Current Health': 125, 'Status': {'Buff': 0, 'Snared': 0},
+    ...             'Damage Modifier': 1.2, 'Health Modifier': 1.25}
+    >>> expected == actual
+    True
     """
     # Calculate new modifiers
     new_damage_modifier = calculate_monster_damage_modifier(character_level)
