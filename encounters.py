@@ -211,7 +211,37 @@ def user_input_hot_spring() -> int:
 
 
 # Heals to full for Health and Ki or can receive items instead
-def hot_spring_reward(character: dict, user_choice: int):
+def hot_spring_reward(character: dict, user_choice: int) -> None:
+    """
+    Apply rewards to the character based on their hot spring choice.
+
+    :param character: a dictionary containing character data with 'Health', 'Current Health',
+                      'Ki', 'Current Ki', and 'Items' keys
+    :param user_choice: an integer (1 or 2)
+    :precondition: character must contain 'Health', 'Current Health', 'Ki', 'Current Ki' keys with integer values >= 0
+    :precondition: character must contain 'Items' key with a dictionary containing
+                   'Health Pots' and 'Shards' keys with integer values >= 0
+    :precondition: user_choice must be either 1 or 2
+    :postcondition: if user_choice is 1, update character's 'Current Health' and 'Current Ki' to their maximum values
+    :postcondition: if user_choice is 2, increase character's 'Health Pots' and 'Shards' values by 2 each
+    :postcondition: print the correct message depennding on user_choice
+
+    >>> test_character = {'Health': 100, 'Current Health': 50, 'Ki': 50, 'Current Ki': 25,
+    ...                   'Items': {'Health Pots': 0, 'Shards': 0}}
+    >>> hot_spring_reward(test_character, 1)
+    You relax in the warm spring. Your wounds heal and your ki is restored!
+    Health: 100/100
+    Ki: 50/50
+    >>> test_character
+    {'Health': 100, 'Current Health': 100, 'Ki': 50, 'Current Ki': 50, 'Items': {'Health Pots': 0, 'Shards': 0}}
+    >>> test_character = {'Health': 100, 'Current Health': 50, 'Ki': 50, 'Current Ki': 25,
+    ...                   'Items': {'Health Pots': 1, 'Shards': 1}}
+    >>> hot_spring_reward(test_character, 2)
+    You collected minerals from around the spring!
+    Gained: 2 Health Potion(s) and 2 Shard(s)
+    >>> test_character
+    {'Health': 100, 'Current Health': 50, 'Ki': 50, 'Current Ki': 25, 'Items': {'Health Pots': 3, 'Shards': 3}}
+    """
     # Character uses hot spring. Restore Health and Ki to full
     if user_choice == 1:
         character["Current Health"] = character["Health"]
