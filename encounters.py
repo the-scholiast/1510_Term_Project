@@ -192,13 +192,22 @@ def hot_spring_encounter() -> None:
 
 # Get user choice for hot spring
 def user_input_hot_spring() -> int:
+    """
+    Return the user input (1 or 2) for hot spring encounter.
+
+    Continuously prompt the user until they provide a valid choice (1 or 2).
+
+    :postcondition: prompt user for input until a valid choice (1 or 2) is provided
+    :postcondition: validate that user input is one of the valid choices ('1' or '2')
+    :return: an integer (1 or 2) representing the user's validated choice
+    """
     valid_choices = {"1", "2"}
     while True:
-        user_choice = input("Enter your choice [1-2]: ").strip()
+        user_choice = input("Enter your choice [1, 2]: ").strip()
         if user_choice in valid_choices:
             return int(user_choice)
         else:
-            print("Invalid choice. Please enter a number between 1 and 2.")
+            print("Invalid choice. Please enter 1 or 2.")
 
 
 # Heals to full for Health and Ki or can receive items instead
