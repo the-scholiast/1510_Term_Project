@@ -31,6 +31,18 @@ class TestProcessBleedAttack(TestCase):
         expected = {'Current Health': 90, 'Status': {'Bleed': 2}}
         self.assertEqual(expected, test_character)
 
+    def test_process_bleed_attack_character_loses_health_with_fractional_damage(self):
+        test_character = {'Current Health': 100, 'Status': {'Bleed': 0}}
+        monster_modifier = 1.25
+        defense_modifier = 1.0
+        damage = 10
+        test_attack = 'Bite'
+        test_description = 'A quick bite that deals damage and has a chance to inflict bleed.'
+        process_bleed_attack(test_character, monster_modifier, defense_modifier,
+                             damage, test_attack, test_description)
+        expected = {'Current Health': 88, 'Status': {'Bleed': 2}}
+        self.assertEqual(expected, test_character)
+
     def test_process_bleed_attack_increased_monster_modifier_retrieve_proper_message(self):
         test_character = {'Current Health': 100, 'Status': {'Bleed': 0}}
         monster_modifier = 1.5
