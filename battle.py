@@ -71,6 +71,28 @@ def calculate_monster_health_modifier(character_level: int) -> float:
         return health_modifier + 0.5
 
 
+# Apply monster scaling based on character level
+def apply_difficulty_scaling(monster: dict, character_level: int) -> dict:
+    """
+    Apply difficulty scaling to a monster based on character level.
+    """
+    # Calculate new modifiers
+    new_damage_modifier = calculate_monster_damage_modifier(character_level)
+    new_health_modifier = calculate_monster_health_modifier(character_level)
+    # Store original health before modifications
+    original_health = monster['Health']
+    # Update monster modifiers
+    monster['Damage Modifier'] = new_damage_modifier
+    monster['Health Modifier'] = new_health_modifier
+    # Calculate health increase
+    health_multiplier = new_health_modifier
+    new_health = int(original_health * health_multiplier)
+    # Update monster health values
+    monster['Health'] = new_health
+    monster['Current Health'] = new_health
+    return monster
+
+
 # Create monster with Health and stats as a dictionary
 def create_monster(monster: str) -> dict:
     """
