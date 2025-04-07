@@ -1643,6 +1643,10 @@ def reset_statuses(character: dict) -> None:
     >>> reset_statuses(test_character)
     >>> test_character
     {'Status': {'Poison': 0, 'Bleed': 0, 'Shell': 0, 'Berserk': 0}}
+    >>> test_character = {'Status': {'Poison': 2, 'Bleed': 2, 'Shell': 2, 'Berserk': 2}}
+    >>> reset_statuses(test_character)
+    >>> test_character
+    {'Status': {'Poison': 0, 'Bleed': 0, 'Shell': 0, 'Berserk': 0}}
     """
     character_statuses = character['Status']
     for status in character_statuses.keys():
