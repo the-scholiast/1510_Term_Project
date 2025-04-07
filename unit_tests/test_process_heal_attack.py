@@ -31,6 +31,18 @@ class TestProcessHealAttack(TestCase):
         expected = {'Current Health': 114}
         self.assertEqual(expected, test_character)
 
+    def test_process_heal_attack_character_loses_health_with_fractional_damage(self):
+        test_character = {'Current Health': 120}
+        test_monster = {'Current Health': 110, 'Damage Modifier': 1.25}
+        defense_modifier = 1.0
+        damage = 6
+        test_attack = 'Blood Drain'
+        test_description = 'Drinks the target’s blood to restore health.'
+        process_heal_attack(test_character, test_monster, damage, defense_modifier,
+                            test_attack, test_description)
+        expected = {'Current Health': 113}
+        self.assertEqual(expected, test_character)
+
     def test_process_heal_attack_monster_gains_health(self):
         test_character = {'Current Health': 100}
         test_monster = {'Current Health': 100, 'Damage Modifier': 1.0}
