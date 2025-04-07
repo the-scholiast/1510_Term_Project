@@ -962,6 +962,25 @@ def apply_ki_damage_attack(attack_name: str, description: str, damage: int,
     :postcondition: reduce monster 'Current Health' value by damage amount
     :postcondition: generate a string message describing the attack results
     :return: a string message describing the attack results
+
+    >>> test_monster = {'Current Health': 100}
+    >>> attack_description = 'Slams the ground in front of you creating a wave of Ki.'
+    >>> apply_ki_damage_attack('Sunder', attack_description, 35, 1.0, test_monster)
+    'You used Sunder! Slams the ground in front of you creating a wave of Ki. You dealt 35 Ki damage!'
+    >>> test_monster
+    {'Current Health': 65}
+    >>> test_monster = {'Current Health': 10}
+    >>> attack_description = "A lion's mouth forms at the center of the shield and shoots a Ki wave."
+    >>> apply_ki_damage_attack('Roar', attack_description, 45, 1.0, test_monster)
+    "You used Roar! A lion's mouth forms at the center of the shield and shoots a Ki wave. You dealt 45 Ki damage!"
+    >>> test_monster
+    {'Current Health': -35}
+    >>> test_monster = {'Current Health': 100}
+    >>> attack_description = 'Splits into hundreds of smaller whips making its attack unavoidable.'
+    >>> apply_ki_damage_attack('Hydra', attack_description, 50, 1.5, test_monster)
+    'You used Hydra! Splits into hundreds of smaller whips making its attack unavoidable. You dealt 75 Ki damage!'
+    >>> test_monster
+    {'Current Health': 25}
     """
     damage = int(damage * damage_modifier)
     # Apply damage to monster
