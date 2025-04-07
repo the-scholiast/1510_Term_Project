@@ -68,8 +68,6 @@ def print_merchant_offers(equipment: dict):
         print(f"│ {index}. {item_type:<12} {item_name:<18} +{modifier:.2f} {mod_type}     │")
     # Print bottom row
     print("├" + "─" * 50 + "┤")
-    print("│ 0. Leave                                         │")
-    print("└" + "─" * 50 + "┘")
 
 
 # Get user equipment choice
