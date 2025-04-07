@@ -5,6 +5,31 @@ import random
 
 
 def check_encounter(character: dict, board: dict) -> bool:
+    """
+    Return True if an encounter '[!]' is present at the character's location else False.
+
+    :param character: a dictionary containing character coordinates with 'X-coordinate' and 'Y-coordinate' keys
+    :param board: a dictionary representing the game board with (row, column) tuple keys and location markers
+    :precondition: character must contain 'X-coordinate' and 'Y-coordinate' integer keys between [0, 4]
+    :precondition: board must be a dictionary with (row, column) tuple keys (as ints == 5)
+    :precondition: board must contain '[!]' or '   ' as values
+    :postcondition: determine if the character's current location has an encounter
+    :postcondition: leave character and board unmodified
+    :return: True if an encounter '[!]' is present at the character's location else False
+
+    >>> test_board = {(0, 0): '[!]', (0, 1): '[!]', (0, 2): '[!]', (0, 3): '[!]'}
+    >>> test_character = {'Y-coordinate': 0, 'X-coordinate': 0}
+    >>> check_encounter(test_character, test_board)
+    True
+    >>> test_board = {(0, 0): '[!]', (0, 1): '[!]', (0, 2): '[!]', (0, 3): '   '}
+    >>> test_character = {'Y-coordinate': 0, 'X-coordinate': 3}
+    >>> check_encounter(test_character, test_board)
+    False
+    >>> test_board = {(0, 0): '[!]', (0, 1): '[!]', (0, 2): '[!]', (0, 3): '[!]'}
+    >>> test_character = {'Y-coordinate': 0, 'X-coordinate': 1}
+    >>> check_encounter(test_character, test_board)
+    True
+    """
     character_location = (character['Y-coordinate'], character['X-coordinate'])
     return board[character_location] == '[!]'
 
