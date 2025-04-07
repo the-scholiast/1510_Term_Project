@@ -7,6 +7,37 @@ from typing import Optional
 from __init__ import BATTLE_STANCES
 
 
+def calculate_monster_damage_modifier(character_level: int) -> float:
+    """
+    Calculate a monster's damage modifier based on the character Level.
+
+    :param character_level: an integer between [1, 3]
+    :precondition: character_level must be an integer between [1, 3]
+    :postcondition: if character_level == 1, damage_modifier = 1.0
+    :postcondition: if character_level == 2, damage_modifier = 1.2
+    :postcondition: if character_level == 3, damage_modifier = 1.5
+    :return: a float value representing the monster's damage modifier
+
+    >>> calculate_monster_damage_modifier(1)
+    1.0
+    >>> calculate_monster_damage_modifier(2)
+    1.2
+    >>> calculate_monster_damage_modifier(3)
+    1.5
+    """
+    # Base damage modifier
+    damage_modifier = 1.0
+    # Level 1: No change
+    if character_level == 1:
+        return damage_modifier
+    # Level 2: +20% damage
+    elif character_level == 2:
+        return damage_modifier + 0.2
+    # Level 3: +45% damage
+    elif character_level == 3:
+        return damage_modifier + 0.5
+
+
 # Create monster with Health and stats as a dictionary
 def create_monster(monster: str) -> dict:
     """
