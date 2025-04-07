@@ -110,6 +110,30 @@ def merchant_offers(character: dict) -> dict:
 
 # Print merchant offers
 def print_merchant_offers(equipment: dict):
+    """
+       Display the merchant's equipment offerings as a table.
+
+       A table showing each equipment item with its type, name, and modifier value.
+
+       :param equipment: a dictionary where keys are item types ('Helmet', 'Armour', 'Ring', 'Amulet')
+                         and values are tuples of (item name, modifier) as (str, float)
+       :precondition: equipment must be a non-empty dictionary with item types ('Helmet', 'Armour', 'Ring', 'Amulet')
+                      as keys and tuples of (item name, modifier) as values
+       :postcondition: print a table of merchant offerings
+
+       >>> test_equipment = {'Helmet': ('Steel Helmet', 0.15), 'Armour': ('Sun Plate', 0.15),
+       ...                   'Ring': ('Warrior Ring', 0.15), 'Amulet': ('Focused Amulet', 0.15)}
+       >>> print_merchant_offers(test_equipment)
+       Merchant: 'I have some fine wares for an adventurer like yourself!'
+       ┌──────────────────────────────────────────────────┐
+       │ #  ITEM TYPE     ITEM NAME           MODIFIER    │
+       ├──────────────────────────────────────────────────┤
+       │ 1. Helmet       Steel Helmet        +0.15 DEF    │
+       │ 2. Armour       Sun Plate           +0.15 DEF    │
+       │ 3. Ring         Warrior Ring        +0.15 DMG    │
+       │ 4. Amulet       Focused Amulet      +0.15 DMG    │
+       ├──────────────────────────────────────────────────┤
+       """
     print("Merchant: 'I have some fine wares for an adventurer like yourself!'")
     # Print the top row
     print("┌" + "─" * 50 + "┐")
