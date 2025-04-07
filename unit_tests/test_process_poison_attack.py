@@ -56,6 +56,18 @@ class TestProcessPoisonAttack(TestCase):
         expected = {'Current Health': 85, 'Status': {'Poison': 4}}
         self.assertEqual(expected, test_character)
 
+    def test_process_poison_attack_increased_monster_modifier_character_loses_health_with_fractional_damage(self):
+        test_character = {'Current Health': 100, 'Status': {'Poison': 0}}
+        monster_modifier = 1.25
+        defense_modifier = 1.0
+        damage = 10
+        test_attack = 'Poison Bite'
+        test_description = 'A venomous bite that inflicts poison damage over time.'
+        process_poison_attack(test_character, monster_modifier, defense_modifier,
+                              damage, test_attack, test_description)
+        expected = {'Current Health': 88, 'Status': {'Poison': 4}}
+        self.assertEqual(expected, test_character)
+
     def test_process_poison_attack_reduced_defense_modifier_retrieve_proper_message(self):
         test_character = {'Current Health': 100, 'Status': {'Poison': 0}}
         monster_modifier = 1.0
