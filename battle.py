@@ -1176,9 +1176,28 @@ def apply_snare_effect(monster: dict) -> str:
     :postcondition: increase 'Snared' value by 1
     :postcondition: generate a string message describing the attack results
     :return: a string message describing the attack results
+
+    >>> test_monster = {'Status': {'Snared': 0}}
+    >>> expected_message = "The monster is snared and will miss its next turn!"
+    >>> expected_monster = {'Status': {'Snared': 2}}
+    >>> actual_message = apply_snare_effect(test_monster)
+    >>> (expected_message, expected_monster) == (actual_message, test_monster)
+    True
+    >>> test_monster = {'Status': {'Snared': 1}}
+    >>> expected_message = "The monster is snared and will miss its next turn!"
+    >>> expected_monster = {'Status': {'Snared': 3}}
+    >>> actual_message = apply_snare_effect(test_monster)
+    >>> (expected_message, expected_monster) == (actual_message, test_monster)
+    True
+    >>> test_monster = {'Status': {'Snared': 9}}
+    >>> expected_message = "The monster is snared and will miss its next turn!"
+    >>> expected_monster = {'Status': {'Snared': 11}}
+    >>> actual_message = apply_snare_effect(test_monster)
+    >>> (expected_message, expected_monster) == (actual_message, test_monster)
+    True
     """
     # Monster loses a turn
-    monster['Status']['Snared'] += 1
+    monster['Status']['Snared'] += 2
     return "The monster is snared and will miss its next turn!"
 
 
