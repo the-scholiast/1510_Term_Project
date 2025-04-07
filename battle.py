@@ -1132,11 +1132,33 @@ def apply_shell_buff(attack_name: str, description: str, character: dict) -> str
     :postcondition: increase 'Shell' value by 2
     :postcondition: generate a string message describing the buff results
     :return: a string message describing the buff results
+
+    >>> test_description = 'Take no damage next two turns.'
+    >>> test_character = {'Active Defense Modifier': 1.0, 'Status': {'Shell': 0}}
+    >>> actual_message = apply_shell_buff('Shell', test_description, test_character)
+    >>> expected_message = "You used Shell! Take no damage next two turns."
+    >>> expected_character = {'Active Defense Modifier': 0.0, 'Status': {'Shell': 4}}
+    >>> (expected_message, expected_character) == (actual_message, test_character)
+    True
+    >>> test_description = 'Take no damage next two turns.'
+    >>> test_character = {'Active Defense Modifier': 0.0, 'Status': {'Shell': 3}}
+    >>> actual_message = apply_shell_buff('Shell', test_description, test_character)
+    >>> expected_message = "You used Shell! Take no damage next two turns."
+    >>> expected_character = {'Active Defense Modifier': 0.0, 'Status': {'Shell': 7}}
+    >>> (expected_message, expected_character) == (actual_message, test_character)
+    True
+    >>> test_description = 'Take no damage next two turns.'
+    >>> test_character = {'Active Defense Modifier': 0.5, 'Status': {'Shell': 10}}
+    >>> actual_message = apply_shell_buff('Shell', test_description, test_character)
+    >>> expected_message = "You used Shell! Take no damage next two turns."
+    >>> expected_character = {'Active Defense Modifier': 0.0, 'Status': {'Shell': 14}}
+    >>> (expected_message, expected_character) == (actual_message, test_character)
+    True
     """
     # Add Shell status with duration. Lasts for 2 turns
     character['Status']['Shell'] += 4
     character['Active Defense Modifier'] = 0.0
-    return f"You used {attack_name}! {description} You take no damage for the next two turns!"
+    return f"You used {attack_name}! {description}"
 
 
 # Apply snare effect to monster
