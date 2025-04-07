@@ -1451,6 +1451,41 @@ def execute_attack(attack_type: str, attack_name: str, description: str,
     :return: a tuple containing (success_boolean, result_message) where:
              success_boolean is True if the attack was executed successfully else False
              result_message is a string describing the attack result, or an empty string if the attack failed
+
+    >>> test_character = {'Current Ki': 50}
+    >>> test_monster = {'Current Health': 100}
+    >>> test_description = 'Slams the ground in front of you creating a wave of Ki.'
+    >>> success, result = execute_attack('Ki', 'Sunder', test_description, 35, 1.0, test_character, test_monster)
+    >>> success
+    True
+    >>> 'You used Sunder!' in result and 'You dealt 35 Ki damage!' in result
+    True
+    >>> test_character['Current Ki']
+    40
+    >>> test_monster['Current Health']
+    65
+    >>> test_character = {'Current Ki': 50, 'Damage Modifier': 1.0, 'Status': {'Berserk': 0, 'Shell': 0}}
+    >>> test_monster = {'Status': {'Snared': 0}}
+    >>> test_description = 'Enters a state of rage, increasing damage.'
+    >>> success, result = execute_attack('Ki', 'Berserk', test_description, 0, 1.0, test_character, test_monster)
+    >>> success
+    True
+    >>> 'Your damage is increased' in result
+    True
+    >>> test_character['Current Ki']
+    40
+    >>> test_character = {'Current Ki': 5}
+    >>> test_monster = {'Current Health': 100}
+    >>> test_description = 'Slams the ground in front of you creating a wave of Ki.'
+    >>> success, result = execute_attack('Ki', 'Sunder', test_description, 35, 1.0, test_character, test_monster)
+    >>> success
+    False
+    >>> result
+    ''
+    >>> test_character['Current Ki']
+    5
+    >>> test_monster['Current Health']
+    100
     """
     # Apply physical attack. Return True and result message
     if attack_type == 'Physical':
