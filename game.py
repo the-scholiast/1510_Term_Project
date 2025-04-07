@@ -99,9 +99,9 @@ def game():
         character_module.print_apply_equipment(equipment_choice, character)
 
     # Monster manager
-    def monster_manager(character: dict, monster_name: str):
-        # Create monster
-        monster = battle.create_monster(monster_name)
+    def monster_manager(character: dict, monster_name: str, custom_monster=None):
+        # Create monster or use custom one if provided
+        monster = custom_monster if custom_monster else battle.create_monster(monster_name)
         # Determine turn order
         turns, first_strike_message = battle.turn_order(monster_name)
         print(first_strike_message)
@@ -114,13 +114,13 @@ def game():
             # Display health status
             print(f"Your Health: {character['Current Health']}/{character['Health']}")
             print(f"Your Ki: {character['Current Ki']}/{character['Ki']}")
-            print(f"{monster_name}'s Health: {monster['Current Health']}/{monster['Health']}")
+            print(f"{monster['Name']}'s Health: {monster['Current Health']}/{monster['Health']}")
             # Monster's turn
             if current_turn == 'monster':
                 # Check if monster is snared
                 if not battle.skip_turn(monster):
-                    # Get monster attack
-                    monster_attack = battle.get_monster_attack(monster_name)
+                    # Get monster attack. Split handles situation for final boss.
+                    monster_attack = battle.get_monster_attack(monster['Name'].split()[-1])
                     # Apply monster attack to character
                     battle.apply_monster_attack(monster_attack, character, monster)
                 # Move to next turn after monster's action
@@ -292,7 +292,7 @@ def game():
         boss_monster['Damage Modifier'] = 1.5
         # Handle final boss battle
         print(f"The Calamity Beast {boss_monster_type} appears!")
-        monster_manager(new_character, boss_monster_type)
+        monster_manager(new_character, boss_monster_type, boss_monster)
         # Check if character survived the battle
         character_alive = is_alive(new_character)
         if character_alive:
@@ -306,6 +306,9 @@ def game():
 
 
 def main():
+    """
+    Drive the program.
+    """
     game()
 
 
