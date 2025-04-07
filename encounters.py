@@ -109,7 +109,7 @@ def merchant_offers(character: dict) -> dict:
 
 
 # Print merchant offers
-def print_merchant_offers(equipment: dict):
+def print_merchant_offers(equipment: dict) -> None:
     """
        Display the merchant's equipment offerings as a table.
 
@@ -128,10 +128,10 @@ def print_merchant_offers(equipment: dict):
        ┌──────────────────────────────────────────────────┐
        │ #  ITEM TYPE     ITEM NAME           MODIFIER    │
        ├──────────────────────────────────────────────────┤
-       │ 1. Helmet       Steel Helmet        +0.15 DEF    │
-       │ 2. Armour       Sun Plate           +0.15 DEF    │
-       │ 3. Ring         Warrior Ring        +0.15 DMG    │
-       │ 4. Amulet       Focused Amulet      +0.15 DMG    │
+       │ 1. Helmet       Steel Helmet       +0.15 DEF     │
+       │ 2. Armour       Sun Plate          +0.15 DEF     │
+       │ 3. Ring         Warrior Ring       +0.15 DMG     │
+       │ 4. Amulet       Focused Amulet     +0.15 DMG     │
        ├──────────────────────────────────────────────────┤
        """
     print("Merchant: 'I have some fine wares for an adventurer like yourself!'")
@@ -149,12 +149,22 @@ def print_merchant_offers(equipment: dict):
 
 
 # Get user equipment choice
-def user_picks_equipment(equipment) -> tuple:
+def user_picks_equipment(equipment: dict) -> tuple:
+    """
+    Prompt the user to select equipment to obtain and return the selected item details.
+
+    :param equipment: a dictionary where keys are item types and values are tuples of
+                      (item name, modifier) as (str, float)
+    :precondition: equipment must be a non-empty dictionary with item types ('Helmet', 'Armour', 'Ring', 'Amulet')
+                   as keys and tuples of (item name, modifier) as values
+    :postcondition: obtain a valid user selection from the available equipment options
+    :return: a tuple containing (item type, item_name, modifier) as (str, str, float)
+    """
     # Create mapping of numbers to item types
     equipment_types = list(equipment.keys())
     equipment_choice = {str(index): item_type for index, item_type in enumerate(equipment_types, 1)}
     while True:
-        user_input = input("Enter the number of the item you wish to purchase: ").strip()
+        user_input = input("Enter the number of the item you wish to obtain: ").strip()
         if user_input in equipment_choice:
             item_type = equipment_choice[user_input]
             item_name, price = equipment[item_type]
