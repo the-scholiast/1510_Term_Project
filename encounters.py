@@ -36,23 +36,24 @@ def check_encounter(character: dict, board: dict) -> bool:
 
 def obtain_random_npc(npc_count: dict) -> str:
     """
-    Obtain a random encounter depending on the weights.
+    Obtain a random NPC encounter based on weighted probabilities.
 
-    :param:
-    :return:
+    :param npc_count: a dictionary containing the counts of each NPC type (Friendly, Monsters, Environment)
+    :precondition: npc_count must be a dictionary with keys 'Friendly', 'Monsters', 'Environment'
+                   and integer values >= 0 representing the count of each NPC type
+    :postcondition: select a random NPC type based on the weighted counts in npc_count
+    :postcondition: decrement the count of the selected NPC type in npc_count by 1
+    :postcondition: obtain a random NPC as a string from the list of NPCs for the chosen type
+    :return: a string representing the randomly selected NPC
     """
     npc_list = {'Friendly': ['Merchant'],
                 'Monsters': ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'],
                 'Environment': ['Hot Spring']
                 }
-    # Store how many of each encounter in a zone
-
     # Sort NPC list by its keys
     npc_list_keys = sorted(list(npc_list.keys()))
-
     # Create weighted NPC list
     weighted_list = [npc_count[npc_type] for npc_type in sorted(npc_list)]
-
     # Get a weighted random selection of encounter type
     random_type = random.choices(population=npc_list_keys,
                                  weights=weighted_list,
