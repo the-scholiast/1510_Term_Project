@@ -1307,36 +1307,31 @@ def process_damaging_ki_attack(attack_name: str, description: str, damage: int,
 
     >>> test_character = {'Current Ki': 50}
     >>> test_monster = {'Current Health': 100}
-    >>> test_description = 'Slams the ground in front of you creating a wave of Ki.'
-    >>> expected_message = ('You used Sunder! Slams the ground in front of you creating a wave of Ki. '
-    ...                     'You dealt 35 Ki damage!')
-    >>> expected_ki = 40
-    >>> expected_health = 65
-    >>> expected = (expected_message, expected_ki, expected_health)
-    >>> actual_message = process_damaging_ki_attack('Sunder', test_description, 35, 1.0, test_character, test_monster)
-    >>> expected == (actual_message, test_character['Current Ki'], test_monster['Current Health'])
-    True
+    >>> process_damaging_ki_attack('Sunder', 'Slams the ground in front of you creating a wave of Ki.', 35, 1.0,
+    ...                            test_character, test_monster)
+    'You used Sunder! Slams the ground in front of you creating a wave of Ki. You dealt 35 Ki damage!'
+    >>> test_character['Current Ki']
+    40
+    >>> test_monster['Current Health']
+    65
     >>> test_character = {'Current Ki': 20}
     >>> test_monster = {'Current Health': 50}
-    >>> test_description = "A lion's mouth forms at the center of the shield and shoots a Ki wave."
-    >>> expected_message = ("You used Roar! A lion's mouth forms at the center of the shield and shoots a Ki wave. "
-    ...                     "You dealt 67 Ki damage!")
-    >>> expected_ki = 10
-    >>> expected_health = -17
-    >>> expected = (expected_message, expected_ki, expected_health)
-    >>> actual_message = process_damaging_ki_attack('Roar', test_description, 45, 1.5, test_character, test_monster)
-    >>> expected == (actual_message, test_character['Current Ki'], test_monster['Current Health'])
-    True
+    >>> process_damaging_ki_attack('Roar', "A lion's mouth forms at the center of the shield and shoots a Ki wave.", 45,
+    ...                            1.5, test_character, test_monster)
+    "You used Roar! A lion's mouth forms at the center of the shield and shoots a Ki wave. You dealt 67 Ki damage!"
+    >>> test_character['Current Ki']
+    10
+    >>> test_monster['Current Health']
+    -17
     >>> test_character = {'Current Ki': 10}
     >>> test_monster = {'Current Health': 100}
-    >>> test_description = 'Whip entangles its target, paralyzing its victim.'
-    >>> expected_message = 'You used Snare! Whip entangles its target, paralyzing its victim. You dealt 12 Ki damage!'
-    >>> expected_ki = 0
-    >>> expected_health = 88
-    >>> expected = (expected_message, expected_ki, expected_health)
-    >>> actual_message = process_damaging_ki_attack('Snare', test_description, 12, 1.0, test_character, test_monster)
-    >>> expected == (actual_message, test_character['Current Ki'], test_monster['Current Health'])
-    True
+    >>> process_damaging_ki_attack('Snare', 'Whip entangles its target, paralyzing its victim.', 12, 1.0,
+    ...                            test_character, test_monster)
+    'You used Snare! Whip entangles its target, paralyzing its victim. You dealt 12 Ki damage!'
+    >>> test_character['Current Ki']
+    0
+    >>> test_monster['Current Health']
+    88
     """
     # Apply Ki cost
     apply_ki_cost(character)
