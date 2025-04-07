@@ -94,23 +94,31 @@ def apply_difficulty_scaling(monster: dict, character_level: int) -> dict:
 
 
 # Create monster with Health and stats as a dictionary
-def create_monster(monster: str) -> dict:
+def create_monster(monster: str, character_level: int = 1) -> dict:
     """
-    Generate a monster with stats depending on its type.
+    Generate a monster with stats depending on its type and character level.
 
     :param monster: is a string
+    :param character_level: an integer representing character level (default=1) between [1, 3]
     :precondition: monster must be ('Wendigo', 'Djinn', 'Skinwalker', 'Ghoul', 'Shapeshifter', 'Werewolf', 'Vampire')
+    :precondition: character_level must be an integer between [1, 3]
     :postcondition: generate a monster represented as a dictionary containing its name and stats
+    :postcondition: apply difficulty scaling based on character level
     :return: a monster represented as a dictionary containing its name and stats
 
     >>> actual = create_monster('Ghoul')
-    >>> expected = {'Name': 'Ghoul', 'Health': 80, 'Current Health': 80, 'Status': {'Buff': 0, 'Snared': 0},
+    >>> expected = {'Name': 'Ghoul', 'Health': 100, 'Current Health': 100, 'Status': {'Buff': 0, 'Snared': 0},
     ... 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
     >>> actual == expected
     True
-    >>> actual = create_monster('Vampire')
-    >>> expected = {'Name': 'Vampire', 'Health': 90, 'Current Health': 90, 'Status': {'Buff': 0, 'Snared': 0},
-    ... 'Damage Modifier': 1.0, 'Health Modifier': 1.0}
+    >>> actual = create_monster('Vampire', 2)
+    >>> expected = {'Name': 'Vampire', 'Health': 125, 'Current Health': 125, 'Status': {'Buff': 0, 'Snared': 0},
+    ... 'Damage Modifier': 1.2, 'Health Modifier': 1.25}
+    >>> actual == expected
+    True
+    >>> actual = create_monster('Vampire', 3)
+    >>> expected = {'Name': 'Vampire', 'Health': 150, 'Current Health': 150, 'Status': {'Buff': 0, 'Snared': 0},
+    ... 'Damage Modifier': 1.5, 'Health Modifier': 1.5}
     >>> actual == expected
     True
     """
@@ -127,10 +135,13 @@ def create_monster(monster: str) -> dict:
     # Create monster dictionary with health and status
     monster_dict = {
         'Name': monster,
-        'Health': monster_health.get(monster), 'Current Health': monster_health.get(monster),
+        'Health': monster_health[monster], 'Current Health': monster_health[monster],
         'Status': {'Buff': 0, 'Snared': 0},
         'Damage Modifier': 1.0, 'Health Modifier': 1.0
     }
+    # Apply difficulty scaling if character level > 1
+    if character_level > 1:
+        monster_dict = apply_difficulty_scaling(monster_dict, character_level)
     return monster_dict
 
 
