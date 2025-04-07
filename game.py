@@ -140,6 +140,16 @@ def game():
         # Print the result
         battle.print_attack_result(attack_type, success, message)
 
+    # Manager to process status effects
+    def process_status_effects(character: dict, monster: dict) -> None:
+        # First apply damage from active status effects to character
+        character_status_message = battle.apply_status_damage(character)
+        # Print status effect damage messages
+        if character_status_message:
+            print(character_status_message)
+        # Then update status effect durations
+        battle.update_status_effects(character, monster)
+
     # Monster manager
     def monster_manager(character: dict, monster_name: str, custom_monster=None):
         # Create monster or use custom one if provided
@@ -219,7 +229,7 @@ def game():
                 if action_completed:
                     current_turn = next(turns)
             # Process status effects after each turn
-            battle.process_status_effects(character, monster)
+            process_status_effects(character, monster)
             # Check battle status
             character_is_alive = is_alive(character)
             monster_alive = not battle.monster_defeat(monster)
