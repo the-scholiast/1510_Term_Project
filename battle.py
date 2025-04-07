@@ -1010,7 +1010,7 @@ def apply_berserk_buff(attack_name: str, description: str, character: dict) -> s
     """
     character['Damage Modifier'] += 0.5
     # Add duration tracking for Berserk. Lasts for 3 turns
-    character['Status']['Berserk'] += 3
+    character['Status']['Berserk'] += 6
     return f"You used {attack_name}! {description} Your damage is increased by 50% for 3 turns!"
 
 
@@ -1037,7 +1037,7 @@ def apply_shell_buff(attack_name: str, description: str, character: dict) -> str
     :return: a string message describing the buff results
     """
     # Add Shell status with duration. Lasts for 2 turns
-    character['Status']['Shell'] += 2
+    character['Status']['Shell'] += 4
     character['Active Defense Modifier'] = 0.0
     return f"You used {attack_name}! {description} You take no damage for the next two turns!"
 
