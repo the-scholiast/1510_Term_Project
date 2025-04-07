@@ -1511,7 +1511,56 @@ def execute_attack(attack_type: str, attack_name: str, description: str,
 
 
 # Update status effects for both character and monster
-def update_status_effects(character, monster):
+def update_status_effects(character: dict, monster: dict) -> None:
+    """
+    Update and decrement status effect durations for both character and monster.
+
+    Reduce all active status effect durations by 1 and reset relevant modifiers when effects expire.
+
+    :param character: a dictionary containing character data with 'Status' dictionary and relevant modifiers
+    :param monster: a dictionary containing monster data with 'Status' dictionary
+    :precondition: character must be a dictionary containing 'Status' key with
+                   a dictionary of effect:duration as (str:int >=0)
+    :precondition: character must have 'Defense Modifier' key with float value > 0
+    :precondition: character must have 'Active Defense Modifier' key with float values >= 0
+    :precondition: character must have 'Damage Modifier' key with float value > 0
+    :precondition: monster must be a dictionary containing 'Status' key with
+                   a dictionary of effect:duration as (str:int >=0)
+    :postcondition: decrement durations of all active status effects by 1
+    :postcondition: reset character 'Active Defense Modifier' when 'Shell' effect duration reaches 0
+    :postcondition: reduce character 'Damage Modifier' by 0.5 when 'Berserk' effect duration reaches 0
+
+    >>> test_character = {'Status': {'Shell': 1, 'Berserk': 0, 'Poison': 2},
+    ...                   'Defense Modifier': 1.0, 'Active Defense Modifier': 0.0, 'Damage Modifier': 1.0}
+    >>> test_monster = {'Status': {'Buff': 1, 'Snared': 2}}
+    >>> update_status_effects(test_character, test_monster)
+    >>> expected_character = {'Status': {'Shell': 0, 'Berserk': 0, 'Poison': 1},
+    ...                       'Defense Modifier': 1.0, 'Active Defense Modifier': 1.0, 'Damage Modifier': 1.0}
+    >>> test_character == expected_character
+    True
+    >>> test_monster
+    {'Status': {'Buff': 0, 'Snared': 1}}
+    >>> test_character = {'Status': {'Shell': 0, 'Berserk': 1, 'Poison': 0},
+    ...                   'Defense Modifier': 1.0, 'Active Defense Modifier': 1.0, 'Damage Modifier': 1.5}
+    >>> test_monster = {'Status': {'Buff': 0, 'Snared': 0}}
+    >>> update_status_effects(test_character, test_monster)
+    >>> expected_character = {'Status': {'Shell': 0, 'Berserk': 0, 'Poison': 0},
+    ...                       'Defense Modifier': 1.0, 'Active Defense Modifier': 1.0, 'Damage Modifier': 1.0}
+    >>> test_character == expected_character
+    True
+    >>> test_monster
+    {'Status': {'Buff': 0, 'Snared': 0}}
+    >>> test_character = {'Status': {'Shell': 2, 'Berserk': 2, 'Poison': 3},
+    ...                   'Defense Modifier': 1.0, 'Active Defense Modifier': 0.0, 'Damage Modifier': 1.5}
+    >>> test_monster = {'Status': {'Buff': 3, 'Snared': 3}}
+    >>> update_status_effects(test_character, test_monster)
+    >>> expected_character = {'Status': {'Shell': 1, 'Berserk': 1, 'Poison': 2},
+    ...                       'Defense Modifier': 1.0, 'Active Defense Modifier': 0.0, 'Damage Modifier': 1.5}
+    >>> test_character == expected_character
+    True
+    >>> test_monster
+    {'Status': {'Buff': 2, 'Snared': 2}}
+    """
     # Update character status effects
     for effect, duration in list(character['Status'].items()):
         if duration > 0:
@@ -1519,7 +1568,7 @@ def update_status_effects(character, monster):
             if character['Status'][effect] == 0:
                 # Reset effect when duration expires
                 if effect == 'Shell':
-                    character['Active Defense Modifier'] = character.get('Defense Modifier')
+                    character['Active Defense Modifier'] = character['Defense Modifier']
                 elif effect == 'Berserk':
                     character['Damage Modifier'] -= .5
     # Update monster status effects
