@@ -1405,6 +1405,12 @@ def print_attack_result(attack_type: str, success: bool, message: str) -> None:
     :postcondition: if success is True, print the message
     :postcondition: if success is False and attack_type is 'Ki', print not enough Ki message
     :postcondition: if success is False and attack_type is not 'Ki', do nothing
+
+    >>> print_attack_result('Physical', True, 'You hit the monster for 20 damage!')
+    You hit the monster for 20 damage!
+    >>> print_attack_result('Ki', False, 'This message should not be printed')
+    You don't have enough Ki to use this attack! Choose another action.
+    >>> print_attack_result('Physical', False, 'This message should not be printed')
     """
     # Print attack message if attack is valid
     if success:
