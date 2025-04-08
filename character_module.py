@@ -41,10 +41,10 @@ def make_character(player_name: str) -> dict:
     character = {
         'Name': f'{player_name}', 'Title': 'the Amateur',
         'Level': 1, 'Experience': 0,
-        'Health': 200, 'Current Health': 200, 'Ki': 50, 'Current Ki': 50,
-        'Defense Modifier': 1.0, 'Damage Modifier': 1.0, 'Active Defense Modifier': 1.0,
+        'Health': 250, 'Current Health': 250, 'Ki': 60, 'Current Ki': 60,
+        'Defense Modifier': 1.0, 'Damage Modifier': 1.2, 'Active Defense Modifier': 1.0,
         'X-coordinate': 0, 'Y-coordinate': 0,
-        'Crystals': 95,
+        'Crystals': 0,
         'Items': {'Health Pots': 0, 'Shards': 0},
         'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""},
         'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0},
