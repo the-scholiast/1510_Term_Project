@@ -149,6 +149,7 @@ def remove_equipment_modifiers(character: dict) -> None:
     ...                                 'Ring': ('Ruby Ring', 0.04), 'Amulet': ('Crystal Pendant', 0.04)},
     ...                   'Defense Modifier': 1.08, 'Damage Modifier': 1.08}
     >>> remove_equipment_modifiers(test_character)
+    >>> expected_defense, expected_damage = 1.0, 1.0
     >>> actual_defense, actual_damage = test_character['Defense Modifier'], test_character['Damage Modifier']
     >>> (expected_defense, expected_damage) == (actual_defense, actual_damage)
     True
@@ -156,6 +157,7 @@ def remove_equipment_modifiers(character: dict) -> None:
     ...                                 'Ring': '', 'Amulet': ''},
     ...                   'Defense Modifier': 1.0, 'Damage Modifier': 1.0}
     >>> remove_equipment_modifiers(test_character)
+    >>> expected_defense, expected_damage = 1.0, 1.0
     >>> actual_defense, actual_damage = test_character['Defense Modifier'], test_character['Damage Modifier']
     >>> (expected_defense, expected_damage) == (actual_defense, actual_damage)
     True
@@ -178,7 +180,44 @@ def remove_equipment_modifiers(character: dict) -> None:
             character["Damage Modifier"] -= modifier
 
 # Apply equipment stats
-def apply_equipment(character: dict):
+def apply_equipment(character: dict) -> None:
+    """
+    Apply modifiers from equipped items to the character's stats.
+
+    :param character: a dictionary containing character data with 'Equipment',
+                      'Defense Modifier', and 'Damage Modifier' keys
+    :precondition: character must be a dictionary containing 'Equipment' key with equipment slots,
+                  'Defense Modifier' key with float value, and 'Damage Modifier' key with float value
+    :precondition: character['Equipment'] must contain ('Helmet', 'Armour', 'Ring', 'Amulet') as keys
+    :precondition: character['Equipment'] keys value must contain either empty strings or
+                   tuples of (item name, modifier) values as (str, float > 0)
+    :postcondition: add equipment modifiers to character's stats based on equipment type
+
+    >>> test_character = {'Equipment': {'Helmet': ('Iron Hat', 0.02), 'Armour': ('Copper Plate', 0.04),
+    ...                                 'Ring': ('Copper Ring', 0.02), 'Amulet': ''},
+    ...                   'Defense Modifier': 1.0, 'Damage Modifier': 1.0}
+    >>> apply_equipment(test_character)
+    >>> expected_defense, expected_damage = 1.06, 1.02
+    >>> actual_defense, actual_damage = test_character['Defense Modifier'], test_character['Damage Modifier']
+    >>> (expected_defense, expected_damage) == (actual_defense, actual_damage)
+    True
+    >>> test_character = {'Equipment': {'Helmet': '', 'Armour': ('War Plate', 0.08),
+    ...                                 'Ring': ('Ruby Ring', 0.04), 'Amulet': ('Crystal Pendant', 0.04)},
+    ...                   'Defense Modifier': 1.0, 'Damage Modifier': 1.0}
+    >>> apply_equipment(test_character)
+    >>> expected_defense, expected_damage = 1.08, 1.08
+    >>> actual_defense, actual_damage = test_character['Defense Modifier'], test_character['Damage Modifier']
+    >>> (expected_defense, expected_damage) == (actual_defense, actual_damage)
+    True
+    >>> test_character = {'Equipment': {'Helmet': '', 'Armour': '',
+    ...                                 'Ring': '', 'Amulet': ''},
+    ...                   'Defense Modifier': 1.0, 'Damage Modifier': 1.0}
+    >>> apply_equipment(test_character)
+    >>> expected_defense, expected_damage = 1.00, 1.00
+    >>> actual_defense, actual_damage = test_character['Defense Modifier'], test_character['Damage Modifier']
+    >>> (expected_defense, expected_damage) == (actual_defense, actual_damage)
+    True
+    """
     defense_equipment = {"Helmet", "Armour"}
     damage_equipment = {"Ring", "Amulet"}
     # Get the dictionary storing equipment
@@ -207,6 +246,7 @@ def print_apply_equipment(equipment: tuple, character: dict):
         print(f"Your Damage Modifier increased to {character['Damage Modifier']}!")
 
 
+# Check if character movement is valid and within the board boundaries
 def validate_move(board, character, direction):
     """
     Return True if the character's coordinates after moving are in the board else return False.
@@ -381,6 +421,3 @@ def use_item(character: dict, item_choice: str):
             character['Current Ki'] = min(character['Ki'], character['Current Ki'] + ki_amount)
             character['Items']['Shards'] -= 1
             print(f"You used a Shard and restored {ki_amount} Ki!")
-
-
-# Apply damaging status effects
