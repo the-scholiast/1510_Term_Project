@@ -447,8 +447,8 @@ def game():
         # Create a regular monster first
         boss_monster = battle.create_monster(boss_monster_type)
         # Enhance the boss monster stats
-        boss_monster['Health'] = 300
-        boss_monster['Current Health'] = 300
+        boss_monster['Health'] = 500
+        boss_monster['Current Health'] = 500
         boss_monster['Damage Modifier'] = 1.7
         # Handle final boss battle
         print(f"The Calamity Beast {boss_monster_type} appears!")
