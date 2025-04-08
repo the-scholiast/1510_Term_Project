@@ -5,7 +5,6 @@ from encounters import check_encounter
 from unittest import TestCase
 
 
-
 class TestCheckEncounters(TestCase):
     def test_check_encounter_has_encounter(self):
         board = {
