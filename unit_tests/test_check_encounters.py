@@ -1,7 +1,7 @@
 """
 This module tests check_encounter from encounters.py
 """
-from grid import check_encounter
+from encounters import check_encounter
 from unittest import TestCase
 
 
