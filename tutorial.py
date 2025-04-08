@@ -140,7 +140,33 @@ def handle_input(npc: str, dialogue_counter: int) -> int:
         return dialogue_counter + 1
 
 
-def tutorial_interaction(npc, character) -> bool:
+def tutorial_interaction(npc: str, character: dict) -> bool:
+    """
+    Manage the tutorial interaction between the character and an NPC.
+    Return True if the tutorial is exited else False.
+
+    :param npc: a string representing the NPC name
+    :param character: a dictionary containing character data including 'Name', 'X-coordinate', and 'Y-coordinate'
+    :precondition: npc must be a valid NPC name: 'Self', 'Darrow', 'Misaki', 'Ragnar'
+    :precondition: character must contain 'Name':value as (str, str),
+                   'X-coordinate' and 'Y-coordinate' keys with integer values between [0, 4]
+    :postcondition: print the NPC's dialogue
+    :postcondition: if NPC is Darrow and character skips, update character's location and exit tutorial
+    :postcondition: if user input is required, handle it and update the dialogue counter accordingly
+    :return: True if the tutorial is exited else False
+
+    >>> test_character = {'Name': 'Hero', 'X-coordinate': 0, 'Y-coordinate': 0}
+    >>> tutorial_interaction('Self', test_character)
+    Self: Today's the day! I'm going to become an official member of the Reaper's Guild!
+    Self: Wait what time is it?! Ahhh I'm late!
+    Self: Hero enters the main room of the Guild.
+    False
+    >>> test_character = {'Name': 'Hero', 'X-coordinate': 1, 'Y-coordinate': 0}
+    >>> tutorial_interaction('Darrow', test_character)
+    Darrow: Finally awake eh Hero? So how about it. Do you need to prep or are you ready to go?
+    Type 1 for tutorial or anything else to skip: 1
+    Darrow: Well I guess as your leader, it's my duty to explain a few things.
+    """
     name = character['Name']
     character_location = (character['X-coordinate'], character['Y-coordinate'])
     # Get dialogue for the specified NPC
