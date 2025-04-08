@@ -836,10 +836,10 @@ def get_item(character: dict) -> Optional[str]:
     while True:
         user_choice = input("Select an item by index number or type 0 to return: ").strip()
         # Make sure user choice is a digit between 0 and length of available items
-        if user_choice.isdigit() and len(available_items) >= int(user_choice) >= 0:
-            return available_items[int(user_choice) - 1]
-        elif user_choice == '0':
+        if user_choice == '0':
             return None
+        elif user_choice.isdigit() and len(available_items) >= int(user_choice) >= 0:
+            return available_items[int(user_choice) - 1]
         else:
             print("Invalid item. Please select from the available options.")
 
