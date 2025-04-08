@@ -4,6 +4,7 @@ This module contains all possible encounters with NPCs and monsters.
 import random
 
 
+# Return True if encounter marker in character coordinates
 def check_encounter(character: dict, board: dict) -> bool:
     """
     Return True if an encounter '[!]' is present at the character's location else False.
@@ -224,7 +225,7 @@ def hot_spring_reward(character: dict, user_choice: int) -> None:
     :precondition: user_choice must be either 1 or 2
     :postcondition: if user_choice is 1, update character's 'Current Health' and 'Current Ki' to their maximum values
     :postcondition: if user_choice is 2, increase character's 'Health Pots' and 'Shards' values by 2 each
-    :postcondition: print the correct message depennding on user_choice
+    :postcondition: print the correct message depending on user_choice
 
     >>> test_character = {'Health': 100, 'Current Health': 50, 'Ki': 50, 'Current Ki': 25,
     ...                   'Items': {'Health Pots': 0, 'Shards': 0}}

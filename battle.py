@@ -478,7 +478,8 @@ def process_bleed_attack(character: dict, monster_modifier: float, defense_modif
 # Process buff attacks
 def process_buff_attack(monster: dict, attack_name: str, description: str) -> str:
     """
-    Increase Damage Modifier, Health Modifier, Current Health values, and return message of the attack description.
+    Increase monster Damage Modifier, Health Modifier, Current Health values,
+    and return message of the attack description.
 
     :param monster: a dictionary containing monster data with: a 'Current Health' key with an integer value > 0,
                     'Damage Modifier' key with a float > 0, 'Health Modifier' key with a float > 0
@@ -554,7 +555,7 @@ def turn_order(monster: str) -> tuple:
     """
     Determine the turn order between the character and monster with a 50% chance for either to go first.
 
-    Create an infinite cycle of turns using itertools.cycle and returns a message indicating who strikes first.
+    Create an infinite cycle of turns using itertools.cycle and return a message indicating who strikes first.
 
     :param monster: a string representing the monster's name
     :precondition: monster must be a non-empty string representing the monster's name
@@ -902,11 +903,8 @@ def get_attack_moves(character: dict) -> dict:
             'Hydra': ['Splits into hundreds of smaller whips making its attack unavoidable.', 'Ki', 50]
         }
     }
-    # Retrieve current character stance
-    character_stance = character['Active Stance']
-    # Obtain stance attack moves as a dictionary
-    attack_moves = character_attacks[character_stance]
-    return attack_moves
+    # Retrieve attack moves depending on stance
+    return character_attacks[character['Active Stance']]
 
 
 # Display attack list depending on stance
