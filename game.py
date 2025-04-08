@@ -2,6 +2,7 @@
 Woojin Song, A01431327
 This module drives the entire game.
 """
+import ascii
 import battle
 import character_module
 import encounters
@@ -360,6 +361,8 @@ def game():
         elif new_random_encounter in npc_dict['Monsters']:
             monster_manager(character, new_random_encounter)
 
+    # Welcome ascii
+    ascii.welcome()
     # Ask user for proper character name
     name = character_module.proper_name()
     # Create new character
@@ -419,6 +422,7 @@ def game():
             # Check if character is still alive after the encounter
             character_alive = is_alive(new_character)
             if not character_alive:
+                ascii.game_over()
                 game_lost()
             # Check if character has reached 100 crystals
             crystals_100 = check_crystals(new_character)
@@ -429,9 +433,10 @@ def game():
     # If player has collected 100 crystals, start final boss sequence
     if crystals_100:
         # Notify player about approaching calamity
-        print("You feel a powerful presence approaching...")
+        ascii.boss_fight()
+        print("\nYou feel a powerful presence approaching...")
         print("The ground trembles beneath your feet.")
-        print("A massive creature emerges from the shadows!")
+        print("A massive creature emerges from the shadows!\n")
         # Heal character for final battle
         new_character['Current Health'] = new_character['Health']
         new_character['Current Ki'] = new_character['Ki']
@@ -444,7 +449,7 @@ def game():
         # Enhance the boss monster stats
         boss_monster['Health'] = 300
         boss_monster['Current Health'] = 300
-        boss_monster['Damage Modifier'] = 1.5
+        boss_monster['Damage Modifier'] = 1.7
         # Handle final boss battle
         print(f"The Calamity Beast {boss_monster_type} appears!")
         monster_manager(new_character, boss_monster_type, boss_monster)
@@ -455,8 +460,10 @@ def game():
             print("You collect its rare Crystal and return to the Reaper's Guild.")
             print("\nDarrow: 'ZEHAHAHAHA! You've done it! You are now an Accepted member of the Reaper's Guild!'")
             print(f"{new_character['Name']}, you have completed your quest.")
+            ascii.game_won()
             sys.exit(0)
         else:
+            ascii.game_over()
             game_lost()
 
 
