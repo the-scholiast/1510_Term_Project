@@ -97,7 +97,9 @@ def obtain_and_equip(equipment_choice: tuple, character: dict) -> None:
     :precondition: equipment_choice must be a tuple with 3 elements
     :precondition: equipment_choice must contain (item type, item name, modifier) as (str, str, float)
     :precondition: character must have an 'Equipment' key with a dictionary of equipment slots
-    :precondition: character['Equipment'] must contain ('Helmet', 'Armour', 'Ring', 'Amulet') as keys with value string
+    :precondition: character['Equipment'] must contain ('Helmet', 'Armour', 'Ring', 'Amulet') as keys
+    :precondition: character['Equipment'] keys value must contain either empty strings or
+                   tuples of (item name, modifier) values as (str, float > 0)
     :precondition: item type must be a valid equipment slot
     :postcondition: update the character's equipment with the new item
     :postcondition: print a message confirming equipment acquisition
@@ -122,7 +124,42 @@ def obtain_and_equip(equipment_choice: tuple, character: dict) -> None:
 
 
 # Remove current equipment modifiers
-def remove_equipment_modifiers(character: dict):
+def remove_equipment_modifiers(character: dict) -> None:
+    """
+    Remove modifiers from all equipped items from the character's stats.
+
+    :param character: a dictionary containing character data with 'Equipment',
+                      'Defense Modifier', and 'Damage Modifier' keys
+    :precondition: character must be a dictionary containing 'Equipment' key with equipment slots,
+                   'Defense Modifier' key with float value, and 'Damage Modifier' key with float value
+    :precondition: character['Equipment'] must contain ('Helmet', 'Armour', 'Ring', 'Amulet') as keys
+    :precondition: character['Equipment'] keys value must contain either empty strings or
+                   tuples of (item name, modifier) values as (str, float > 0)
+    :postcondition: subtract equipment modifiers from character's stats based on equipment type
+
+    >>> test_character = {'Equipment': {'Helmet': ('Iron Hat', 0.02), 'Armour': ('Copper Plate', 0.04),
+    ...                                 'Ring': ('Copper Ring', 0.02), 'Amulet': ''},
+    ...                   'Defense Modifier': 1.06, 'Damage Modifier': 1.02}
+    >>> remove_equipment_modifiers(test_character)
+    >>> expected_defense, expected_damage = 1.0, 1.0
+    >>> actual_defense, actual_damage = test_character['Defense Modifier'], test_character['Damage Modifier']
+    >>> (expected_defense, expected_damage) == (actual_defense, actual_damage)
+    True
+    >>> test_character = {'Equipment': {'Helmet': '', 'Armour': ('War Plate', 0.08),
+    ...                                 'Ring': ('Ruby Ring', 0.04), 'Amulet': ('Crystal Pendant', 0.04)},
+    ...                   'Defense Modifier': 1.08, 'Damage Modifier': 1.08}
+    >>> remove_equipment_modifiers(test_character)
+    >>> actual_defense, actual_damage = test_character['Defense Modifier'], test_character['Damage Modifier']
+    >>> (expected_defense, expected_damage) == (actual_defense, actual_damage)
+    True
+    >>> test_character = {'Equipment': {'Helmet': '', 'Armour': '',
+    ...                                 'Ring': '', 'Amulet': ''},
+    ...                   'Defense Modifier': 1.0, 'Damage Modifier': 1.0}
+    >>> remove_equipment_modifiers(test_character)
+    >>> actual_defense, actual_damage = test_character['Defense Modifier'], test_character['Damage Modifier']
+    >>> (expected_defense, expected_damage) == (actual_defense, actual_damage)
+    True
+    """
     defense_equipment = {"Helmet", "Armour"}
     damage_equipment = {"Ring", "Amulet"}
     # Get the dictionary storing equipment
