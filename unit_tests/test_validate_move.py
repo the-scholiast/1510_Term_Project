@@ -28,7 +28,7 @@ class TestValidateMove(TestCase):
             (3, 0): '   ', (3, 1): '[!]', (3, 2): '   ', (3, 3): '[!]', (3, 4): '   ',
             (4, 0): '[!]', (4, 1): '   ', (4, 2): '[!]', (4, 3): '   ', (4, 4): '[!]'
         }
-        character = {"X-coordinate": 3, "Y-coordinate": 3, "Current HP": 5}
+        character = {"X-coordinate": 3, "Y-coordinate": 3}
         direction = 1
         expected = True
         actual = validate_move(board, character, direction)
@@ -42,7 +42,7 @@ class TestValidateMove(TestCase):
             (3, 0): '   ', (3, 1): '[!]', (3, 2): '   ', (3, 3): '[!]', (3, 4): '   ',
             (4, 0): '[!]', (4, 1): '   ', (4, 2): '[!]', (4, 3): '   ', (4, 4): '[!]'
         }
-        character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
+        character = {"X-coordinate": 0, "Y-coordinate": 0}
         direction = 4
         expected = False
         actual = validate_move(board, character, direction)
@@ -56,7 +56,7 @@ class TestValidateMove(TestCase):
             (3, 0): '   ', (3, 1): '[!]', (3, 2): '   ', (3, 3): '[!]', (3, 4): '   ',
             (4, 0): '[!]', (4, 1): '   ', (4, 2): '[!]', (4, 3): '   ', (4, 4): '[!]'
         }
-        character = {"X-coordinate": 3, "Y-coordinate": 3, "Current HP": 5}
+        character = {"X-coordinate": 3, "Y-coordinate": 3}
         direction = 4
         expected = True
         actual = validate_move(board, character, direction)
@@ -70,7 +70,7 @@ class TestValidateMove(TestCase):
             (3, 0): '   ', (3, 1): '[!]', (3, 2): '   ', (3, 3): '[!]', (3, 4): '   ',
             (4, 0): '[!]', (4, 1): '   ', (4, 2): '[!]', (4, 3): '   ', (4, 4): '[!]'
         }
-        character = {"X-coordinate": 4, "Y-coordinate": 0, "Current HP": 5}
+        character = {"X-coordinate": 4, "Y-coordinate": 0}
         direction = 3
         expected = False
         actual = validate_move(board, character, direction)
@@ -84,7 +84,7 @@ class TestValidateMove(TestCase):
             (3, 0): '   ', (3, 1): '[!]', (3, 2): '   ', (3, 3): '[!]', (3, 4): '   ',
             (4, 0): '[!]', (4, 1): '   ', (4, 2): '[!]', (4, 3): '   ', (4, 4): '[!]'
         }
-        character = {"X-coordinate": 3, "Y-coordinate": 3, "Current HP": 5}
+        character = {"X-coordinate": 3, "Y-coordinate": 3}
         direction = 3
         expected = True
         actual = validate_move(board, character, direction)
@@ -98,7 +98,7 @@ class TestValidateMove(TestCase):
             (3, 0): '   ', (3, 1): '[!]', (3, 2): '   ', (3, 3): '[!]', (3, 4): '   ',
             (4, 0): '[!]', (4, 1): '   ', (4, 2): '[!]', (4, 3): '   ', (4, 4): '[!]'
         }
-        character = {"X-coordinate": 3, "Y-coordinate": 4, "Current HP": 5}
+        character = {"X-coordinate": 3, "Y-coordinate": 4}
         direction = 2
         expected = False
         actual = validate_move(board, character, direction)
@@ -112,7 +112,7 @@ class TestValidateMove(TestCase):
             (3, 0): '   ', (3, 1): '[!]', (3, 2): '   ', (3, 3): '[!]', (3, 4): '   ',
             (4, 0): '[!]', (4, 1): '   ', (4, 2): '[!]', (4, 3): '   ', (4, 4): '[!]'
         }
-        character = {"X-coordinate": 4, "Y-coordinate": 3, "Current HP": 5}
+        character = {"X-coordinate": 4, "Y-coordinate": 3}
         direction = 2
         expected = True
         actual = validate_move(board, character, direction)
