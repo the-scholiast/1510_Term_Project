@@ -237,7 +237,32 @@ def apply_equipment(character: dict) -> None:
 
 
 # Print increase in stats from equipment
-def print_apply_equipment(equipment: tuple, character: dict):
+def print_apply_equipment(equipment: tuple, character: dict) -> None:
+    """
+    Print a message about increased character stats based on the item type.
+
+    :param equipment: a tuple containing (item type, item name, modifier) as (str, str, float)
+    :param character: a dictionary containing character data with 'Defense Modifier' and 'Damage Modifier' keys
+                      with float values
+    :precondition: equipment must be a tuple with 3 elements (item type, item name, modifier) as (str, str, float)
+    :precondition: equipment[0] must be a string representing the item type
+    :precondition: character must be a dictionary containing 'Defense Modifier' and 'Damage Modifier' keys
+    :precondition: character['Defense Modifier'] and character['Damage Modifier'] values must be floats
+    :postcondition: print a message about the increased stat based on item type
+
+    >>> test_character = {'Defense Modifier': 1.06, 'Damage Modifier': 1.0}
+    >>> test_equipment = ('Helmet', 'Iron Hat', 0.02)
+    >>> print_apply_equipment(test_equipment, test_character)
+    Your Defense Modifier increased to 1.06!
+    >>> test_character = {'Defense Modifier': 1.0, 'Damage Modifier': 1.04}
+    >>> test_equipment = ('Ring', 'Ruby Ring', 0.04)
+    >>> print_apply_equipment(test_equipment, test_character)
+    Your Damage Modifier increased to 1.04!
+    >>> test_character = {'Defense Modifier': 1.12, 'Damage Modifier': 1.0}
+    >>> test_equipment = ('Armour', 'War Plate', 0.08)
+    >>> print_apply_equipment(test_equipment, test_character)
+    Your Defense Modifier increased to 1.12!
+    """
     defense_equipment = {"Helmet", "Armour"}
     damage_equipment = {"Ring", "Amulet"}
     if equipment[0] in defense_equipment:
@@ -268,15 +293,15 @@ def validate_move(board, character, direction):
     :postcondition: check if the character's coordinates after moving are in the board
     :return: True if the character's coordinates after moving are in the board else return False
 
-    >>> small_board = {(0, 0): "Empty room", (0, 1): "Corridor", (0, 2): "Colonnade", (0, 3): "Empty room"}
+    >>> small_board = {(0, 0): "[!]", (0, 1): "[!]", (0, 2): "[!]", (0, 3): "[!]"}
     >>> test_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
     >>> validate_move(small_board, test_character, 1)
     False
-    >>> small_board = {(0, 0): "Empty room", (1, 0): "Corridor", (2, 0): "Colonnade", (3, 0): "Empty room"}
+    >>> small_board = {(0, 0): "[!]", (1, 0): "[!]", (2, 0): "[!]", (3, 0): "[!]"}
     >>> test_character = {"X-coordinate": 0, "Y-coordinate": 0, "Current HP": 5}
     >>> validate_move(small_board, test_character, 2)
     True
-    >>> small_board = {(4, 4): "Empty room", (4, 3): "Corridor", (4, 2): "Colonnade", (4, 1): "Empty room"}
+    >>> small_board = {(4, 4): "[!]", (4, 3): "[!]", (4, 2): "[!]", (4, 1): "[!]"}
     >>> test_character = {"Y-coordinate": 4, "X-coordinate": 3, "Current HP": 5}
     >>> validate_move(small_board, test_character, 3)
     True
