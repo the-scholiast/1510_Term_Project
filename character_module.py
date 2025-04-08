@@ -44,7 +44,7 @@ def make_character(player_name: str) -> dict:
         'Health': 200, 'Current Health': 200, 'Ki': 50, 'Current Ki': 50,
         'Defense Modifier': 1.0, 'Damage Modifier': 1.0, 'Active Defense Modifier': 1.0,
         'X-coordinate': 0, 'Y-coordinate': 0,
-        'Crystals': 0,
+        'Crystals': 95,
         'Items': {'Health Pots': 0, 'Shards': 0},
         'Equipment': {'Helmet': "", 'Armour': "", 'Ring': "", 'Amulet': ""},
         'Status': {"Poison": 0, "Bleed": 0, 'Shell': 0, 'Berserk': 0},
@@ -54,7 +54,30 @@ def make_character(player_name: str) -> dict:
 
 
 # Update the title of the character into it's name, depending on level
-def update_title(character):
+def update_title(character: dict) -> dict:
+    """
+    Update the character's title based on their current level.
+
+    :param character: a dictionary containing character data with a 'Level' and 'Title' key
+    :precondition: character must be a non-empty dictionary
+    :precondition: character must have a 'Level' key with an integer value between [1, 3]
+    :precondition: character must have a 'Title' key with a string value
+    :postcondition: update the character's 'Title' to match their current level
+    :return: character dictionary with updated title
+
+    >>> test_character = {'Name': 'Alex', 'Level': 1, 'Title': ''}
+    >>> updated_character = update_title(test_character)
+    >>> updated_character['Title']
+    'the Amateur'
+    >>> test_character = {'Name': 'Sam', 'Level': 2, 'Title': 'the Amateur'}
+    >>> updated_character = update_title(test_character)
+    >>> updated_character['Title']
+    'the Novice'
+    >>> test_character = {'Name': 'Morgan', 'Level': 3, 'Title': 'the Novice'}
+    >>> updated_character = update_title(test_character)
+    >>> updated_character['Title']
+    'the Accepted'
+    """
     current_level = character['Level']
     # Name for each level
     level_name = {1: 'Amateur', 2: 'Novice', 3: 'Accepted'}
