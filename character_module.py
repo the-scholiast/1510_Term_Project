@@ -37,12 +37,20 @@ def make_character(player_name: str) -> dict:
     :postcondition: creates a character dictionary with default starting values
     :return: a dictionary containing all character attributes including name, stats,
              position, inventory, equipment, and status effects
+
+    >>> test_character = make_character('Test')
+    >>> test_character['Name']
+    'Test'
+    >>> test_character['Crystals']
+    0
+    >>> test_character['Level']
+    1
     """
     character = {
         'Name': f'{player_name}', 'Title': 'the Amateur',
         'Level': 1, 'Experience': 0,
-        'Health': 250, 'Current Health': 250, 'Ki': 60, 'Current Ki': 60,
-        'Defense Modifier': 1.0, 'Damage Modifier': 1.2, 'Active Defense Modifier': 1.0,
+        'Health': 200, 'Current Health': 200, 'Ki': 60, 'Current Ki': 60,
+        'Defense Modifier': 1.0, 'Damage Modifier': 1.0, 'Active Defense Modifier': 1.0,
         'X-coordinate': 0, 'Y-coordinate': 0,
         'Crystals': 0,
         'Items': {'Health Pots': 0, 'Shards': 0},
