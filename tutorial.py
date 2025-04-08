@@ -53,7 +53,22 @@ def get_npc_dialogue(npc: str, character_name: str) -> list:
     """
     Return the dialogue options for a specific NPC.
 
-    :return: a list of tuples (dialogue as a string, Boolean indicator if user input is required)
+    Each dialogue is a tuple containing two elements: a dialogue string,
+    a boolean indicating whether user input is required for this dialogue line.
+
+    :param npc: a string representing the name of the NPC ('Self', 'Darrow', 'Misaki', 'Ragnar')
+    :param character_name: a string representing the character name
+    :precondition: npc must be a string of ('Self', 'Darrow', 'Misaki', 'Ragnar')
+    :precondition: character_name must be a string representing the character name
+    :postcondition: obtain a list of dialogue tuples as (str, boolean) for the specified NPC
+    :return: a list of dialogue tuples as (str, boolean) for the specified NPC
+
+    >>> get_npc_dialogue('Self', 'Alice')[0]
+    ("Today's the day! I'm going to become an official member of the Reaper's Guild!", False)
+    >>> get_npc_dialogue('Darrow', 'Bob')[0]
+    ('Finally awake eh Bob? So how about it. Do you need to prep or are you ready to go?', True)
+    >>> get_npc_dialogue('Misaki', 'Charlie')[6]
+    ("Don't get yourself killed, okay? I bet Ragnar has some combat tips for you.", False)
     """
     npcs = {
         'Self': [
@@ -72,7 +87,7 @@ def get_npc_dialogue(npc: str, character_name: str) -> list:
             ("Now get out of my face! Maybe your friends have some more tips for you. ZEHAHAHAHAHA!", False)
         ],
         'Misaki': [
-            ("Hey idiot. Since you really plan on doing this, I might as well inform you about this world.", True),
+            ("Hey idiot. Since you really plan on doing this, I might as well inform you about this world.", False),
             ("You'll encounter a bunch of random monsters out in the world.", False),
             ("Sometimes you'll come across a merchant who'll offer you equipment to improve your damage"
              "or defense", False),
