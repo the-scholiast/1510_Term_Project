@@ -72,43 +72,43 @@ def get_npc_dialogue(npc: str, character_name: str) -> list:
     """
     npcs = {
         'Self': [
-            ("Today's the day! I'm going to become an official member of the Reaper's Guild!", False),
-            ("Wait what time is it?! Ahhh I'm late!", False),
-            (f"{character_name} enters the main room of the Guild.", False)
+            ("Today's the day! I'm going to become an official member of the Reaper's Guild!\n", False),
+            ("Wait what time is it?! Ahhh I'm late!\n", False),
+            (f"{character_name} enters the main room of the Guild.\n", False)
         ],
         'Darrow': [
-            (f'Finally awake eh {character_name}? So how about it. Do you need to prep or are you ready to go?', True),
-            ("ZEHAHAHAHAHAHA! That's the spirit! Go bring me the head of a worthy beast!", False),
-            ("Well I guess as your leader, it's my duty to explain a few things.", False),
-            ("Your goal is to defeat a Calamity-Level Monster and bring me its rare Crystal.", False),
-            ("All monsters drop Crystals when they die, but we're only after the rarest!", False),
-            ("Obtain normal Crystals by defeating weaker monsters.", False),
-            ("When you have 100 Crystals, the big bad Monster will be attracted to you, so be ready!", False),
-            ("Now get out of my face! Maybe your friends have some more tips for you. ZEHAHAHAHAHA!", False)
+            (f'Finally awake eh {character_name}? So how about it. Do you need to prep or are you ready to go?\n', True),
+            ("ZEHAHAHAHAHAHA! That's the spirit! Go bring me the head of a worthy beast!\n", False),
+            ("Well I guess as your leader, it's my duty to explain a few things.\n", False),
+            ("Your goal is to defeat a Calamity-Level Monster and bring me its rare Crystal.\n", False),
+            ("All monsters drop Crystals when they die, but we're only after the rarest!\n", False),
+            ("Obtain normal Crystals by defeating weaker monsters.\n", False),
+            ("When you have 100 Crystals, the big bad Monster will be attracted to you, so be ready!\n", False),
+            ("Now get out of my face! Maybe your friends have some more tips for you. ZEHAHAHAHAHA!\n", False)
         ],
         'Misaki': [
-            ("Hey idiot. Since you really plan on doing this, I might as well inform you about this world.", False),
-            ("You'll encounter a bunch of random monsters out in the world.", False),
+            ("Hey idiot. Since you really plan on doing this, I might as well inform you about this world.\n", False),
+            ("You'll encounter a bunch of random monsters out in the world.\n", False),
             ("Sometimes you'll come across a merchant who'll offer you equipment to improve your damage"
-             "or defense", False),
-            ("Or maybe you'll find a hot spring to replenish you.", False),
-            ("The [!] symbol on the map marks one of these three encounters.", False),
-            ("Input the movement commands and move into one of these encounter symbols to initiate it.", False),
-            ("Don't get yourself killed, okay? I bet Ragnar has some combat tips for you.", False)
+             "or defense.\n", False),
+            ("Or maybe you'll find a hot spring to replenish you.\n", False),
+            ("The [!] symbol on the map marks one of these three encounters.\n", False),
+            ("Input the movement commands and move into one of these encounter symbols to initiate it.\n", False),
+            ("Don't get yourself killed, okay? I bet Ragnar has some combat tips for you.\n", False)
         ],
         'Ragnar': [
-            (f"Lo, {character_name}! I can't let you leave without you knowing how to defend yourself.", False),
-            ("Don't let your Current Health fall to zero or you'll die!", False),
-            ("Ki based attacks are more powerful but be careful as it drains your Current Ki.", False),
-            ("Your weapon, Clavem, has three stances and each stance has their own set of attack moves.", False),
-            ("You start with Bear stance and you'll gain another stance each level.", False),
-            ("Combat in this world is turn-based. You'll need to choose your actions wisely.", False),
-            ("You'll have three options in the battle menu: STANCE, ITEMS, FIGHT.", False),
-            ("Any successful action will end your turn.", False),
-            ("Defeat any monster by getting their Health to zero.", False),
-            ("Every battle won will grant you experience. You need 100 experience to level up.", False),
-            ("Every level up will give you a new stance, Health, Ki, and Damage.", False),
-            ("We'll that's pretty much the basics. Now come back with that Crystal!.", False)
+            (f"Lo, {character_name}! I can't let you leave without you knowing how to defend yourself.\n", False),
+            ("Don't let your Current Health fall to zero or you'll die!\n", False),
+            ("Ki based attacks are more powerful but be careful as it drains your Current Ki.\n", False),
+            ("Your weapon, Clavem, has three stances and each stance has their own set of attack moves.\n", False),
+            ("You start with Bear stance and you'll gain another stance each level.\n", False),
+            ("Combat in this world is turn-based. You'll need to choose your actions wisely.\n", False),
+            ("You'll have three options in the battle menu: STANCE, ITEMS, FIGHT.\n", False),
+            ("Any successful action will end your turn.\n", False),
+            ("Defeat any monster by getting their Health to zero.\n", False),
+            ("Every battle won will grant you experience. You need 100 experience to level up.\n", False),
+            ("Every level up will give you a new stance, Health, Ki, and Damage.\n", False),
+            ("We'll that's pretty much the basics. Now come back with that Crystal!.\n", False)
         ]
     }
     return npcs[npc]

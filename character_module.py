@@ -17,7 +17,7 @@ def proper_name() -> str:
     while True:
         player_name = input("Please enter a valid character name (letters only): ").strip()
         if player_name.isalpha():
-            print(f"Thank you! Enjoy your time {player_name}!")
+            print(f"Thank you! Enjoy your time {player_name}!\n")
             return player_name
         else:
             print("Not a valid character name. Try again.")
