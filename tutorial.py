@@ -26,10 +26,27 @@ def tutorial_area() -> dict:
 
 # Character interactions with NPCs in tutorial zone
 def tutorial_npcs(character_location: (int, int)) -> str:
+    """
+    Return the NPC the character is interacting with in the tutorial zone.
+
+    :param character_location: a tuple of (row, column) coordinates in the tutorial zone
+    :precondition: character_location must be a tuple of two integers
+    :precondition: character_location must be one of: (0, 0), (1, 0), (2, 0), (3, 0)
+    :return: a string representing the NPC at the given location
+
+    >>> tutorial_npcs((0, 0))
+    'Self'
+    >>> tutorial_npcs((1, 0))
+    'Darrow'
+    >>> tutorial_npcs((2, 0))
+    'Misaki'
+    >>> tutorial_npcs((3, 0))
+    'Ragnar'
+    """
     # Tutorial Interactions
     tutorial_npc = {(0, 0): 'Self', (1, 0): 'Darrow', (2, 0): 'Misaki', (3, 0): 'Ragnar'}
     # Return which NPC you are interacting with
-    return tutorial_npc.get(character_location)
+    return tutorial_npc[character_location]
 
 
 def get_npc_dialogue(npc: str, character_name: str) -> list:
@@ -79,7 +96,7 @@ def get_npc_dialogue(npc: str, character_name: str) -> list:
             ("We'll that's pretty much the basics. Now come back with that Crystal!.", False)
         ]
     }
-    return npcs.get(npc)
+    return npcs[npc]
 
 
 def handle_input(npc, dialogue_counter):
@@ -119,18 +136,6 @@ def tutorial_interaction(npc, character) -> bool:
         else:
             dialogue_counter += 1
     return False
-
-
-def equip_items(character: dict, items: dict):
-    """
-    Equip items onto character.
-
-    :param character:
-    :param items:
-    """
-    character_items = character['Items']
-    for equipment, item in items.items():
-        character_items[equipment] = item
 
 
 def exit_tutorial(character) -> bool:
