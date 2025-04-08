@@ -21,6 +21,7 @@ Unfortunately, I had to downsize my game ideas.
 ## Table of Requirements:
 Notes: 
 - I used defensive programming to minimize errors
+- I lacked proper time to fully balance my game
 
 | Required Elements                 | Code Location                               |
 |-----------------------------------|---------------------------------------------|
