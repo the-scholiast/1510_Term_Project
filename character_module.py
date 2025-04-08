@@ -394,24 +394,25 @@ def level_up(character: dict) -> bool:
     :return: True if character leveled up else False
 
     >>> test_character = {'Level': 1, 'Experience': 100, 'Health': 200, 'Current Health': 180,
-    ...                   'Ki': 50, 'Current Ki': 30, 'Damage Modifier': 1.0, 'Stance': ['Bear']}
+    ...                   'Ki': 50, 'Current Ki': 30, 'Damage Modifier': 1.0,
+    ...                   'Stance': ['Bear'], 'Title': 'the Amateur'}
     >>> result = level_up(test_character)
-    >>> (True, 2, 250, 250, 65, 65, 1.1, ['Bear', 'Turtle'], 0) == (
+    >>> (True, 2, 250, 250, 65, 65, 1.1, ['Bear', 'Turtle'], 0, 'the Novice') == (
     ...     result, test_character['Level'], test_character['Health'],
     ...     test_character['Current Health'], test_character['Ki'],
     ...     test_character['Current Ki'], test_character['Damage Modifier'],
-    ...     test_character['Stance'], test_character['Experience']
+    ...     test_character['Stance'], test_character['Experience'], test_character['Title']
     ... )
     True
     >>> test_character = {'Level': 2, 'Experience': 100, 'Health': 250, 'Current Health': 200,
     ...                   'Ki': 65, 'Current Ki': 40, 'Damage Modifier': 1.1,
-    ...                   'Stance': ['Bear', 'Turtle']}
+    ...                   'Stance': ['Bear', 'Turtle'], 'Title': 'the Accepted'}
     >>> result = level_up(test_character)
-    >>> (True, 3, 300, 300, 80, 80, 1.2, ['Bear', 'Turtle', 'Snake'], 0) == (
+    >>> (True, 3, 300, 300, 80, 80, 1.2, ['Bear', 'Turtle', 'Snake'], 0, 'the Accepted') == (
     ...     result, test_character['Level'], test_character['Health'],
     ...     test_character['Current Health'], test_character['Ki'],
     ...     test_character['Current Ki'], test_character['Damage Modifier'],
-    ...     test_character['Stance'], test_character['Experience']
+    ...     test_character['Stance'], test_character['Experience'], test_character['Title']
     ... )
     True
     """
@@ -445,8 +446,40 @@ def level_up(character: dict) -> bool:
     return False
 
 
-# Print character leveling up
-def print_level_up(character: dict):
+# Print character leveling up details
+def print_level_up(character: dict) -> None:
+    """
+    Print detailed information about the character's level up progression.
+
+    Displays the new level, title, increased health and ki,
+    and newly unlocked stance if applicable.
+
+    :param character: a dictionary containing character data
+    :precondition: character must be a dictionary with 'Level', 'Title',
+                   'Health', 'Ki', and 'Stance' keys
+    :precondition: charater['Level'] value must be an integer between [1, 3]
+    :precondition: charater['Title'] value must be a non-empty string
+    :precondition: charater['Health'] value must be a positive integer > 0
+    :precondition: charater['Ki'] value must be a positive integer > 0
+    :precondition: charater['Stance'] value must be a list containing available stance as strings
+    :postcondition: print the detailed information about the character's level up progression
+
+    >>> test_character = {'Level': 2, 'Title': 'the Novice', 'Health': 250, 'Ki': 65, 'Stance': ['Bear', 'Turtle']}
+    >>> print_level_up(test_character)
+    Level Up! You are now level 2!
+    New title: the Novice
+    Health increased to 250
+    Ki increased to 65
+    New stance unlocked: Turtle
+    >>> test_character = {'Level': 3, 'Title': 'the Accepted', 'Health': 300,
+    ...                   'Ki': 80, 'Stance': ['Bear', 'Turtle', 'Snake']}
+    >>> print_level_up(test_character)
+    Level Up! You are now level 3!
+    New title: the Accepted
+    Health increased to 300
+    Ki increased to 80
+    New stance unlocked: Snake
+    """
     # Print the obtained stats
     print(f"Level Up! You are now level {character['Level']}!")
     print(f"New title: {character['Title']}")
