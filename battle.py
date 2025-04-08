@@ -118,14 +118,13 @@ def apply_difficulty_scaling(monster: dict, character_level: int) -> dict:
     # Calculate new modifiers
     new_damage_modifier = calculate_monster_damage_modifier(character_level)
     new_health_modifier = calculate_monster_health_modifier(character_level)
-    # Store original health before modifications
-    original_health = monster['Health']
+    # Get the base health
+    base_health = monster['Health'] / monster['Health Modifier']
     # Update monster modifiers
     monster['Damage Modifier'] = new_damage_modifier
     monster['Health Modifier'] = new_health_modifier
-    # Calculate health increase
-    health_multiplier = new_health_modifier
-    new_health = int(original_health * health_multiplier)
+    # Calculate new health with the new modifier
+    new_health = int(base_health * new_health_modifier)
     # Update monster health values
     monster['Health'] = new_health
     monster['Current Health'] = new_health

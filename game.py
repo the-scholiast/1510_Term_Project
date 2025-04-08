@@ -247,7 +247,7 @@ def game():
         :postcondition: run all functions to handle battle mechanic
         """
         # Create monster or use custom one if provided
-        monster = custom_monster if custom_monster else battle.create_monster(monster_name)
+        monster = custom_monster if custom_monster else battle.create_monster(monster_name, character['Level'])
         # Determine turn order
         turns, first_strike_message = battle.turn_order(monster_name)
         print(first_strike_message)
