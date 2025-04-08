@@ -272,7 +272,7 @@ def print_apply_equipment(equipment: tuple, character: dict) -> None:
 
 
 # Check if character movement is valid and within the board boundaries
-def validate_move(board, character, direction):
+def validate_move(board: dict, character: dict, direction: int) -> bool:
     """
     Return True if the character's coordinates after moving are in the board else return False.
 
@@ -322,7 +322,7 @@ def validate_move(board, character, direction):
     return (new_y_coordinate, new_x_coordinate) in board
 
 
-def move_character(character, direction):
+def move_character(character: dict, direction: int) -> None:
     """
     Increment or decrement the character's X- or Y-coordinate depending on the direction.
 
@@ -362,7 +362,7 @@ def move_character(character, direction):
 
 
 # Get direction represent as an integer between 1 and 4 ('Up', 'Down', 'Left', 'Right')
-def get_user_choice():
+def get_user_choice() -> int:
     """
     Return the direction as an integer between [1, 4] representing ('Up', 'Down', 'Left', 'Right').
 
@@ -381,7 +381,7 @@ def get_user_choice():
 
 
 # Character level up boost
-def level_up(character: dict):
+def level_up(character: dict) -> bool:
     """
     Update character Health, Ki, Damage Modifier, and Stance after leveling up.
 
@@ -389,6 +389,31 @@ def level_up(character: dict):
                       coordinates, equipment, status, level, and stance
     :precondition: character must be a dictionary containing all character attributes including name, stats,
                    position, inventory, equipment, and status effects
+    :postcondition: if character can level up, increase stats and generate True
+    :postcondition: if character cannot level up, generate False
+    :return: True if character leveled up else False
+
+    >>> test_character = {'Level': 1, 'Experience': 100, 'Health': 200, 'Current Health': 180,
+    ...                   'Ki': 50, 'Current Ki': 30, 'Damage Modifier': 1.0, 'Stance': ['Bear']}
+    >>> result = level_up(test_character)
+    >>> (True, 2, 250, 250, 65, 65, 1.1, ['Bear', 'Turtle'], 0) == (
+    ...     result, test_character['Level'], test_character['Health'],
+    ...     test_character['Current Health'], test_character['Ki'],
+    ...     test_character['Current Ki'], test_character['Damage Modifier'],
+    ...     test_character['Stance'], test_character['Experience']
+    ... )
+    True
+    >>> test_character = {'Level': 2, 'Experience': 100, 'Health': 250, 'Current Health': 200,
+    ...                   'Ki': 65, 'Current Ki': 40, 'Damage Modifier': 1.1,
+    ...                   'Stance': ['Bear', 'Turtle']}
+    >>> result = level_up(test_character)
+    >>> (True, 3, 300, 300, 80, 80, 1.2, ['Bear', 'Turtle', 'Snake'], 0) == (
+    ...     result, test_character['Level'], test_character['Health'],
+    ...     test_character['Current Health'], test_character['Ki'],
+    ...     test_character['Current Ki'], test_character['Damage Modifier'],
+    ...     test_character['Stance'], test_character['Experience']
+    ... )
+    True
     """
     current_level = character['Level']
     current_exp = character['Experience']
@@ -404,8 +429,10 @@ def level_up(character: dict):
         character['Health'] += 50
         character['Current Health'] = character['Health']
         character['Ki'] += 15
-        character['Current Ki'] = character['Ki']
+        character['Current Ki'] = character['Ki']  # Fully restore ki on level up
+        # Increase damage modifier and round to 2 decimal places to avoid floating-point precision issues
         character['Damage Modifier'] += 0.1
+        character['Damage Modifier'] = round(character['Damage Modifier'], 2)
         # Add new stance at level 2
         if character['Level'] == 2:
             character['Stance'].append('Turtle')
