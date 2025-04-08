@@ -15,21 +15,28 @@ A01431327
 the-scholiast
 
 ## Any important comments you'd like to make about your work:
-| Required Elements                 | Code Location  |
-|-----------------------------------|----------------|
-| Immutable data structures         | n/a            |
-| Mutable data structures           | n/a            |
-| Exceptions and exception handling | n/a            |
-| Minimized scope                   | n/a            |
-| Decomposition                     | n/a            |
-| Simple flat code                  | n/a            |
-| Comprehensions                    | n/a            |
-| if-statements                     | n/a            |
-| Repetition                        | n/a            |
-| Membership operator               | n/a            |
-| Range function                    | n/a            |
-| Itertools                         | n/a            |
-| Random module                     | n/a            |
-| Function annotations              | n/a            |
-| Doctests and unit tests           | n/a            |
-| Proper string formating           | n/a            |
+I greatly misinterpreted the complexity of my battle system.
+Unfortunately, I had to downsize my game ideas.
+
+## Table of Requirements:
+Notes: 
+- I used defensive programming to minimize errors
+
+| Required Elements                 | Code Location                      |
+|-----------------------------------|------------------------------------|
+| Immutable data structures         | lines 5-9 in __init__.py           |
+| Mutable data structures           | lines 41-51 in character_module.py |
+| Exceptions and exception handling | lines 998-1007 in battle.py        |
+| Minimized scope                   | lines 336-361 in game.py           |
+| Decomposition                     | lines 104-131 in game.py           |
+| Simple flat code                  | line 907 in battle.py              |
+| Comprehensions                    | line 734 in battle.py              |
+| if-statements                     | lines 1291-1296 in battle.py       |
+| Repetition                        | lines 1603-1615 in battle.py       |
+| Membership operator               | n/a                                |
+| Range function                    | n/a                                |
+| Itertools                         | lines 513-535 in battle.py         |
+| Random module                     | n/a                                |
+| Function annotations              | lines 1462-1463 in battle.py       |
+| Doctests and unit tests           | n/a                                |
+| Proper string formating           | n/a                                |
