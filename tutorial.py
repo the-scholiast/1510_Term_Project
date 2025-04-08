@@ -190,6 +190,26 @@ def tutorial_interaction(npc: str, character: dict) -> bool:
     return False
 
 
-def exit_tutorial(character) -> bool:
+def exit_tutorial(character: dict) -> bool:
+    """
+    Return True if character did not reach end of tutorial zone else return False.
+
+    :param character: a dictionary containing character data with 'X-coordinate' and 'Y-coordinate' as keys with
+                      integer values between [0, 4]
+    :precondition: character must be a dictionary containing character data with
+                   'X-coordinate' and 'Y-coordinate' as keys with integer values between [0, 4]
+    :postcondition: check if character coordinates != (4, 0)
+    :return: True if character coordinates != (4, 0) else False
+
+    >>> test_character = {'X-coordinate': 0, 'Y-coordinate': 0}
+    >>> exit_tutorial(test_character)
+    True
+    >>> test_character = {'X-coordinate': 3, 'Y-coordinate': 0}
+    >>> exit_tutorial(test_character)
+    True
+    >>> test_character = {'X-coordinate': 4, 'Y-coordinate': 0}
+    >>> exit_tutorial(test_character)
+    False
+    """
     character_location = (character['X-coordinate'], character['Y-coordinate'])
     return character_location != (4, 0)
