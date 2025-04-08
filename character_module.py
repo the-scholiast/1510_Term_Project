@@ -179,6 +179,7 @@ def remove_equipment_modifiers(character: dict) -> None:
         elif equipment_type in damage_equipment:
             character["Damage Modifier"] -= modifier
 
+
 # Apply equipment stats
 def apply_equipment(character: dict) -> None:
     """
@@ -491,18 +492,57 @@ def print_level_up(character: dict) -> None:
 
 
 # Uses item from character inventory
-def use_item(character: dict, item_choice: str):
+def use_item(character: dict, item_choice: str) -> None:
+    """
+    Use an item from the character's inventory to restore Health or Ki.
+
+    :param character: A dictionary containing character's inventory and stats
+    :param item_choice: A string specifying the item to use ('Health Pots' or 'Shards')
+    :precondition: character must be a dictionary with 'Items', 'Health', 'Current Health',
+                   'Ki', and 'Current Ki' keys
+    :precondition: charater['Health'] value must be an integer > 0
+    :precondition: charater['Current Health'] value be an integer between [1, charater['Health']]
+    :precondition: charater['Ki'] value must be an integer >= 0
+    :precondition: charater['Current Ki'] value be an integer between [0, charater['Ki']]
+    :precondition: charater['Items'] contain 'Health Pots' and 'Shards' keys with integer values >= 0
+    :postcondition: reduce the item count and increases health or ki if item is available
+    :postcondition: print the restored amount from using an item
+
+    >>> test_character = {'Health': 200, 'Current Health': 150, 'Ki': 50, 'Current Ki': 30,
+    ...                   'Items': {'Health Pots': 2, 'Shards': 1}}
+    >>> use_item(test_character, 'Health Pots')
+    You used a Health Potion and restored 70 health!
+    >>> test_character['Current Health']
+    200
+    >>> test_character['Items']['Health Pots']
+    1
+    >>> test_character = {'Health': 200, 'Current Health': 180, 'Ki': 50, 'Current Ki': 30,
+    ...                   'Items': {'Health Pots': 1, 'Shards': 2}}
+    >>> use_item(test_character, 'Shards')
+    You used a Shard and restored 30 Ki!
+    >>> test_character['Current Ki']
+    50
+    >>> test_character['Items']['Shards']
+    1
+    >>> test_character = {'Health': 200, 'Current Health': 180, 'Ki': 50, 'Current Ki': 30,
+    ...                   'Items': {'Health Pots': 0, 'Shards': 0}}
+    >>> use_item(test_character, 'Health Pots')
+    >>> test_character['Current Health']
+    180
+    """
     if item_choice == 'Health Pots':
         # Use health potion if available
         if character['Items']['Health Pots'] > 0:
-            heal_amount = 50
+            heal_amount = 70
+            # Make sure not to restore past Health
             character['Current Health'] = min(character['Health'], character['Current Health'] + heal_amount)
             character['Items']['Health Pots'] -= 1
             print(f"You used a Health Potion and restored {heal_amount} health!")
     elif item_choice == 'Shards':
         # Use Ki shard if available
         if character['Items']['Shards'] > 0:
-            ki_amount = 20
+            ki_amount = 30
+            # Make sure not to restore past Ki
             character['Current Ki'] = min(character['Ki'], character['Current Ki'] + ki_amount)
             character['Items']['Shards'] -= 1
             print(f"You used a Shard and restored {ki_amount} Ki!")
