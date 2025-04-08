@@ -1,4 +1,5 @@
 """
+Woojin Song, A01431327
 This module drives the entire game.
 """
 import battle
@@ -359,15 +360,14 @@ def game():
         elif new_random_encounter in npc_dict['Monsters']:
             monster_manager(character, new_random_encounter)
 
-    # Ask user for proper character name @DONE
+    # Ask user for proper character name
     name = character_module.proper_name()
-    # Create new character @DONE
+    # Create new character
     new_character = character_module.make_character(name)
-    # Make tutorial zone @STARTED
+    # Make tutorial zone
     tutorial_zone = tutorial.tutorial_area()
     in_tutorial = tutorial.exit_tutorial(new_character)
-    # Character spawns in
-    # Character goes through NPC interactions. Can skip to main zone. @DONE
+    # Character goes through NPC interactions. Can skip to main zone
     while in_tutorial:
         # Mark visited areas with empty space
         grid.mark_location_visited(tutorial_zone, new_character)
@@ -389,14 +389,14 @@ def game():
         # Check if character still in tutorial zone
         in_tutorial = tutorial.exit_tutorial(new_character)
     # Character moves out of tutorial zone
-    # Make main board @STARTED
+    # Make main game board
     board = grid.make_board(5, 5)
     # Reset character starting location for next area
     new_character['X-coordinate'] = 2
     new_character['Y-coordinate'] = 4
-    # If character Current Health == 0, lost game dialogue and end game @DONE
+    # If character Current Health == 0, lost game dialogue and end game
     character_alive = is_alive(new_character)
-    # Critical game loop around if Crystals >= 100 @DONE
+    # Critical game loop around if Crystals >= 100
     crystals_100 = check_crystals(new_character)
     # Store NPC and Monster weights
     npc_count = {'Monsters': 14, 'Friendly': 6, 'Environment': 4}
