@@ -29,27 +29,6 @@ def make_board(rows: int, columns: int) -> dict:
     return board
 
 
-# Create tutorial zone
-def tutorial_area() -> dict:
-    """
-    Create a linear board for the tutorial section of the game.
-
-    Generates a 1x5 board where each position contains a tutorial marker '[?]'.
-
-    :postcondition: generate a dictionary with (row, column) tuple keys (as int = 1, int = 5) and '[?]' string values
-    :return: a dictionary representing the tutorial zone
-             with (row, column) tuple keys (as int = 1, int = 5) and '[?]' string values
-
-    >>> actual = tutorial_area()
-    >>> expected = {(0, 0): '[?]', (0, 1): '[?]', (0, 2): '[?]', (0, 3): '[?]', (0, 4): '[?]'}
-    >>> actual == expected
-    True
-    """
-    # Linear board for tutorial.
-    tutorial_zone = {(row, column): '[?]' for row in range(1) for column in range(5)}
-    return tutorial_zone
-
-
 # Print board
 def print_board(board: dict, character: dict):
     """
