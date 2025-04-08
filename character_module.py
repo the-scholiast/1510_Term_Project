@@ -87,7 +87,34 @@ def update_title(character: dict) -> dict:
 
 
 # Character equipments item
-def obtain_and_equip(equipment_choice: tuple, character: dict):
+def obtain_and_equip(equipment_choice: tuple, character: dict) -> None:
+    """
+    Equip a piece of equipment to the character's equipment slot.
+
+    :param equipment_choice: a tuple containing (item type, item name, modifier)
+    :param character: a dictionary containing character data with 'Equipment' key and
+                      equipment slot keys as value
+    :precondition: equipment_choice must be a tuple with 3 elements
+    :precondition: equipment_choice must contain (item type, item name, modifier) as (str, str, float)
+    :precondition: character must have an 'Equipment' key with a dictionary of equipment slots
+    :precondition: character['Equipment'] must contain ('Helmet', 'Armour', 'Ring', 'Amulet') as keys with value string
+    :precondition: item type must be a valid equipment slot
+    :postcondition: update the character's equipment with the new item
+    :postcondition: print a message confirming equipment acquisition
+
+    >>> test_character = {'Equipment': {'Helmet': '', 'Armour': '', 'Ring': '', 'Amulet': ''}}
+    >>> test_equipment = ('Helmet', 'Iron Hat', 0.02)
+    >>> obtain_and_equip(test_equipment, test_character)
+    You have equipped Iron Hat!
+    >>> test_character['Equipment']['Helmet']
+    ('Iron Hat', 0.02)
+    >>> test_character = {'Equipment': {'Helmet': '', 'Armour': '', 'Ring': '', 'Amulet': ''}}
+    >>> test_equipment = ('Ring', 'Ruby Ring', 0.04)
+    >>> obtain_and_equip(test_equipment, test_character)
+    You have equipped Ruby Ring!
+    >>> test_character['Equipment']['Ring']
+    ('Ruby Ring', 0.04)
+    """
     item_type, item_name, price = equipment_choice
     character_equipment = character['Equipment']
     character_equipment[item_type] = (item_name, price)
