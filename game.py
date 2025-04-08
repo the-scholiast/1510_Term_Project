@@ -1,4 +1,6 @@
-# Future import files below
+"""
+This module drives the entire game.
+"""
 import battle
 import character_module
 import encounters
@@ -60,7 +62,13 @@ def is_alive(character: dict) -> bool:
     return current_health > 0
 
 
-def game_lost():
+def game_lost() -> None:
+    """
+    Print game over message when the character dies and terminate the program.
+
+    :postcondition: print text describing the character's death
+    :postcondition: terminate the program with sys.exit
+    """
     print("Your quest to become Accepted has ended.")
     print("So much blood spills from your guts.")
     print("You let go of your family heirloom.")
@@ -69,8 +77,21 @@ def game_lost():
 
 
 def game():
+    """
+    Manage the entire game.
+    """
+
     # Hot spring manager
-    def hot_spring_manager(character: dict):
+    def hot_spring_manager(character: dict) -> None:
+        """
+        Manage hot spring interactions.
+
+        :param character: a dictionary containing all character attributes including name, stats,
+                          position, inventory, equipment, and status effects
+        :precondition: character must be a dictionary containing all character attributes including name, stats,
+                       position, inventory, equipment, and status effects
+        :postcondition: run functions interacting with hot spring encounter
+        """
         # Display hot spring options
         encounters.hot_spring_encounter()
         # Get user choice
@@ -79,7 +100,17 @@ def game():
         encounters.hot_spring_reward(character, user_choice)
 
     # Merchant manager
-    def merchant_manager(character: dict):
+    def merchant_manager(character: dict) -> None:
+        """
+        Manage merchant interactions.
+
+        :param character: a dictionary containing all character attributes including name, stats,
+                          position, inventory, equipment, and status effects
+        :precondition: character must be a dictionary containing all character attributes including name, stats,
+                       position, inventory, equipment, and status effects
+        :postcondition: run functions interacting with merchant encounter
+        :postcondition: print merchant accepted equipment message
+        """
         # Get merchant items based on character level
         merchant_items = encounters.merchant_offers(character)
         # Display merchant offers
@@ -99,7 +130,23 @@ def game():
         character_module.print_apply_equipment(equipment_choice, character)
 
     # Handles monster attack
-    def apply_monster_attack(attack: list, character: dict, monster: dict):
+    def apply_monster_attack(attack: list, character: dict, monster: dict) -> None:
+        """
+        Process a monster's attack against the character based on attack type.
+
+        :param attack: a list containing [attack_name, description, attack_type, damage] as [str, str, str, int]
+        :param character: a dictionary containing all character attributes including name, stats,
+                          position, inventory, equipment, and status effects
+        :param monster: a dictionary containing all monster data
+        :precondition: character must be a dictionary containing all character attributes including name, stats,
+                       position, inventory, equipment, and status effects
+        :precondition: monster must be a dictionary containing all monster data
+        :precondition: attack must contain exactly 4 elements: attack_name, description, attack_type, and damage
+        :precondition: attack_type must be one of: 'Attack', 'Heal', 'Poison', 'Bleed', or any other value for 'Buff'
+        :postcondition: process the appropriate attack against the character based on attack_type
+        :postcondition: check if character is defeated and update message
+        :postcondition: print the attack result message
+        """
         # Unpack attack list
         attack_name, description, attack_type, damage = attack
         # Obtain 'Damage Modifier' value from monster
@@ -129,6 +176,22 @@ def game():
 
     # Manager function to apply character attack move
     def apply_attack_move(attack_move: tuple, character: dict, monster: dict) -> None:
+        """
+        Execute a character's attack move against a monster.
+
+        :param attack_move: a tuple containing (attack_name, attack_details) where attack_details
+                            is a list of [description, attack_type, damage] as [str, str, int]
+        :param character: a dictionary containing all character attributes including name, stats,
+                          position, inventory, equipment, and status effects
+        :param monster: a dictionary containing all monster data
+        :precondition: character must be a dictionary containing all character attributes including name, stats,
+                       position, inventory, equipment, and status effects
+        :precondition: monster must be a dictionary containing all monster data
+        :precondition: attack_move must be a tuple with exactly 2 elements
+        :precondition: attack_details must be a list with exactly 3 elements
+        :postcondition: execute the attack if valid
+        :postcondition: print the result of the attack attempt
+        """
         # Unpack attack details
         attack_name, attack_details = attack_move
         description, attack_type, damage = attack_details
@@ -142,6 +205,19 @@ def game():
 
     # Manager to process status effects
     def process_status_effects(character: dict, monster: dict) -> None:
+        """
+        Process active status effects for both character and monster.
+
+        :param character: a dictionary containing all character attributes including name, stats,
+                          position, inventory, equipment, and status effects
+        :param monster: a dictionary containing all monster data
+        :precondition: character must be a dictionary containing all character attributes including name, stats,
+                       position, inventory, equipment, and status effects
+        :precondition: monster must be a dictionary containing all monster data
+        :postcondition: apply damage from active status effects to the character
+        :postcondition: print status effect damage messages if any
+        :postcondition: update and decrement all status effect durations
+        """
         # First apply damage from active status effects to character
         character_status_message = battle.apply_status_damage(character)
         # Print status effect damage messages
@@ -151,7 +227,23 @@ def game():
         battle.update_status_effects(character, monster)
 
     # Monster manager
-    def monster_manager(character: dict, monster_name: str, custom_monster=None):
+    def monster_manager(character: dict, monster_name: str, custom_monster=None) -> None:
+        """
+        Manage a battle between character and monster.
+
+        Handles turn order, battle loop, and user actions until either the monster or character is defeated.
+        Resets character statuses and awards rewards when the monster is defeated.
+
+        :param character: a dictionary containing all character attributes including name, stats,
+                          position, inventory, equipment, and status effects
+        :param monster_name: a string representing monster name
+        :param custom_monster: optional pre-created monster dictionary
+        :precondition: character must be a dictionary containing all character attributes including name, stats,
+                       position, inventory, equipment, and status effects
+        :precondition: monster_name must be a string
+        :precondition: custom_monster must be None or a dictionary containing monster data
+        :postcondition: run all functions to handle battle mechanic
+        """
         # Create monster or use custom one if provided
         monster = custom_monster if custom_monster else battle.create_monster(monster_name)
         # Determine turn order
@@ -241,6 +333,17 @@ def game():
 
     # Manages all potential encounters
     def encounter_manager(character, npc_counts):
+        """
+        Handle random encounters in the game world (Friendly, Monsters, Environment).
+
+        :param character: a dictionary containing all character attributes including name, stats,
+                          position, inventory, equipment, and status effects
+        :param npc_counts: a dictionary tracking encounter type weights for encounter selection
+        :precondition: character must be a dictionary containing all character attributes including name, stats,
+                       position, inventory, equipment, and status effects
+        :postcondition: proper encounter is triggered based on random selection
+        :postcondition: correct manager function is called to handle the encounter
+        """
         npc_dict = {'Friendly': ['Merchant'],
                     'Monsters': ['Djinn', 'Skinwalker', 'Ghoul', 'Wendigo', 'Shapeshifter', 'Werewolf', 'Vampire'],
                     'Environment': ['Hot Spring']}
@@ -261,7 +364,7 @@ def game():
     # Create new character @DONE
     new_character = character_module.make_character(name)
     # Make tutorial zone @STARTED
-    tutorial_zone = grid.tutorial_area()
+    tutorial_zone = tutorial.tutorial_area()
     in_tutorial = tutorial.exit_tutorial(new_character)
     # Character spawns in
     # Character goes through NPC interactions. Can skip to main zone. @DONE
