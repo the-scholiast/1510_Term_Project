@@ -398,7 +398,7 @@ def level_up(character: dict) -> bool:
     ...                   'Ki': 50, 'Current Ki': 30, 'Damage Modifier': 1.0,
     ...                   'Stance': ['Bear'], 'Title': 'the Amateur'}
     >>> result = level_up(test_character)
-    >>> (True, 2, 250, 250, 65, 65, 1.1, ['Bear', 'Turtle'], 0, 'the Novice') == (
+    >>> (True, 2, 250, 250, 70, 70, 1.1, ['Bear', 'Turtle'], 0, 'the Novice') == (
     ...     result, test_character['Level'], test_character['Health'],
     ...     test_character['Current Health'], test_character['Ki'],
     ...     test_character['Current Ki'], test_character['Damage Modifier'],
@@ -409,7 +409,7 @@ def level_up(character: dict) -> bool:
     ...                   'Ki': 65, 'Current Ki': 40, 'Damage Modifier': 1.1,
     ...                   'Stance': ['Bear', 'Turtle'], 'Title': 'the Accepted'}
     >>> result = level_up(test_character)
-    >>> (True, 3, 300, 300, 80, 80, 1.2, ['Bear', 'Turtle', 'Snake'], 0, 'the Accepted') == (
+    >>> (True, 3, 300, 300, 85, 85, 1.2, ['Bear', 'Turtle', 'Snake'], 0, 'the Accepted') == (
     ...     result, test_character['Level'], test_character['Health'],
     ...     test_character['Current Health'], test_character['Ki'],
     ...     test_character['Current Ki'], test_character['Damage Modifier'],
@@ -430,7 +430,7 @@ def level_up(character: dict) -> bool:
         # Update stats
         character['Health'] += 50
         character['Current Health'] = character['Health']
-        character['Ki'] += 15
+        character['Ki'] += 20
         character['Current Ki'] = character['Ki']  # Fully restore ki on level up
         # Increase damage modifier and round to 2 decimal places to avoid floating-point precision issues
         character['Damage Modifier'] += 0.1

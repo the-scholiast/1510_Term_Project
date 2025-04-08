@@ -20,7 +20,7 @@ class TestLevelUp(TestCase):
         }
         result = level_up(character)
         expected = (
-            True, 2, 250, 250, 65, 65, 1.1,
+            True, 2, 250, 250, 70, 70, 1.1,
             ['Bear', 'Turtle'], 0, 'the Novice'
         )
         actual = (
@@ -51,7 +51,7 @@ class TestLevelUp(TestCase):
         }
         result = level_up(character)
         expected = (
-            True, 3, 300, 300, 80, 80, 1.2,
+            True, 3, 300, 300, 85, 85, 1.2,
             ['Bear', 'Turtle', 'Snake'], 0, 'the Accepted'
         )
         actual = (
