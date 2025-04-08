@@ -22,21 +22,22 @@ Unfortunately, I had to downsize my game ideas.
 Notes: 
 - I used defensive programming to minimize errors
 
-| Required Elements                 | Code Location                        |
-|-----------------------------------|--------------------------------------|
-| Immutable data structures         | lines 5-9 in __init__.py             |
-| Mutable data structures           | lines 41-51 in character_module.py   |
-| Exceptions and exception handling | lines 998-1007 in battle.py          |
-| Minimized scope                   | lines 336-361 in game.py             |
-| Decomposition                     | lines 104-131 in game.py             |
-| Simple flat code                  | line 907 in battle.py                |
-| Comprehensions                    | line 734 in battle.py                |
-| if-statements                     | lines 1291-1296 in battle.py         |
-| Repetition                        | lines 1603-1615 in battle.py         |
-| Membership operator               | lines 227-237 in character_module.py |
-| Range function                    | lines 99-110 in grid.py              |
-| Itertools                         | lines 513-535 in battle.py           |
-| Random module                     | line 224 in battle.py                |
-| Function annotations              | lines 1462-1463 in battle.py         |
-| Doctests and unit tests           | lines 1464-1491 in battle.py         |
-| Proper string formating           | lines 138-149 in encounters.py       |
+| Required Elements                 | Code Location                               |
+|-----------------------------------|---------------------------------------------|
+| Immutable data structures         | lines 5-9 in __init__.py                    |
+| Mutable data structures           | lines 41-51 in character_module.py          |
+| Exceptions and exception handling | lines 998-1007 in battle.py                 |
+| Minimized scope                   | lines 336-361 in game.py                    |
+| Decomposition                     | lines 104-131 in game.py                    |
+| Simple flat code                  | line 907 in battle.py                       |
+| Comprehensions                    | line 734 in battle.py                       |
+| if-statements                     | lines 1291-1296 in battle.py                |
+| Repetition                        | lines 1603-1615 in battle.py                |
+| Membership operator               | lines 227-237 in character_module.py        |
+| Range function                    | lines 99-110 in grid.py                     |
+| Itertools                         | lines 513-535 in battle.py                  |
+| Random module                     | line 224 in battle.py                       |
+| Function annotations              | lines 1462-1463 in battle.py                |
+| Doctests                          | lines 1266-1288 in battle.py                |
+| Proper string formating           | lines 138-149 in encounters.py              |
+| Unit tests                        | test_execute_attack.py in unit_tests folder |
