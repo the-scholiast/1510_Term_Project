@@ -357,7 +357,7 @@ def game():
             hot_spring_manager(character)
         elif new_random_encounter == 'Merchant':
             merchant_manager(character)
-        # Monster encounter -->> fix NPC_DICT
+        # Monster encounter
         elif new_random_encounter in npc_dict['Monsters']:
             monster_manager(character, new_random_encounter)
 
@@ -391,7 +391,6 @@ def game():
                 print("You cannot move in that direction. Please enter a different direction.")
         # Check if character still in tutorial zone
         in_tutorial = tutorial.exit_tutorial(new_character)
-    # Character moves out of tutorial zone
     # Make main game board
     board = grid.make_board(5, 5)
     # Reset character starting location for next area
