@@ -114,11 +114,22 @@ def get_npc_dialogue(npc: str, character_name: str) -> list:
     return npcs[npc]
 
 
-def handle_input(npc, dialogue_counter):
+def handle_input(npc: str, dialogue_counter: int) -> int:
+    """
+    Manage dialogue progression with special handling for the first Darrow encounter.
+
+    For the first Darrow dialogue, provides an option to skip the tutorial.
+    For other cases, advance to the next dialogue.
+
+    :param npc: a string representing the current NPC name
+    :param dialogue_counter: an integer >= 0
+    :postcondition: obtain the next dialogue index as an integer > 0 based on NPC and current dialogue position
+    :return: the next dialogue index as an integer
+    """
     # First tutorial NPC encounter. Option to skip tutorial.
     if npc == 'Darrow' and dialogue_counter == 0:
-        user_response = input("Type 'Yes' for tutorial or 'No' to skip: ")
-        if user_response.lower() == 'no':
+        user_response = input("Type 1 for tutorial or anything else to skip: ")
+        if user_response.lower() != '1':
             # Skip to dialogue index 1
             return 1
         else:
