@@ -1,5 +1,3 @@
-import random
-
 """
 Contain the necessary functions and variables needed to create the 5x5 game board.
 """
@@ -29,37 +27,6 @@ def make_board(rows: int, columns: int) -> dict:
     """
     board = {(row, column): '[!]' for column in range(columns) for row in range(rows)}
     return board
-
-
-# Check if character movement will lead to random encounter '[!]'
-def check_encounter(character: dict, board: dict):
-    """
-    Determine if the character's current location contains an encounter marker '[!]'.
-
-    :param character: a dictionary containing all character attributes including name, stats,
-                      position, inventory, equipment, and status effects
-    :param board: a dictionary with (row, column):"[!]" (as a tuple with 0<=ints<5:string)
-    :precondition: character must contain 'X-coordinate' and 'Y-coordinate' integer keys between [0, 4]
-    :precondition: board must be a dictionary with (row, column) tuple keys (as ints == 5)
-    :precondition: board must contain '[!]' or '   ' as values
-    :postcondition: determine if the character's current location has an encounter
-    :postcondition: leave character unmodified
-    :postcondition: replace '[!]' value with "   " if character's location equals its key
-    :return: True if an encounter '[!]' is present at the character's location else False
-
-    >>> test_character = {'X-coordinate': 1, 'Y-coordinate': 2}
-    >>> test_board = {(2, 1): '[!]', (2, 2): '   '}
-    >>> check_encounter(test_character, test_board)
-    True
-    >>> test_character = {'X-coordinate': 2, 'Y-coordinate': 2}
-    >>> check_encounter(test_character, test_board)
-    >>> test_board = {(2, 1): '[!]', (2, 2): "   "}
-    False
-    """
-    character_location = (character['Y-coordinate'], character['X-coordinate'])
-    # Get either encounter marker '[!]' or whitespace
-    board_location = board.get(character_location)
-    return board_location == '[!]'
 
 
 # Create tutorial zone
